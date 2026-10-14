@@ -1,0 +1,13 @@
+{
+  "name": "md",
+  "installCommand": "corepack enable && corepack pnpm install --frozen-lockfile",
+  "buildCommand": "corepack pnpm --filter @md/web build:h5-netlify",
+  "outputDirectory": "apps/web/dist",
+  "nodeVersion": "22.11.0",
+  "rewrites": [
+    {
+      "source": "/*",
+      "destination": "/index.html"
+    }
+  ]
+}

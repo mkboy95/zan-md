@@ -3,9 +3,10 @@ import { t } from '@/i18n/translate'
 import { postSignature } from '@/lib/post-signature'
 import { ApiError } from '@/services/account/client'
 import { isSyncConfigured } from '@/services/sync/client'
+import { isGitHubBackend } from '@/services/sync/github/config'
 import { hydrateSyncedSettings } from '@/services/sync/hydrate'
 import { mergeRemoteIntoLocal, postToDoc, toMs } from '@/services/sync/merge'
-import { isProPlan, SYNC_DEBOUNCE_MS_PRO, SYNC_PRO_ENABLED } from '@/services/sync/plan'
+import { isProPlan, SYNC_DEBOUNCE_MS_PRO } from '@/services/sync/plan'
 import { buildPushBatches } from '@/services/sync/push-batch'
 import { applyRemoteSettings, collectChangedSettings } from '@/services/sync/settings'
 import { store } from '@/storage'
@@ -42,7 +43,8 @@ export const useSyncStore = defineStore(`sync`, () => {
   const status = ref<SyncStatus>(`idle`)
   const lastError = ref<string>(``)
   const lastSyncAt = store.reactive<number>(addPrefix(`sync_last_at`), 0)
-  const autoSyncEnabled = store.reactive(addPrefix(`sync_auto`), false)
+  // GitHub 后端没有计费与配额，自动同步默认开启；md-api 沿用原来的默认关闭行为。
+  const autoSyncEnabled = store.reactive(addPrefix(`sync_auto`), isGitHubBackend())
 
   let cursor = 0
   let debounceTimer: ReturnType<typeof setTimeout> | null = null
@@ -50,6 +52,8 @@ export const useSyncStore = defineStore(`sync`, () => {
   const isAvailable = computed(() => isSyncConfigured() && authStore.isLoggedIn)
   const isSyncing = computed(() => status.value === `syncing`)
   const isPro = computed(() => isProPlan(authStore.user?.plan))
+  /** 自动同步原先只对 Pro 开放；GitHub 后端不吃配额，同样放开。 */
+  const autoSyncAvailable = computed(() => isPro.value || isGitHubBackend())
   const syncDebounceMs = computed(() => SYNC_DEBOUNCE_MS_PRO)
 
   const lastLocalEditAt = computed(() => {
@@ -169,7 +173,7 @@ export const useSyncStore = defineStore(`sync`, () => {
   }
 
   function scheduleAutoSync(): void {
-    if (!isPro.value || !autoSyncEnabled.value || !isAvailable.value)
+    if (!autoSyncAvailable.value || !autoSyncEnabled.value || !isAvailable.value)
       return
     if (debounceTimer)
       clearTimeout(debounceTimer)
@@ -182,7 +186,7 @@ export const useSyncStore = defineStore(`sync`, () => {
   let autoSyncWatcherStarted = false
 
   function startAutoSyncWatcher(): void {
-    if (!SYNC_PRO_ENABLED || autoSyncWatcherStarted)
+    if (!autoSyncAvailable.value || autoSyncWatcherStarted)
       return
     autoSyncWatcherStarted = true
     // Shallow per-post signatures instead of a deep watch: only fires when a

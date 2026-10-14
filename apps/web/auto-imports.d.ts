@@ -110,7 +110,6 @@ declare global {
   const onUpdated: typeof import('vue').onUpdated
   const onWatcherCleanup: typeof import('vue').onWatcherCleanup
   const pausableWatch: typeof import('@vueuse/shared').pausableWatch
-  const postSignature: typeof import('./src/stores/post').postSignature
   const provide: typeof import('vue').provide
   const provideLocal: typeof import('@vueuse/shared').provideLocal
   const reactify: typeof import('@vueuse/shared').reactify
@@ -138,7 +137,6 @@ declare global {
   const storeToRefs: typeof import('pinia').storeToRefs
   const syncRef: typeof import('@vueuse/shared').syncRef
   const syncRefs: typeof import('@vueuse/shared').syncRefs
-  const templateRef: typeof import('@vueuse/core').templateRef
   const throttledRef: typeof import('@vueuse/shared').throttledRef
   const throttledWatch: typeof import('@vueuse/shared').throttledWatch
   const toRaw: typeof import('vue').toRaw

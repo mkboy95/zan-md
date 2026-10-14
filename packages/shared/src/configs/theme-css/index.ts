@@ -5,6 +5,7 @@ import baseCSS from './base.css?raw'
 import defaultCSS from './default.css?raw'
 import graceCSS from './grace.css?raw'
 import simpleCSS from './simple.css?raw'
+import weikeCSS from './weike.css?raw'
 
 export const baseCSSContent = baseCSS
 
@@ -12,6 +13,7 @@ export const themeMap = {
   default: defaultCSS,
   grace: graceCSS,
   simple: simpleCSS,
+  weike: weikeCSS,
 } as const
 
 export type BuiltinThemeName = keyof typeof themeMap

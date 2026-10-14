@@ -141,6 +141,19 @@ docker run -d -p 8080:80 doocs/md:latest
 
 启动后访问 http://localhost:8080 即可。Docker 镜像的更多信息，请参考 https://github.com/doocs/docker-md
 
+### 方式三：腾讯云 EdgeOne Pages（免费，自带跨设备云同步）
+
+免费托管在 EdgeOne Pages，用 GitHub 账号登录，文章数据存在你自己的 GitHub 私有仓库里，
+换任何设备登录都能看到历史文章。不需要数据库，也不需要自建后端。
+
+完整步骤见 [docs/deploy-edgeone.md](docs/deploy-edgeone.md)。
+
+## 内置主题：维客绿
+
+除默认主题外，本仓库内置了「维客绿」主题（`packages/shared/src/configs/theme-css/weike.css`）：
+绿丝带一级标题（绿底白字 + 米色斜切角 + 底部绿线）、宽字距正文、绿色渐变分割线。
+在编辑器右上角的样式面板里选择「维客绿」即可。
+
 ## Star 趋势
 
 <a href="https://github.com/doocs/md/stargazers" target="_blank"><img src="./images/starcharts.svg" alt="Stargazers over time" /></a>

@@ -1,0 +1,497 @@
+/**
+ * MD 维客绿主题 — 绿丝带排版
+ *
+ * 移植自公众号「维客笔记」的排版（原文样式系逐条读取其行内 style 提取）。
+ * 辨识特征三件套：
+ *   1. 宽字距 1.5px + 大行高（原文 32px / 16px = 2.0）
+ *   2. 一级标题：绿色丝带 + 右侧米色斜切角（用右侧透明边框 + 双层背景画出来）
+ *   3. 三色渐变提示框：Tip 绿 / Info 蓝 / Warning 橙
+ *
+ * 实现约定（与其它内置主题一致）：
+ *   - 用 var(--md-primary-color) 而不是硬编码颜色，换色时整站跟随
+ *   - 尺寸用 calc(var(--md-font-size) * N)，运行时会被求值成具体 px
+ *   - 不用 color-mix()，微信端不认；一律写 rgba 字面量
+ *   - 所有间距乘 var(--md-block-spacing)，跟随「段间距」设置
+ */
+
+/* ==================== 正文 ==================== */
+p {
+  margin: calc(1.2em * var(--md-block-spacing)) 8px;
+  /* 宽字距是这套排版的头号特征 */
+  letter-spacing: 1.5px;
+  color: #333333;
+  line-height: 1.9;
+}
+
+/* ==================== H1：绿丝带 + 斜切角 + 底线 ====================
+ * 单个 h1 元素画出原设计的三段结构：
+ *   [绿色丝带文字] [米色斜切角]
+ *   └──────── 2px 绿色底线 ────────┘
+ * 原理：
+ *   - border-right: 20px transparent 在右侧留出一块「透明边框区」
+ *   - 米色三角形是第二层背景，画在这块边框区里（background-clip: border-box）
+ *   - 绿色只画到 padding-box，所以不会盖住三角形
+ */
+h1 {
+  display: inline-block;
+  box-sizing: border-box;
+  max-width: 100%;
+  margin: calc(2em * var(--md-block-spacing)) 0 calc(1em * var(--md-block-spacing));
+  padding: 0.25em 0.5em;
+  border-right: calc(var(--md-font-size) * 1.25) solid transparent;
+  border-bottom: 2px solid var(--md-primary-color);
+  border-radius: 5px 5px 0 0;
+  color: rgb(247, 247, 247);
+  background-color: var(--md-primary-color);
+  background-image: linear-gradient(58deg, rgb(239, 235, 233) 50%, transparent 50%),
+    linear-gradient(var(--md-primary-color), var(--md-primary-color));
+  background-repeat: no-repeat;
+  background-position: right bottom, left top;
+  background-size: calc(var(--md-font-size) * 1.25) calc(var(--md-font-size) * 2), 100% 100%;
+  background-clip: border-box, padding-box;
+  background-origin: border-box, padding-box;
+  font-size: calc(var(--md-font-size) * 1.25);
+  font-weight: bold;
+  line-height: 1.4;
+  letter-spacing: -0.3px;
+  text-align: left;
+}
+
+/* ==================== H2：绿色加粗 ==================== */
+h2 {
+  display: block;
+  margin: calc(2em * var(--md-block-spacing)) 0 calc(0.75em * var(--md-block-spacing));
+  padding: 0;
+  color: var(--md-primary-color);
+  background: transparent;
+  font-size: calc(var(--md-font-size) * 1.25);
+  font-weight: bold;
+  line-height: 1.5;
+  letter-spacing: -0.22px;
+  text-align: left;
+}
+
+/* ==================== H3：左侧绿色竖条 ==================== */
+h3 {
+  margin: calc(1.6em * var(--md-block-spacing)) 0 calc(0.6em * var(--md-block-spacing));
+  padding: 0 0 0 10px;
+  border-left: 4px solid var(--md-primary-color);
+  color: #333333;
+  font-size: calc(var(--md-font-size) * 1.125);
+  font-weight: bold;
+  line-height: 1.5;
+  letter-spacing: -0.2px;
+}
+
+/* ==================== H4 / H5 / H6 ==================== */
+h4 {
+  margin: calc(1.4em * var(--md-block-spacing)) 0 calc(0.5em * var(--md-block-spacing));
+  padding: 0;
+  color: var(--md-primary-color);
+  font-size: var(--md-font-size);
+  font-weight: bold;
+  line-height: 1.6;
+  letter-spacing: -0.2px;
+}
+
+h5,
+h6 {
+  margin: calc(1.2em * var(--md-block-spacing)) 0 calc(0.5em * var(--md-block-spacing));
+  color: var(--md-primary-color);
+  font-size: var(--md-font-size);
+  font-weight: bold;
+  letter-spacing: -0.1px;
+}
+
+/* ==================== 普通引用：左侧绿条 + 浅底 ==================== */
+blockquote {
+  margin: 0 8px calc(1.2em * var(--md-block-spacing));
+  padding: 2px 0 2px 12px;
+  border-left: 3px solid var(--md-primary-color);
+  border-radius: 0 6px 6px 0;
+  background: rgb(250, 249, 246);
+  font-style: normal;
+  color: rgb(90, 90, 90);
+}
+
+blockquote > p {
+  margin: 4px 0;
+  font-size: 1em;
+  letter-spacing: 1.5px;
+  color: rgb(90, 90, 90);
+}
+
+/* ==================== 提示框：三色渐变底 ====================
+ * 原文底色是 linear-gradient(120deg, rgba(R,G,B,0.1) 0%, transparent 100%)，
+ * 即从左上 10% 淡到右下透明。
+ */
+.markdown-alert-note,
+.markdown-alert-tip,
+.markdown-alert-info,
+.markdown-alert-important,
+.markdown-alert-warning,
+.markdown-alert-caution,
+.markdown-alert-abstract,
+.markdown-alert-summary,
+.markdown-alert-tldr,
+.markdown-alert-todo,
+.markdown-alert-success,
+.markdown-alert-done,
+.markdown-alert-question,
+.markdown-alert-help,
+.markdown-alert-faq,
+.markdown-alert-failure,
+.markdown-alert-fail,
+.markdown-alert-missing,
+.markdown-alert-danger,
+.markdown-alert-error,
+.markdown-alert-bug,
+.markdown-alert-example,
+.markdown-alert-quote,
+.markdown-alert-cite {
+  margin: 0 8px calc(1.2em * var(--md-block-spacing));
+  padding: 12px 16px;
+  border-left: none;
+  border-radius: 6px;
+  font-style: normal;
+}
+
+.markdown-alert-tip,
+.markdown-alert-hint,
+.markdown-alert-success,
+.markdown-alert-check,
+.markdown-alert-done,
+.markdown-alert-note {
+  background: linear-gradient(120deg, rgba(0, 191, 143, 0.1) 0%, transparent 100%);
+}
+
+.markdown-alert-info,
+.markdown-alert-abstract,
+.markdown-alert-summary,
+.markdown-alert-tldr,
+.markdown-alert-todo,
+.markdown-alert-question,
+.markdown-alert-help,
+.markdown-alert-faq {
+  background: linear-gradient(120deg, rgba(8, 109, 221, 0.1) 0%, transparent 100%);
+}
+
+.markdown-alert-warning,
+.markdown-alert-caution,
+.markdown-alert-attention,
+.markdown-alert-important {
+  background: linear-gradient(120deg, rgba(236, 117, 0, 0.1) 0%, transparent 100%);
+}
+
+.markdown-alert-danger,
+.markdown-alert-error,
+.markdown-alert-failure,
+.markdown-alert-fail,
+.markdown-alert-missing,
+.markdown-alert-bug {
+  background: linear-gradient(120deg, rgba(217, 48, 37, 0.1) 0%, transparent 100%);
+}
+
+.markdown-alert-quote,
+.markdown-alert-cite,
+.markdown-alert-example {
+  background: linear-gradient(120deg, rgba(136, 136, 136, 0.1) 0%, transparent 100%);
+}
+
+/* 提示框正文 */
+.markdown-alert-note > p,
+.markdown-alert-tip > p,
+.markdown-alert-info > p,
+.markdown-alert-important > p,
+.markdown-alert-warning > p,
+.markdown-alert-caution > p,
+.markdown-alert-abstract > p,
+.markdown-alert-summary > p,
+.markdown-alert-tldr > p,
+.markdown-alert-todo > p,
+.markdown-alert-success > p,
+.markdown-alert-done > p,
+.markdown-alert-question > p,
+.markdown-alert-help > p,
+.markdown-alert-faq > p,
+.markdown-alert-failure > p,
+.markdown-alert-fail > p,
+.markdown-alert-missing > p,
+.markdown-alert-danger > p,
+.markdown-alert-error > p,
+.markdown-alert-bug > p,
+.markdown-alert-example > p,
+.markdown-alert-quote > p,
+.markdown-alert-cite > p {
+  margin: 4px 0;
+  color: rgb(74, 74, 74);
+  font-size: 0.95em;
+  line-height: 1.7;
+  letter-spacing: 1.2px;
+}
+
+/* 提示框标题：三色 */
+.alert-title-tip,
+.alert-title-hint,
+.alert-title-success,
+.alert-title-check,
+.alert-title-done,
+.alert-title-note {
+  color: rgb(0, 191, 143);
+}
+
+.alert-title-info,
+.alert-title-abstract,
+.alert-title-summary,
+.alert-title-tldr,
+.alert-title-todo,
+.alert-title-question,
+.alert-title-help,
+.alert-title-faq {
+  color: rgb(8, 109, 221);
+}
+
+.alert-title-warning,
+.alert-title-caution,
+.alert-title-attention,
+.alert-title-important {
+  color: rgb(236, 117, 0);
+}
+
+.alert-title-danger,
+.alert-title-error,
+.alert-title-failure,
+.alert-title-fail,
+.alert-title-missing,
+.alert-title-bug {
+  color: rgb(217, 48, 37);
+}
+
+.alert-title-quote,
+.alert-title-cite,
+.alert-title-example {
+  color: rgb(136, 136, 136);
+}
+
+/* 提示框图标：跟随标题颜色 */
+.alert-icon-tip,
+.alert-icon-hint,
+.alert-icon-success,
+.alert-icon-check,
+.alert-icon-done,
+.alert-icon-note {
+  fill: rgb(0, 191, 143);
+}
+
+.alert-icon-info,
+.alert-icon-abstract,
+.alert-icon-summary,
+.alert-icon-tldr,
+.alert-icon-todo,
+.alert-icon-question,
+.alert-icon-help,
+.alert-icon-faq {
+  fill: rgb(8, 109, 221);
+}
+
+.alert-icon-warning,
+.alert-icon-caution,
+.alert-icon-attention,
+.alert-icon-important {
+  fill: rgb(236, 117, 0);
+}
+
+.alert-icon-danger,
+.alert-icon-error,
+.alert-icon-failure,
+.alert-icon-fail,
+.alert-icon-missing,
+.alert-icon-bug {
+  fill: rgb(217, 48, 37);
+}
+
+.alert-icon-quote,
+.alert-icon-cite,
+.alert-icon-example {
+  fill: rgb(136, 136, 136);
+}
+
+/* 学术环境（原文没有，沿用主色，避免掉进默认主题的紫/绿配色） */
+.markdown-alert-theorem,
+.markdown-alert-lemma,
+.markdown-alert-corollary,
+.markdown-alert-proposition,
+.markdown-alert-definition,
+.markdown-alert-axiom,
+.markdown-alert-postulate,
+.markdown-alert-assumption,
+.markdown-alert-proof,
+.markdown-alert-remark {
+  border-left: none;
+  background: linear-gradient(120deg, rgba(32, 166, 117, 0.1) 0%, transparent 100%);
+}
+
+.markdown-alert-theorem > :not(.markdown-alert-title),
+.markdown-alert-lemma > :not(.markdown-alert-title),
+.markdown-alert-corollary > :not(.markdown-alert-title),
+.markdown-alert-proposition > :not(.markdown-alert-title),
+.markdown-alert-definition > :not(.markdown-alert-title),
+.markdown-alert-axiom > :not(.markdown-alert-title),
+.markdown-alert-postulate > :not(.markdown-alert-title),
+.markdown-alert-assumption > :not(.markdown-alert-title) {
+  font-style: normal;
+}
+
+/* ==================== 分割线：两端淡出的绿色渐变 ==================== */
+hr {
+  height: 1px;
+  margin: calc(2.5em * var(--md-block-spacing)) 0;
+  border: none;
+  background: linear-gradient(90deg, transparent, #21a675, transparent);
+  opacity: 0.5;
+  transform: none;
+  -webkit-transform: none;
+}
+
+/* ==================== 行内代码 ==================== */
+.codespan {
+  margin: 0 2px;
+  padding: 3px 5px;
+  border: none;
+  border-radius: 4px;
+  color: rgb(33, 166, 117);
+  background: rgb(250, 249, 246);
+  font-size: 0.9em;
+  font-weight: bold;
+}
+
+/* ==================== 代码块 ==================== */
+pre.code__pre,
+.hljs.code__pre {
+  border: 1px solid rgb(238, 238, 238);
+  border-radius: 6px;
+  background: rgb(250, 249, 246);
+  margin: calc(0.8em * var(--md-block-spacing)) 8px;
+}
+
+pre.code__pre > code,
+.hljs.code__pre > code {
+  padding: 0.6em 0.9em;
+  font-size: 0.875em;
+  line-height: 1.7;
+  letter-spacing: 0;
+}
+
+/* ==================== 加粗 / 斜体 / 删除线 ==================== */
+strong {
+  /* 原文的加粗是纯黑，不走主色 */
+  color: #000000;
+  font-weight: bold;
+}
+
+em {
+  font-style: italic;
+}
+
+.del {
+  color: rgb(136, 136, 136);
+  text-decoration: line-through;
+}
+
+/* ==================== 链接 ==================== */
+a {
+  color: var(--md-primary-color);
+  text-decoration: none;
+  border-bottom: 1px solid var(--md-primary-color);
+}
+
+/* ==================== 列表 ==================== */
+ul,
+ol {
+  margin: 0 8px calc(1.2em * var(--md-block-spacing));
+  padding-left: 1.2em;
+  color: #333333;
+}
+
+li {
+  display: list-item;
+  margin: calc(0.25em * var(--md-block-spacing)) 0;
+  color: #333333;
+  line-height: 1.9;
+  letter-spacing: 1.5px;
+}
+
+li::marker {
+  color: rgb(136, 136, 136);
+}
+
+/* ==================== 图片 ==================== */
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: calc(0.6em * var(--md-block-spacing)) auto;
+  border: none;
+  border-radius: 8px;
+  box-shadow: none;
+}
+
+figcaption,
+.md-figcaption {
+  text-align: center;
+  color: rgb(136, 136, 136);
+  font-size: 0.8em;
+  letter-spacing: 1px;
+}
+
+/* ==================== 表格 ==================== */
+table {
+  color: #333333;
+  letter-spacing: 1px;
+}
+
+th {
+  padding: 8px 10px;
+  border: 1px solid rgb(226, 238, 232);
+  background: rgb(240, 248, 245);
+  color: rgb(20, 120, 85);
+  font-weight: bold;
+  font-size: 0.95em;
+}
+
+td {
+  padding: 8px 10px;
+  border: 1px solid rgb(235, 235, 235);
+  color: #333333;
+  font-size: 0.95em;
+  line-height: 1.6;
+}
+
+/* ==================== 脚注 ==================== */
+p.footnotes {
+  margin: calc(0.8em * var(--md-block-spacing)) 8px;
+  color: rgb(136, 136, 136);
+  font-size: 0.85em;
+  letter-spacing: 1px;
+}
+
+/* ==================== 标记类扩展 ==================== */
+.markup-highlight {
+  padding: 2px 4px;
+  border-radius: 3px;
+  background-color: var(--md-primary-color);
+  color: #fff;
+}
+
+.markup-underline {
+  text-decoration-color: var(--md-primary-color);
+}
+
+.markup-wavyline {
+  text-decoration-color: var(--md-primary-color);
+}
+
+.markup-superscript {
+  color: #21a675;
+  font-size: 0.75em;
+}
