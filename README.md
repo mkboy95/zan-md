@@ -1,6 +1,6 @@
 <div align="center">
 
-[![doocs-md](https://cdn-doocs.oss-cn-shenzhen.aliyuncs.com/gh/doocs/md/images/logo-2.png)](https://github.com/doocs/md)
+**Zan MD** · 超赞系列 · [Zan Blog](https://github.com/mkboy95) / [Zan Apps](https://github.com/mkboy95) / [Zan MD](https://github.com/mkboy95/zan-md)
 
 </div>
 
@@ -8,7 +8,7 @@
 
 <div align="center">
 
-[![status](https://img.shields.io/github/actions/workflow/status/doocs/md/deploy.yml?style=flat-square&labelColor=564341&color=42cc23)](https://github.com/doocs/md/actions) [![node](https://img.shields.io/badge/node-%3E%3D22-42cc23?style=flat-square&labelColor=564341)](https://nodejs.org/en/about/previous-releases) [![pr](https://img.shields.io/badge/prs-welcome-42cc23?style=flat-square&labelColor=564341)](https://github.com/doocs/md/pulls) [![stars](https://img.shields.io/github/stars/doocs/md?style=flat-square&labelColor=564341&color=42cc23)](https://github.com/doocs/md/stargazers) [![forks](https://img.shields.io/github/forks/doocs/md?style=flat-square&labelColor=564341&color=42cc23)](https://github.com/doocs/md)<br> [![release](https://img.shields.io/github/v/release/doocs/md?style=flat-square&labelColor=564341&color=42cc23)](https://github.com/doocs/md/releases) [![npm](https://img.shields.io/npm/v/@doocs/md-cli?style=flat-square&labelColor=564341&color=42cc23)](https://www.npmjs.com/package/@doocs/md-cli) [![docker](https://img.shields.io/badge/docker-latest-42cc23?style=flat-square&labelColor=564341)](https://hub.docker.com/r/doocs/md)
+[![license](https://img.shields.io/badge/license-WTFPL-42cc23?style=flat-square&labelColor=564341)](./LICENSE) [![node](https://img.shields.io/badge/node-%3E%3D22-42cc23?style=flat-square&labelColor=564341)](https://nodejs.org/en/about/previous-releases) [![pr](https://img.shields.io/badge/prs-welcome-42cc23?style=flat-square&labelColor=564341)](https://github.com/mkboy95/zan-md/pulls) [![stars](https://img.shields.io/github/stars/mkboy95/zan-md?style=flat-square&labelColor=564341&color=42cc23)](https://github.com/mkboy95/zan-md/stargazers) [![forks](https://img.shields.io/github/forks/mkboy95/zan-md?style=flat-square&labelColor=564341&color=42cc23)](https://github.com/mkboy95/zan-md) [![release](https://img.shields.io/github/v/release/mkboy95/zan-md?style=flat-square&labelColor=564341&color=42cc23)](https://github.com/mkboy95/zan-md/releases)
 
 </div>
 
@@ -24,7 +24,7 @@
 
 ## 在线编辑器
 
-[https://md.doocs.org](https://md.doocs.org)
+部署到你自己的域名后即可访问（免费托管方案见 [EdgeOne 部署文档](/docs/deploy-edgeone.md)）。
 
 > 推荐使用 Chrome 浏览器以获得最佳体验。
 
