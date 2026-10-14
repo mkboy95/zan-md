@@ -4,7 +4,7 @@
 
 </div>
 
-<h1 align="center">微信 Markdown 编辑器</h1>
+<h1 align="center">超赞 Markdown 编辑器（Zan MD）</h1>
 
 <div align="center">
 
@@ -14,11 +14,13 @@
 
 中文 | [English](./README-EN.md)
 
+> **衍生声明**：本项目基于 [doocs/md](https://github.com/doocs/md) 修改而来，遵循其原始协议 **WTFPL**（DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE）。在保留原作者署名的前提下，你可自由使用、修改与再发布。详见 [NOTICE.md](./NOTICE.md)。
+
 ## 项目介绍
 
-**Markdown 文档自动即时渲染为微信图文**，让你不再为公众号排版发愁。只需掌握基本的 Markdown 语法，即可生成样式简洁、美观大方的微信图文。
+**Markdown 文档自动即时渲染为微信图文**，让你不再为公众号排版发愁。本项目在 doocs/md 的基础上增加了「维客绿」主题、EdgeOne Pages 一键部署，以及基于 GitHub 私有仓库的跨设备云同步——不管在哪台设备登录，都能看到你历史编辑过的文章。
 
-如果这个项目对你有帮助，欢迎点个 Star ⭐️，我们会持续维护与迭代。
+如果这个项目对你有帮助，欢迎点个 Star ⭐️，也欢迎提交 PR 参与共建。
 
 ## 在线编辑器
 
@@ -34,6 +36,9 @@
 
 ## 功能特性
 
+- 🎨 内置「维客绿」主题（绿丝带一级标题），顶部一键切换主题
+- 🚀 可免费部署到腾讯云 EdgeOne Pages（详见 [部署文档](/docs/deploy-edgeone.md)）
+- ☁️ 登录 GitHub 后跨设备云同步历史文章（基于私有仓库，详见 [部署文档](/docs/deploy-edgeone.md)）
 - 支持标准 Markdown 语法及数学公式（KaTeX）
 - 支持 Mermaid 图表、PlantUML、[GFM 警告块](https://github.com/orgs/community/discussions/16925)
 - 支持 Ruby 注音扩展，格式兼容 `[文字]{注音}` 与 `[文字]^(注音)`
@@ -43,6 +48,16 @@
 - 支持多种图床（GitHub、阿里云、腾讯云、七牛云、MinIO、S3、Cloudflare R2 等）
 - 支持文件导入与导出
 - 集成主流 AI 模型（DeepSeek、OpenAI、通义千问、腾讯混元、火山方舟、302.AI 等），辅助内容创作
+
+## 路线图（借鉴社区优秀开源项目）
+
+以下功能已在规划中，借鉴自 StackEdit / Vditor / Typora / MdEditor 等开源编辑器，欢迎认领实现：
+
+- **文档大纲（TOC）侧边栏**：实时提取标题、点击跳转（借鉴 Vditor / StackEdit）
+- **专注模式**：隐藏菜单与侧栏，仅保留编辑区（借鉴 Typora）
+- **模板画廊**：内置多套公众号排版模板，一键套用（借鉴 MdEditor 主题市场）
+- **图片自动上传图床**：粘贴即上传并返回链接（扩展 doocs/md 图床能力）
+- **多文档标签页**：同时编辑多篇文章（借鉴 StackEdit）
 
 ## 支持的图床服务
 

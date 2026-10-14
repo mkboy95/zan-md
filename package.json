@@ -1,17 +1,18 @@
 {
-  "name": "md",
+  "name": "zan-md",
   "type": "module",
   "version": "2.1.0",
   "private": false,
   "packageManager": "pnpm@12.6.0",
-  "description": "WeChat Markdown Editor | 一款高度简洁的微信 Markdown 编辑器：支持 Markdown 语法、自定义主题样式、内容管理、多图床、AI 助手等特性",
-  "homepage": "https://github.com/doocs/md",
+  "description": "超赞 Markdown 编辑器（Zan MD）| 基于 doocs/md 的衍生版，内置「维客绿」主题，可免费部署到 EdgeOne Pages 并支持 GitHub 云同步",
+  "author": "mkboy95",
+  "homepage": "https://github.com/mkboy95/zan-md",
   "repository": {
     "type": "git",
-    "url": "https://github.com/doocs/md"
+    "url": "https://github.com/mkboy95/zan-md"
   },
   "bugs": {
-    "url": "https://github.com/doocs/md/issues"
+    "url": "https://github.com/mkboy95/zan-md/issues"
   },
   "engines": {
     "node": ">=22.22.2"

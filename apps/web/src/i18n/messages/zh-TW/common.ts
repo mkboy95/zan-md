@@ -171,6 +171,7 @@ export default {
     menu: `選單`,
     copy: `複製`,
     style: `樣式`,
+    theme: `主題`,
     emoji: `表情`,
   },
   toast: {

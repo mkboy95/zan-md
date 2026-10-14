@@ -171,6 +171,7 @@ export default {
     menu: `Menu`,
     copy: `Copy`,
     style: `Style`,
+    theme: `Theme`,
     emoji: `Emoji`,
   },
   toast: {

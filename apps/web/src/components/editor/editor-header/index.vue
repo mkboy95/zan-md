@@ -15,6 +15,7 @@ import FormatDropdown from './FormatDropdown.vue'
 import HelpDropdown from './HelpDropdown.vue'
 import InsertDropdown from './InsertDropdown.vue'
 import StyleDropdown from './StyleDropdown.vue'
+import ThemeSwitcher from './ThemeSwitcher.vue'
 
 const emit = defineEmits([`startCopy`, `endCopy`])
 const { t } = useI18n()
@@ -273,6 +274,8 @@ function copyToWeChat() {
       </Button>
 
       <PostInfo class="hidden md:inline-flex" />
+
+      <ThemeSwitcher />
 
       <Button
         variant="outline"
