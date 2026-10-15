@@ -27,6 +27,25 @@
 
 ---
 
+## 部署前检查清单
+
+仓库里已经为你准备好的东西（无需改动）：
+
+- [x] `edgeone.json` — 构建命令、产物目录 `apps/web/dist`、Node 22.11.0、SPA 回退
+- [x] `edge-functions/api/auth/github.js` 与 `.../callback.js` — OAuth 中转函数
+- [x] `apps/web/src/services/sync/github/*` — 浏览器直连 GitHub 的同步客户端（含 11 个测试）
+- [x] 默认构建产物 base 已改为根路径 `/`（`build:h5-netlify`）
+
+还需要你准备的（三件事，约 10 分钟）：
+
+- [ ] **一个已备案的域名**（国内直连必需；没有也能先部署，只是国内访问受限）
+- [ ] **一个 GitHub OAuth App**（拿 Client ID / Client secret）— 见第二节
+- [ ] **EdgeOne 控制台里配好环境变量**（前端 6 个 `VITE_` + 函数 5 个）— 见第四节
+
+> 只想要编辑器、暂不接登录同步？那这三件都不用准备，直接导入仓库即可部署使用。
+
+---
+
 ## 一、先确认域名（这一步决定国内能不能直连）
 
 EdgeOne 免费版对**项目域名 / 部署域名**有两条限制：
@@ -66,8 +85,8 @@ EdgeOne 免费版对**项目域名 / 部署域名**有两条限制：
 
 ```json
 {
-  "name": "md",
-  "installCommand": "corepack enable && corepack pnpm install --frozen-lockfile",
+  "name": "zan-md",
+  "installCommand": "corepack enable && COREPACK_NPM_REGISTRY=https://registry.npmmirror.com corepack pnpm install --frozen-lockfile",
   "buildCommand": "corepack pnpm --filter @md/web build:h5-netlify",
   "outputDirectory": "apps/web/dist",
   "nodeVersion": "22.11.0",

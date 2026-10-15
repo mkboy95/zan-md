@@ -7,7 +7,7 @@ export default {
     jaJP: `日本語`,
   },
   meta: {
-    title: `WeChat Markdown Editor | Doocs`,
+    title: `Zan MD | WeChat Markdown Editor`,
     description: `Wechat Markdown Editor | A minimalist Markdown editor for WeChat Official Accounts`,
   },
   loader: {

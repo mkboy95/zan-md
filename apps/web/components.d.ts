@@ -191,6 +191,7 @@ declare module 'vue' {
     TelegramConfigForm: typeof import('./src/components/editor/dialogs/upload-providers/TelegramConfigForm.vue')['default']
     TemplateDialog: typeof import('./src/components/editor/dialogs/TemplateDialog.vue')['default']
     Textarea: typeof import('./src/components/ui/textarea/Textarea.vue')['default']
+    ThemeSwitcher: typeof import('./src/components/editor/editor-header/ThemeSwitcher.vue')['default']
     ToolBoxPopover: typeof import('./src/components/ai/tool-box/ToolBoxPopover.vue')['default']
     Tooltip: typeof import('./src/components/ui/tooltip/Tooltip.vue')['default']
     TooltipContent: typeof import('./src/components/ui/tooltip/TooltipContent.vue')['default']
