@@ -1,6 +1,6 @@
 {
   "name": "zan-md",
-  "installCommand": "corepack enable && COREPACK_NPM_REGISTRY=https://registry.npmmirror.com corepack pnpm install --frozen-lockfile",
+  "installCommand": "COREPACK_NPM_REGISTRY=https://registry.npmmirror.com COREPACK_ENABLE_DOWNLOAD_PROMPT=0 corepack pnpm install --frozen-lockfile || npx --yes pnpm@12.6.0 install --frozen-lockfile",
   "buildCommand": "corepack pnpm --filter @md/web build:h5-netlify",
   "outputDirectory": "apps/web/dist",
   "nodeVersion": "22.11.0",
