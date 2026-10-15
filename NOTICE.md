@@ -13,7 +13,7 @@ doocs/md 采用 **WTFPL（DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE, Version 2
 ## 署名（建议保留，非强制）
 
 - 原始作者：Doocs &lt;admin@doocs.org&gt;
-- 衍生修改：mkboy95（「维客绿」主题、EdgeOne Pages 部署、GitHub 云同步、顶部主题切换等）
+- 衍生修改：mkboy95（「超赞绿」主题、EdgeOne Pages 部署、GitHub 云同步、顶部主题切换等）
 
 ## 本仓库新增 / 修改的主要内容
 

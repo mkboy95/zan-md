@@ -415,4 +415,27 @@ export function defaultPerThemeSettings(): PerThemeSettings {
   }
 }
 
+/**
+ * Per-theme setting overrides. When a theme is selected but the user has not
+ * customised its settings yet, these values apply instead of the generic
+ * defaults, so each theme ships with its intended look.
+ *
+ * `weike` is the 超赞绿 theme; the id is kept from the upstream port so that
+ * preferences already stored under it keep working (only the label changed).
+ */
+export const perThemeSettingOverrides: Partial<Record<ThemeName, Partial<PerThemeSettings>>> = {
+  weike: {
+    primaryColor: `#21A675`,
+    fontFamily: fontFamilyOptions[1].value,
+    lineHeight: `1.9`,
+  },
+}
+
+/** Settings a theme starts from: generic defaults plus its own overrides. */
+export function perThemeDefaultSettings(theme: ThemeName): PerThemeSettings {
+  const base = defaultPerThemeSettings()
+  const overrides = perThemeSettingOverrides[theme]
+  return overrides ? { ...base, ...overrides } : base
+}
+
 export type PerThemeSettingsMap = Partial<Record<ThemeName, PerThemeSettings>>

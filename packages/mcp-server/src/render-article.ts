@@ -7,6 +7,7 @@ import { initRenderer } from '@md/core/renderer'
 import { processCSS } from '@md/core/theme/cssProcessor'
 import { generateCSSVariables, generateHeadingStyles } from '@md/core/theme/cssVariables'
 import { postProcessHtml, renderMarkdown } from '@md/core/utils'
+import { perThemeSettingOverrides } from '@md/shared/configs'
 import {
   assertAllowedCodeBlockThemeUrl,
   defaultRenderOptions,
@@ -108,10 +109,16 @@ function normalizeHeadingStyles(input?: HeadingStylesInput): HeadingStyles | und
 
 export async function buildRenderedOutput(input: RenderMarkdownInput) {
   const theme = input.theme ?? defaultRenderOptions.theme
-  const primaryColor = input.primaryColor ?? defaultRenderOptions.primaryColor
-  const fontFamily = input.fontFamily ?? defaultRenderOptions.fontFamily
+  // Themes with their own defaults (超赞绿: green primary colour, serif font)
+  // apply those unless the caller passes a value explicitly. Fields the theme
+  // does not override keep defaultRenderOptions.
+  const themeOverrides = perThemeSettingOverrides[theme] ?? {}
+  const pick = <T>(inputValue: T | undefined, overrideValue: T | undefined, genericValue: T): T =>
+    inputValue ?? overrideValue ?? genericValue
+  const primaryColor = pick(input.primaryColor, themeOverrides.primaryColor, defaultRenderOptions.primaryColor)
+  const fontFamily = pick(input.fontFamily, themeOverrides.fontFamily, defaultRenderOptions.fontFamily)
+  const lineHeight = pick(input.lineHeight, themeOverrides.lineHeight, defaultRenderOptions.lineHeight)
   const fontSize = input.fontSize ?? defaultRenderOptions.fontSize
-  const lineHeight = input.lineHeight ?? defaultRenderOptions.lineHeight
   const blockSpacing = input.blockSpacing ?? defaultRenderOptions.blockSpacing
   const linkColor = input.linkColor ?? defaultRenderOptions.linkColor
   const blockquoteBackground = input.blockquoteBackground ?? defaultRenderOptions.blockquoteBackground

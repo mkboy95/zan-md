@@ -25,8 +25,10 @@ export const themeOptionsMap = {
     value: `simple`,
     desc: `@okooo5km`,
   },
+  // 超赞绿。id 沿用上游移植时的 `weike`：本地存储与云同步里的主题偏好都按 id 落盘，
+  // 改 id 会让已选中的偏好失效，所以只改展示名。
   weike: {
-    label: `维客绿`,
+    label: `超赞绿`,
     value: `weike`,
     desc: `绿丝带标题`,
   },
@@ -49,7 +51,7 @@ export const themeOptions: IConfigOption<ThemeName>[] = [
     desc: `@okooo5km`,
   },
   {
-    label: `维客绿`,
+    label: `超赞绿`,
     value: `weike`,
     desc: `绿丝带标题`,
   },

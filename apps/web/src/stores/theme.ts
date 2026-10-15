@@ -1,6 +1,6 @@
 import type { HeadingLevel, HeadingStyles, HeadingStyleType, PerThemeSettings, PerThemeSettingsMap, ThemeName } from '@md/shared/configs'
 import { applyTheme } from '@md/core/theme'
-import { defaultPerThemeSettings, defaultStyleConfig, widthOptions } from '@md/shared/configs'
+import { defaultStyleConfig, perThemeDefaultSettings, widthOptions } from '@md/shared/configs'
 import { isMarketplaceThemeKey } from '@md/shared/types'
 import { store } from '@/storage'
 import { addPrefix } from '@/storage/prefix'
@@ -22,7 +22,9 @@ export const useThemeStore = defineStore(`theme`, () => {
   )
 
   const currentSettings = computed<PerThemeSettings>(() => {
-    return themeSettings.value[theme.value] ?? defaultPerThemeSettings()
+    // Uncustomised themes start from their own defaults (e.g. 超赞绿 ships a
+    // green primary colour), not the generic ones.
+    return themeSettings.value[theme.value] ?? perThemeDefaultSettings(theme.value)
   })
 
   const primaryColor = computed<string>({
@@ -84,7 +86,7 @@ export const useThemeStore = defineStore(`theme`, () => {
 
   function setThemeField<K extends keyof PerThemeSettings>(key: K, value: PerThemeSettings[K]) {
     const t = theme.value
-    const existing = themeSettings.value[t] ?? defaultPerThemeSettings()
+    const existing = themeSettings.value[t] ?? perThemeDefaultSettings(t)
     themeSettings.value = {
       ...themeSettings.value,
       [t]: { ...existing, [key]: value },
@@ -110,7 +112,7 @@ export const useThemeStore = defineStore(`theme`, () => {
   const resetStyle = () => {
     themeSettings.value = {
       ...themeSettings.value,
-      [theme.value]: defaultPerThemeSettings(),
+      [theme.value]: perThemeDefaultSettings(theme.value),
     }
     isCiteStatus.value = defaultStyleConfig.isCiteStatus
     isCountStatus.value = defaultStyleConfig.isCountStatus

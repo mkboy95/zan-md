@@ -18,7 +18,7 @@
 
 ## 项目介绍
 
-**Markdown 文档自动即时渲染为微信图文**，让你不再为公众号排版发愁。本项目在 doocs/md 的基础上增加了「维客绿」主题、EdgeOne Pages 一键部署，以及基于 GitHub 私有仓库的跨设备云同步——不管在哪台设备登录，都能看到你历史编辑过的文章。
+**Markdown 文档自动即时渲染为微信图文**，让你不再为公众号排版发愁。本项目在 doocs/md 的基础上增加了「超赞绿」主题、EdgeOne Pages 一键部署，以及基于 GitHub 私有仓库的跨设备云同步——不管在哪台设备登录，都能看到你历史编辑过的文章。
 
 如果这个项目对你有帮助，欢迎点个 Star ⭐️，也欢迎提交 PR 参与共建。
 
@@ -36,7 +36,7 @@
 
 ## 功能特性
 
-- 🎨 内置「维客绿」主题（绿丝带一级标题），顶部一键切换主题
+- 🎨 内置「超赞绿」主题（绿丝带一级标题），顶部一键切换主题
 - 🚀 可免费部署到腾讯云 EdgeOne Pages（详见 [部署文档](/docs/deploy-edgeone.md)）
 - ☁️ 登录 GitHub 后跨设备云同步历史文章（基于私有仓库，详见 [部署文档](/docs/deploy-edgeone.md)）
 - 支持标准 Markdown 语法及数学公式（KaTeX）
@@ -163,11 +163,11 @@ docker run -d -p 8080:80 doocs/md:latest
 
 完整步骤见 [docs/deploy-edgeone.md](docs/deploy-edgeone.md)。
 
-## 内置主题：维客绿
+## 内置主题：超赞绿
 
-除默认主题外，本仓库内置了「维客绿」主题（`packages/shared/src/configs/theme-css/weike.css`）：
+除默认主题外，本仓库内置了「超赞绿」主题（`packages/shared/src/configs/theme-css/weike.css`）：
 绿丝带一级标题（绿底白字 + 米色斜切角 + 底部绿线）、宽字距正文、绿色渐变分割线。
-在编辑器右上角的样式面板里选择「维客绿」即可。
+在编辑器右上角的样式面板里选择「超赞绿」即可。
 
 ## Star 趋势
 

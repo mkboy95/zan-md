@@ -8,7 +8,7 @@ export default {
   },
   meta: {
     title: `超赞 Markdown 编辑器 | Zan MD`,
-    description: `Zan MD | 一款高度简洁的微信 Markdown 编辑器，内置「维客绿」主题，支持 EdgeOne 一键部署与跨设备云同步`,
+    description: `Zan MD | 一款高度简洁的微信 Markdown 编辑器，内置「超赞绿」主题，支持 EdgeOne 一键部署与跨设备云同步`,
   },
   loader: {
     tagline: `致力于让 Markdown 编辑更简单`,
@@ -204,7 +204,7 @@ export default {
       default: { label: `经典`, desc: `` },
       grace: { label: `优雅`, desc: `{'@'}brzhang` },
       simple: { label: `简洁`, desc: `{'@'}okooo5km` },
-      weike: { label: `维客绿`, desc: `绿丝带标题` },
+      weike: { label: `超赞绿`, desc: `绿丝带标题` },
     },
     fontFamily: {
       sansSerif: { label: `无衬线`, desc: `字体123Abc` },

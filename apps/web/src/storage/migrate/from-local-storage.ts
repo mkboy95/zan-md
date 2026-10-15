@@ -2,7 +2,7 @@ import type { PerThemeSettings, PerThemeSettingsMap, ThemeName } from '@md/share
 
 import type { IndexedDBEngine } from '@/storage/engines/indexed-db'
 import type { Post } from '@/types/post'
-import { defaultPerThemeSettings, defaultStyleConfig } from '@md/shared/configs'
+import { defaultStyleConfig, perThemeDefaultSettings } from '@md/shared/configs'
 import { uuidv4 } from '@md/shared/utils/uuid'
 import { normalizePostHistory } from '@/lib/format/datetime'
 import { getDatabase } from '@/storage/db'
@@ -135,7 +135,7 @@ export async function migrateLegacyThemeSettings(engine: IndexedDBEngine): Promi
     ? parseStoredValue(existingMapRaw, {} as PerThemeSettingsMap)
     : {}
 
-  const defaults = defaultPerThemeSettings()
+  const defaults = perThemeDefaultSettings(initialTheme)
   const settings: PerThemeSettings = { ...existingMap[initialTheme] ?? defaults }
 
   const legacyFont = legacyGet(`fonts`)

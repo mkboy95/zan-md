@@ -29,14 +29,15 @@ export const renderMarkdownInputSchema = z.object({
     .enum([`default`, `grace`, `simple`, `weike`])
     .optional()
     .default(`default`)
-    .describe(`Visual theme to apply. One of: default (经典), grace (优雅), simple (简洁), weike (维客绿).`),
+    .describe(`Visual theme to apply. One of: default (经典), grace (优雅), simple (简洁), weike (超赞绿).`),
   primaryColor: z
     .string()
     .regex(/^#[0-9A-F]{6}$/i, `Must be a valid 6-digit hex color`)
     .optional()
-    .default(`#0F4C81`)
     .describe(
-      `Primary accent color (hex). Use list_colors to see presets. Default: #0F4C81 (经典蓝). `
+      `Primary accent color (hex). Use list_colors to see presets. `
+      + `Omit to use the theme's own colour (e.g. #21A675 for weike/超赞绿); `
+      + `generic default is #0F4C81 (经典蓝). `
       + `This color is applied via CSS variable --md-primary-color and affects headings, links, alerts, etc.`,
     ),
   fontFamily: z
@@ -408,7 +409,7 @@ server.registerTool(
   () => jsonText({
     options: [
       { name: `theme`, type: `'default' | 'grace' | 'simple' | 'weike'`, default: `default`, description: `Visual theme.` },
-      { name: `primaryColor`, type: `string (hex)`, default: `#0F4C81`, description: `Primary accent color via --md-primary-color.` },
+      { name: `primaryColor`, type: `string (hex)`, default: `theme colour (e.g. #21A675 for weike)`, description: `Primary accent color via --md-primary-color. Omit to use the theme's own colour.` },
       { name: `fontFamily`, type: `string`, default: `system sans-serif stack`, description: `CSS font-family. See list_fonts.` },
       { name: `fontSize`, type: `string (px)`, default: `16px`, description: `Base font size. See list_font_sizes.` },
       { name: `lineHeight`, type: `string (unitless)`, default: `1.75`, description: `Body line height. See list_spacing_options.` },

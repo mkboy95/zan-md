@@ -25,7 +25,7 @@ export const themeOptions = [
   { value: `default`, label: `经典`, desc: `` },
   { value: `grace`, label: `优雅`, desc: `@brzhang` },
   { value: `simple`, label: `简洁`, desc: `@okooo5km` },
-  { value: `weike`, label: `维客绿`, desc: `绿丝带标题` },
+  { value: `weike`, label: `超赞绿`, desc: `绿丝带标题` },
 ] as const
 
 export const fontFamilyOptions = [
