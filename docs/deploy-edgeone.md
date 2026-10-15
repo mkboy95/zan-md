@@ -31,7 +31,7 @@
 
 仓库里已经为你准备好的东西（无需改动）：
 
-- [x] `edgeone.json` — 构建命令、产物目录 `apps/web/dist`、Node 22.22.2、SPA 回退
+- [x] `edgeone.json` — 构建命令、产物目录 `apps/web/dist`、Node 22.21.1、SPA 回退
 - [x] `edge-functions/api/auth/github.js` 与 `.../callback.js` — OAuth 中转函数
 - [x] `apps/web/src/services/sync/github/*` — 浏览器直连 GitHub 的同步客户端（含 11 个测试）
 - [x] 默认构建产物 base 已改为根路径 `/`（`build:h5-netlify`）
@@ -92,7 +92,7 @@ EdgeOne 免费版对**项目域名 / 部署域名**有两条限制：
   "installCommand": "npm_config_registry=https://registry.npmmirror.com npx --yes pnpm@12.6.0 install --frozen-lockfile",
   "buildCommand": "npx --yes pnpm@12.6.0 --filter @md/web build:h5-netlify",
   "outputDirectory": "apps/web/dist",
-  "nodeVersion": "22.22.2",
+  "nodeVersion": "22.21.1",
   "rewrites": [{ "source": "/*", "destination": "/index.html" }]
 }
 ```
@@ -110,11 +110,18 @@ EdgeOne 免费版对**项目域名 / 部署域名**有两条限制：
 - **`rewrites` 那条是 SPA 回退**。EdgeOne 会把它识别为 SPA fallback，仅在未命中静态资源或函数时
   才返回 `index.html`，不会抢占 `/api/*`。
 
-> ⚠️ **Node 版本必须 ≥ 22.12，`edgeone.json` 固定用 22.22.2。** `vite@8` 的 engines 是
-> `^20.19.0 || >=22.12.0`，根 `package.json` 也要求 `>=22.22.2`。容器里若跑 22.11.0，
-> **安装阶段不报错**（pnpm 默认不强制 engines，只警告），但 `vite build` 一启动就会以
-> 「Node.js version >=22.12.0 is required」退出——属于最容易被忽略的延迟雷。
-> `edgeone.json` 的 `nodeVersion` 决定容器版本；控制台里若另有 Node 版本选项，也要同步改成 22.22.2。
+> ⚠️ **Node 版本只能用 EdgeOne 预装列表里的版本，且必须 ≥ 22.12。** 官方预装列表：
+> `14.21.3 / 16.20.2 / 18.20.4 / 20.18.0 / 22.11.0 / 22.17.1 / 22.21.1 / 24.5.0 / 24.11.0`。
+> 本项目固定选 **22.21.1**——预装列表里唯一满足 `vite@8` engines（`^20.19.0 || >=22.12.0`）的 22.x。
+> 填列表外的版本（如 22.22.2）会直接失败：`Switching error: Failed to switch to Node.js 22.22.2`。
+>
+> **两个地方都要是 22.21.1**，它们是两套独立机制，改一个不管另一个：
+> 1. `edgeone.json` 的 `nodeVersion`（会覆盖控制台设置）
+> 2. 仓库根目录的 `.nvmrc`——**上游 doocs/md 自带这个文件，内容同样会触发版本切换**，很容易漏改。
+>    控制台里也可去 Project settings → Node.js Version 同步选 22.21.1。
+>
+> 根 `package.json` 的 `engines.node` 相应放宽到 `>=22.12.0`（预装环境满足不了 22.22.2；
+> pnpm 默认只警告不阻断，但日志里会有一条 Unsupported engine 提示，属正常）。
 >
 > 另外**不要用 `corepack enable`**：构建容器没有写 `/usr/local/bin` 的权限，会直接报
 > `EACCES: permission denied, symlink .../yarnpkg.js -> '/usr/local/bin/yarnpkg'`。

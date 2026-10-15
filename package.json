@@ -15,7 +15,7 @@
     "url": "https://github.com/mkboy95/zan-md/issues"
   },
   "engines": {
-    "node": ">=22.22.2"
+    "node": ">=22.12.0"
   },
   "scripts": {
     "start": "pnpm web dev",
