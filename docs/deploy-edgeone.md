@@ -31,7 +31,7 @@
 
 仓库里已经为你准备好的东西（无需改动）：
 
-- [x] `edgeone.json` — 构建命令、产物目录 `apps/web/dist`、Node 22.11.0、SPA 回退
+- [x] `edgeone.json` — 构建命令、产物目录 `apps/web/dist`、Node 22.22.2、SPA 回退
 - [x] `edge-functions/api/auth/github.js` 与 `.../callback.js` — OAuth 中转函数
 - [x] `apps/web/src/services/sync/github/*` — 浏览器直连 GitHub 的同步客户端（含 11 个测试）
 - [x] 默认构建产物 base 已改为根路径 `/`（`build:h5-netlify`）
@@ -84,7 +84,7 @@ EdgeOne 免费版对**项目域名 / 部署域名**有两条限制：
 2. 点 **创建项目** → 选 **连接 Git 仓库 / 从 Git 导入**（不要选「从模板开始」）。
 3. 选择 **GitHub**，按页面提示完成授权（点 `Authorize EO Pages` / `Install`），允许访问你的仓库。
 4. 在仓库列表里选中 `mkboy95/zan-md`。
-5. 构建配置会读取仓库根目录的 [`edgeone.json`](../edgeone.json)，无需手填：
+5. 构建配置由仓库根目录的 [`edgeone.json`](../edgeone.json) 在**构建时**提供：
 
 ```json
 {
@@ -92,13 +92,16 @@ EdgeOne 免费版对**项目域名 / 部署域名**有两条限制：
   "installCommand": "npm_config_registry=https://registry.npmmirror.com npx --yes pnpm@12.6.0 install --frozen-lockfile",
   "buildCommand": "npx --yes pnpm@12.6.0 --filter @md/web build:h5-netlify",
   "outputDirectory": "apps/web/dist",
-  "nodeVersion": "22.11.0",
+  "nodeVersion": "22.22.2",
   "rewrites": [{ "source": "/*", "destination": "/index.html" }]
 }
 ```
 
-> 如果控制台里看到的构建命令和上面不一样（例如带 `corepack enable`），说明项目是早期创建的、
-> 配置被固化了。请按上表**手动覆盖**控制台中的「安装命令」和「构建命令」，再重新部署。
+> ⚠️ **控制台表单不会自动识别本项目，必须手填。** 这是 pnpm monorepo：根目录没有 `build` 脚本、
+> 没有任何框架配置文件（vite 配置在 `apps/web/` 里），EdgeOne 的框架探测器只认标准单应用项目，
+> 所以导入后「构建设置」是空的（框架预设 Other、命令框只有占位符）。
+> 请把上表三个值**手动填进控制台**：安装命令 / 构建命令 / 输出目录（根目录保持 `./`）。
+> 表单填了就以表单为准；不填则构建时读 `edgeone.json`——两条路内容一致，填表单是为了确定性。
 
 两个容易踩的点，已经在这里处理掉了：
 
@@ -107,9 +110,11 @@ EdgeOne 免费版对**项目域名 / 部署域名**有两条限制：
 - **`rewrites` 那条是 SPA 回退**。EdgeOne 会把它识别为 SPA fallback，仅在未命中静态资源或函数时
   才返回 `index.html`，不会抢占 `/api/*`。
 
-> ⚠️ **EdgeOne 只在创建项目时读取一次 `edgeone.json`，之后不会自动跟随仓库更新。**
-> 也就是说：建好项目后再改 `edgeone.json` 并推送，线上**不会**变。要改构建命令 / 输出目录 /
-> Node 版本，必须去项目设置里手动改，然后点「重新部署」。
+> ⚠️ **Node 版本必须 ≥ 22.12，`edgeone.json` 固定用 22.22.2。** `vite@8` 的 engines 是
+> `^20.19.0 || >=22.12.0`，根 `package.json` 也要求 `>=22.22.2`。容器里若跑 22.11.0，
+> **安装阶段不报错**（pnpm 默认不强制 engines，只警告），但 `vite build` 一启动就会以
+> 「Node.js version >=22.12.0 is required」退出——属于最容易被忽略的延迟雷。
+> `edgeone.json` 的 `nodeVersion` 决定容器版本；控制台里若另有 Node 版本选项，也要同步改成 22.22.2。
 >
 > 另外**不要用 `corepack enable`**：构建容器没有写 `/usr/local/bin` 的权限，会直接报
 > `EACCES: permission denied, symlink .../yarnpkg.js -> '/usr/local/bin/yarnpkg'`。

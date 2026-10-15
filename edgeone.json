@@ -3,7 +3,7 @@
   "installCommand": "npm_config_registry=https://registry.npmmirror.com npx --yes pnpm@12.6.0 install --frozen-lockfile",
   "buildCommand": "npx --yes pnpm@12.6.0 --filter @md/web build:h5-netlify",
   "outputDirectory": "apps/web/dist",
-  "nodeVersion": "22.11.0",
+  "nodeVersion": "22.22.2",
   "rewrites": [
     {
       "source": "/*",
