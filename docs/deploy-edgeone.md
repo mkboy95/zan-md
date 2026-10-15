@@ -80,8 +80,11 @@ EdgeOne 免费版对**项目域名 / 部署域名**有两条限制：
 
 ## 三、在 EdgeOne Pages 创建项目
 
-1. 进入 EdgeOne 控制台 → **Pages / Makers** → 新建项目 → **导入 Git 仓库**，选择本仓库。
-2. 构建配置会读取仓库根目录的 [`edgeone.json`](../edgeone.json)，无需手填：
+1. 进入 EdgeOne Pages 控制台：<https://pages.edgeone.ai/>（或腾讯云控制台 → EdgeOne → Pages）。
+2. 点 **创建项目** → 选 **连接 Git 仓库 / 从 Git 导入**（不要选「从模板开始」）。
+3. 选择 **GitHub**，按页面提示完成授权（点 `Authorize EO Pages` / `Install`），允许访问你的仓库。
+4. 在仓库列表里选中 `mkboy95/zan-md`。
+5. 构建配置会读取仓库根目录的 [`edgeone.json`](../edgeone.json)，无需手填：
 
 ```json
 {
