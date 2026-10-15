@@ -89,13 +89,16 @@ EdgeOne 免费版对**项目域名 / 部署域名**有两条限制：
 ```json
 {
   "name": "zan-md",
-  "installCommand": "corepack enable && COREPACK_NPM_REGISTRY=https://registry.npmmirror.com corepack pnpm install --frozen-lockfile",
-  "buildCommand": "corepack pnpm --filter @md/web build:h5-netlify",
+  "installCommand": "npm_config_registry=https://registry.npmmirror.com npx --yes pnpm@12.6.0 install --frozen-lockfile",
+  "buildCommand": "npx --yes pnpm@12.6.0 --filter @md/web build:h5-netlify",
   "outputDirectory": "apps/web/dist",
   "nodeVersion": "22.11.0",
   "rewrites": [{ "source": "/*", "destination": "/index.html" }]
 }
 ```
+
+> 如果控制台里看到的构建命令和上面不一样（例如带 `corepack enable`），说明项目是早期创建的、
+> 配置被固化了。请按上表**手动覆盖**控制台中的「安装命令」和「构建命令」，再重新部署。
 
 两个容易踩的点，已经在这里处理掉了：
 
@@ -103,6 +106,14 @@ EdgeOne 免费版对**项目域名 / 部署域名**有两条限制：
   （`vite.config.ts` 里 `base` 默认值），根路径托管会全部 404；`SERVER_ENV=NETLIFY` 会把 base 改成 `/`。
 - **`rewrites` 那条是 SPA 回退**。EdgeOne 会把它识别为 SPA fallback，仅在未命中静态资源或函数时
   才返回 `index.html`，不会抢占 `/api/*`。
+
+> ⚠️ **EdgeOne 只在创建项目时读取一次 `edgeone.json`，之后不会自动跟随仓库更新。**
+> 也就是说：建好项目后再改 `edgeone.json` 并推送，线上**不会**变。要改构建命令 / 输出目录 /
+> Node 版本，必须去项目设置里手动改，然后点「重新部署」。
+>
+> 另外**不要用 `corepack enable`**：构建容器没有写 `/usr/local/bin` 的权限，会直接报
+> `EACCES: permission denied, symlink .../yarnpkg.js -> '/usr/local/bin/yarnpkg'`。
+> 本项目的命令用 `npx --yes pnpm@12.6.0` 直接调包管理器，不需要 `enable`，也不依赖全局安装。
 
 3. 加速区域：有备案域名选「中国大陆可用区」或「全球可用区（含中国大陆）」。
 
