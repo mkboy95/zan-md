@@ -1,0 +1,351 @@
+/**
+ * MD 蔷薇紫主题 — 优雅柔紫
+ *
+ * 设计语言：酒红紫为主色，柔和不刺眼；细线、圆角、留白，
+ * 走「安静的高级感」路线，与多巴胺的高饱和形成对照。
+ * 紫色系是同类编辑器里验证过的热门方向（mdnice 蔷薇紫一系的用色）。
+ *
+ * 微信兼容约定（与其它内置主题一致）：
+ *   - 不用 color-mix()，一律 rgba 字面量
+ *   - 间距乘 var(--md-block-spacing)，跟随「段间距」设置
+ *   - 字号 calc(var(--md-font-size) * N)
+ */
+
+/* ==================== H1：紫底白字 + 通栏细线 ====================
+ * 三段式结构：h1 block 化画通栏底线，丝带画在内层 span 上。
+ */
+h1 {
+  display: block;
+  box-sizing: border-box;
+  margin: calc(2.2em * var(--md-block-spacing)) 0 calc(1.2em * var(--md-block-spacing));
+  padding: 0;
+  border-bottom: 2px solid #a84478;
+  background: transparent;
+  font-size: calc(var(--md-font-size) * 1.3);
+  font-weight: 700;
+  line-height: 0;
+  text-align: left;
+}
+
+h1 > span {
+  display: inline-block;
+  box-sizing: border-box;
+  max-width: 100%;
+  padding: 0.32em 0.9em;
+  border-radius: 6px;
+  color: #ffffff;
+  background-color: #a84478;
+  background-image: linear-gradient(135deg, #b8558a 0%, #93386a 100%);
+  box-shadow: 0 3px 10px rgba(168, 68, 120, 0.22);
+  font-size: calc(var(--md-font-size) * 1.2);
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.3px;
+}
+
+/* ==================== H2：主色字 + 淡紫底 ==================== */
+h2 {
+  display: block;
+  margin: calc(2em * var(--md-block-spacing)) 0 calc(0.9em * var(--md-block-spacing));
+  padding: 0.3em 0.8em;
+  border-left: 4px solid #a84478;
+  border-radius: 0 8px 8px 0;
+  color: #8e3a67;
+  background: rgba(168, 68, 120, 0.07);
+  font-size: calc(var(--md-font-size) * 1.22);
+  font-weight: 700;
+  line-height: 1.5;
+  text-align: left;
+}
+
+/* ==================== H3：主色字 + 短竖条 ==================== */
+h3 {
+  margin: calc(1.6em * var(--md-block-spacing)) 0 calc(0.6em * var(--md-block-spacing));
+  padding: 0 0 0 12px;
+  border-left: 3px solid #c76b9c;
+  color: #8e3a67;
+  background: transparent;
+  font-size: calc(var(--md-font-size) * 1.125);
+  font-weight: 700;
+  line-height: 1.5;
+  text-align: left;
+}
+
+/* ==================== H4 / H5 / H6 ==================== */
+h4 {
+  margin: calc(1.4em * var(--md-block-spacing)) 0 calc(0.5em * var(--md-block-spacing));
+  color: #a84478;
+  font-size: var(--md-font-size);
+  font-weight: 700;
+  line-height: 1.6;
+  text-align: left;
+}
+
+h5,
+h6 {
+  margin: calc(1.2em * var(--md-block-spacing)) 0 calc(0.5em * var(--md-block-spacing));
+  color: #a84478;
+  font-size: var(--md-font-size);
+  font-weight: 700;
+  line-height: 1.6;
+  text-align: left;
+}
+
+/* ==================== 正文 ==================== */
+p {
+  margin: calc(1.1em * var(--md-block-spacing)) 8px;
+  color: #4a3f47;
+  font-size: 1em;
+  line-height: 1.85;
+  letter-spacing: 0.4px;
+}
+
+/* ==================== 引用：淡紫底 ==================== */
+blockquote {
+  margin: 0 8px calc(1.2em * var(--md-block-spacing));
+  padding: 12px 16px;
+  border-left: 3px solid #c76b9c;
+  border-radius: 0 10px 10px 0;
+  background: rgba(168, 68, 120, 0.06);
+  font-style: normal;
+  color: #6b5566;
+}
+
+blockquote > p {
+  margin: 4px 0;
+  color: #6b5566;
+  font-size: 0.96em;
+  line-height: 1.8;
+}
+
+/* ==================== 提示框：柔紫一色 ==================== */
+.markdown-alert-note,
+.markdown-alert-tip,
+.markdown-alert-info,
+.markdown-alert-important,
+.markdown-alert-warning,
+.markdown-alert-caution,
+.markdown-alert-abstract,
+.markdown-alert-summary,
+.markdown-alert-tldr,
+.markdown-alert-todo,
+.markdown-alert-success,
+.markdown-alert-done,
+.markdown-alert-question,
+.markdown-alert-help,
+.markdown-alert-faq,
+.markdown-alert-failure,
+.markdown-alert-fail,
+.markdown-alert-missing,
+.markdown-alert-danger,
+.markdown-alert-error,
+.markdown-alert-bug,
+.markdown-alert-example,
+.markdown-alert-quote,
+.markdown-alert-cite {
+  margin: 0 8px calc(1.2em * var(--md-block-spacing));
+  padding: 12px 16px;
+  border-left: none;
+  border-radius: 10px;
+  background: rgba(168, 68, 120, 0.07);
+  font-style: normal;
+}
+
+.alert-title-note,
+.alert-title-tip,
+.alert-title-info,
+.alert-title-important,
+.alert-title-warning,
+.alert-title-caution,
+.alert-title-abstract,
+.alert-title-summary,
+.alert-title-tldr,
+.alert-title-todo,
+.alert-title-success,
+.alert-title-done,
+.alert-title-question,
+.alert-title-help,
+.alert-title-faq,
+.alert-title-failure,
+.alert-title-fail,
+.alert-title-missing,
+.alert-title-danger,
+.alert-title-error,
+.alert-title-bug,
+.alert-title-example,
+.alert-title-quote,
+.alert-title-cite {
+  color: #8e3a67;
+}
+
+.alert-icon-note,
+.alert-icon-tip,
+.alert-icon-info,
+.alert-icon-important,
+.alert-icon-warning,
+.alert-icon-caution,
+.alert-icon-abstract,
+.alert-icon-summary,
+.alert-icon-tldr,
+.alert-icon-todo,
+.alert-icon-success,
+.alert-icon-done,
+.alert-icon-question,
+.alert-icon-help,
+.alert-icon-faq,
+.alert-icon-failure,
+.alert-icon-fail,
+.alert-icon-missing,
+.alert-icon-danger,
+.alert-icon-error,
+.alert-icon-bug,
+.alert-icon-example,
+.alert-icon-quote,
+.alert-icon-cite {
+  fill: #a84478;
+}
+
+/* ==================== 分割线：两端淡出的紫线 ==================== */
+hr {
+  height: 1px;
+  margin: calc(2.5em * var(--md-block-spacing)) 0;
+  border: none;
+  background: linear-gradient(90deg, transparent, #c76b9c 50%, transparent);
+  opacity: 0.6;
+  transform: none;
+  -webkit-transform: none;
+}
+
+/* ==================== 行内代码 ==================== */
+.codespan {
+  margin: 0 2px;
+  padding: 3px 6px;
+  border: none;
+  border-radius: 6px;
+  color: #8e3a67;
+  background: rgba(168, 68, 120, 0.09);
+  font-size: 0.9em;
+  font-weight: 600;
+}
+
+/* ==================== 代码块 ==================== */
+pre.code__pre,
+.hljs.code__pre {
+  margin: calc(0.8em * var(--md-block-spacing)) 8px;
+  padding: 0;
+  border: 1px solid rgba(168, 68, 120, 0.18);
+  border-radius: 10px;
+  background: #fdfafc;
+}
+
+pre.code__pre > code,
+.hljs.code__pre > code {
+  padding: 0.7em 0.9em;
+  font-size: 0.875em;
+  line-height: 1.7;
+}
+
+/* ==================== 加粗 / 斜体 / 删除线 ==================== */
+strong {
+  color: #8e3a67;
+  font-weight: 700;
+}
+
+em {
+  font-style: italic;
+  color: #b8558a;
+}
+
+.del {
+  color: #b3a6b0;
+  text-decoration: line-through;
+}
+
+/* ==================== 链接 ==================== */
+a {
+  color: #a84478;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(168, 68, 120, 0.35);
+}
+
+/* ==================== 列表 ==================== */
+ul,
+ol {
+  margin: 0 8px calc(1.2em * var(--md-block-spacing));
+  padding-left: 1.3em;
+  color: #4a3f47;
+}
+
+li {
+  margin: calc(0.3em * var(--md-block-spacing)) 0;
+  color: #4a3f47;
+  line-height: 1.85;
+}
+
+li::marker {
+  color: #c76b9c;
+}
+
+/* ==================== 图片 ==================== */
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: calc(0.6em * var(--md-block-spacing)) auto;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 3px 12px rgba(168, 68, 120, 0.12);
+}
+
+figcaption,
+.md-figcaption {
+  text-align: center;
+  color: #b3a6b0;
+  font-size: 0.8em;
+  letter-spacing: 0.5px;
+}
+
+/* ==================== 表格 ==================== */
+table {
+  color: #4a3f47;
+}
+
+th {
+  padding: 9px 12px;
+  border: 1px solid rgba(168, 68, 120, 0.2);
+  background: rgba(168, 68, 120, 0.08);
+  color: #8e3a67;
+  font-weight: 700;
+  font-size: 0.95em;
+}
+
+td {
+  padding: 9px 12px;
+  border: 1px solid #f0e6ec;
+  color: #4a3f47;
+  font-size: 0.95em;
+  line-height: 1.6;
+}
+
+/* ==================== 脚注 ==================== */
+p.footnotes {
+  margin: calc(0.8em * var(--md-block-spacing)) 8px;
+  color: #b3a6b0;
+  font-size: 0.85em;
+}
+
+/* ==================== 标记类扩展 ==================== */
+.markup-highlight {
+  padding: 2px 5px;
+  border-radius: 4px;
+  background-color: #a84478;
+  color: #fff;
+}
+
+.markup-underline {
+  text-decoration-color: #c76b9c;
+}
+
+.markup-wavyline {
+  text-decoration-color: #c76b9c;
+}

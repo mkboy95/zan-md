@@ -205,6 +205,11 @@ export default {
       grace: { label: `Grace`, desc: `{'@'}brzhang` },
       simple: { label: `シンプル`, desc: `{'@'}okooo5km` },
       weike: { label: `ザングリーン`, desc: `リボン見出し` },
+      dopamine: { label: `ドーパミン`, desc: `高彩度のぶつかり合い` },
+      rose: { label: `ローズバイオレット`, desc: `エレガントな柔らか紫` },
+      orange: { label: `オレンジハート`, desc: `暖かく活力ある` },
+      ink: { label: `インクブラック`, desc: `白黒ミニマル` },
+      safflower: { label: `ヤマブキ`, desc: `暖かい黄金色` },
     },
     fontFamily: {
       sansSerif: { label: `ゴシック`, desc: `Font123Abc` },

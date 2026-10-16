@@ -429,6 +429,32 @@ export const perThemeSettingOverrides: Partial<Record<ThemeName, Partial<PerThem
     fontFamily: fontFamilyOptions[1].value,
     lineHeight: `1.9`,
   },
+  // 新增模板主题：各自的设计主色（与 CSS 文件里的强调色一致）
+  dopamine: {
+    primaryColor: `#7C4DFF`,
+    fontFamily: fontFamilyOptions[0].value,
+    lineHeight: `1.85`,
+  },
+  rose: {
+    primaryColor: `#A84478`,
+    fontFamily: fontFamilyOptions[0].value,
+    lineHeight: `1.85`,
+  },
+  orange: {
+    primaryColor: `#E8703A`,
+    fontFamily: fontFamilyOptions[0].value,
+    lineHeight: `1.85`,
+  },
+  ink: {
+    primaryColor: `#1A1A1A`,
+    fontFamily: fontFamilyOptions[0].value,
+    lineHeight: `1.9`,
+  },
+  safflower: {
+    primaryColor: `#E8A33D`,
+    fontFamily: fontFamilyOptions[0].value,
+    lineHeight: `1.85`,
+  },
 }
 
 /** Settings a theme starts from: generic defaults plus its own overrides. */

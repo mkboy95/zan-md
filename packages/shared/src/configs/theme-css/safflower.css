@@ -1,0 +1,356 @@
+/**
+ * MD 山吹主题 — 暖金黄
+ *
+ * 设计语言：山吹色（棣棠花的金黄）为主，配深棕文字保证对比度；
+ * 暖底、圆角、柔和光晕，走「秋天午后」的温和气质。
+ * 同类编辑器里的高人气方向（mdnice 山吹一系）按本项目变量体系重排。
+ *
+ * 注意：黄色明度高，直接拿主色写文字会看不清。本主题的标题文字一律用
+ * 深棕字面量，金黄只出现在底色、边框、列表符号等装饰位。
+ *
+ * 微信兼容约定（与其它内置主题一致）：
+ *   - 不用 color-mix()，一律 rgba 字面量
+ *   - 间距乘 var(--md-block-spacing)，跟随「段间距」设置
+ *   - 字号 calc(var(--md-font-size) * N)
+ */
+
+/* ==================== H1：金底棕字 + 通栏金线 ====================
+ * 三段式结构：h1 block 化画通栏底线，丝带画在内层 span 上。
+ */
+h1 {
+  display: block;
+  box-sizing: border-box;
+  margin: calc(2.2em * var(--md-block-spacing)) 0 calc(1.2em * var(--md-block-spacing));
+  padding: 0;
+  border-bottom: 2px solid #e8a33d;
+  background: transparent;
+  font-size: calc(var(--md-font-size) * 1.3);
+  font-weight: 700;
+  line-height: 0;
+  text-align: left;
+}
+
+h1 > span {
+  display: inline-block;
+  box-sizing: border-box;
+  max-width: 100%;
+  padding: 0.32em 0.95em;
+  border-radius: 8px;
+  color: #5c3a00;
+  background-color: #f5c862;
+  background-image: linear-gradient(135deg, #f7d684 0%, #efb43c 100%);
+  box-shadow: 0 3px 10px rgba(232, 163, 61, 0.28);
+  font-size: calc(var(--md-font-size) * 1.2);
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 1px;
+}
+
+/* ==================== H2：深棕字 + 金色底线 ==================== */
+h2 {
+  display: block;
+  margin: calc(2em * var(--md-block-spacing)) 0 calc(0.9em * var(--md-block-spacing));
+  padding: 0 0 0.34em;
+  border-bottom: 3px solid #e8a33d;
+  border-radius: 0 0 3px 3px;
+  color: #8a5a12;
+  background: transparent;
+  font-size: calc(var(--md-font-size) * 1.22);
+  font-weight: 700;
+  line-height: 1.5;
+  text-align: left;
+}
+
+/* ==================== H3：金色竖条 + 深棕字 ==================== */
+h3 {
+  margin: calc(1.6em * var(--md-block-spacing)) 0 calc(0.6em * var(--md-block-spacing));
+  padding: 0 0 0 12px;
+  border-left: 4px solid #e8a33d;
+  color: #8a5a12;
+  background: transparent;
+  font-size: calc(var(--md-font-size) * 1.125);
+  font-weight: 700;
+  line-height: 1.5;
+  text-align: left;
+}
+
+/* ==================== H4 / H5 / H6 ==================== */
+h4 {
+  margin: calc(1.4em * var(--md-block-spacing)) 0 calc(0.5em * var(--md-block-spacing));
+  color: #8a5a12;
+  font-size: var(--md-font-size);
+  font-weight: 700;
+  line-height: 1.6;
+  text-align: left;
+}
+
+h5,
+h6 {
+  margin: calc(1.2em * var(--md-block-spacing)) 0 calc(0.5em * var(--md-block-spacing));
+  color: #a06d16;
+  font-size: var(--md-font-size);
+  font-weight: 700;
+  line-height: 1.6;
+  text-align: left;
+}
+
+/* ==================== 正文 ==================== */
+p {
+  margin: calc(1.1em * var(--md-block-spacing)) 8px;
+  color: #4d4433;
+  font-size: 1em;
+  line-height: 1.85;
+  letter-spacing: 0.4px;
+}
+
+/* ==================== 引用：淡金底 + 金边 ==================== */
+blockquote {
+  margin: 0 8px calc(1.2em * var(--md-block-spacing));
+  padding: 12px 16px;
+  border-left: 4px solid #e8a33d;
+  border-radius: 0 10px 10px 0;
+  background: rgba(232, 163, 61, 0.10);
+  font-style: normal;
+  color: #6b5c3e;
+}
+
+blockquote > p {
+  margin: 4px 0;
+  color: #6b5c3e;
+  font-size: 0.96em;
+  line-height: 1.8;
+}
+
+/* ==================== 提示框：暖金一系 ==================== */
+.markdown-alert-note,
+.markdown-alert-tip,
+.markdown-alert-info,
+.markdown-alert-important,
+.markdown-alert-warning,
+.markdown-alert-caution,
+.markdown-alert-abstract,
+.markdown-alert-summary,
+.markdown-alert-tldr,
+.markdown-alert-todo,
+.markdown-alert-success,
+.markdown-alert-done,
+.markdown-alert-question,
+.markdown-alert-help,
+.markdown-alert-faq,
+.markdown-alert-failure,
+.markdown-alert-fail,
+.markdown-alert-missing,
+.markdown-alert-danger,
+.markdown-alert-error,
+.markdown-alert-bug,
+.markdown-alert-example,
+.markdown-alert-quote,
+.markdown-alert-cite {
+  margin: 0 8px calc(1.2em * var(--md-block-spacing));
+  padding: 12px 16px;
+  border-left: none;
+  border-radius: 10px;
+  background: rgba(232, 163, 61, 0.10);
+  font-style: normal;
+}
+
+.alert-title-note,
+.alert-title-tip,
+.alert-title-info,
+.alert-title-important,
+.alert-title-warning,
+.alert-title-caution,
+.alert-title-abstract,
+.alert-title-summary,
+.alert-title-tldr,
+.alert-title-todo,
+.alert-title-success,
+.alert-title-done,
+.alert-title-question,
+.alert-title-help,
+.alert-title-faq,
+.alert-title-failure,
+.alert-title-fail,
+.alert-title-missing,
+.alert-title-danger,
+.alert-title-error,
+.alert-title-bug,
+.alert-title-example,
+.alert-title-quote,
+.alert-title-cite {
+  color: #8a5a12;
+}
+
+.alert-icon-note,
+.alert-icon-tip,
+.alert-icon-info,
+.alert-icon-important,
+.alert-icon-warning,
+.alert-icon-caution,
+.alert-icon-abstract,
+.alert-icon-summary,
+.alert-icon-tldr,
+.alert-icon-todo,
+.alert-icon-success,
+.alert-icon-done,
+.alert-icon-question,
+.alert-icon-help,
+.alert-icon-faq,
+.alert-icon-failure,
+.alert-icon-fail,
+.alert-icon-missing,
+.alert-icon-danger,
+.alert-icon-error,
+.alert-icon-bug,
+.alert-icon-example,
+.alert-icon-quote,
+.alert-icon-cite {
+  fill: #d99400;
+}
+
+/* ==================== 分割线：金线两端淡出 ==================== */
+hr {
+  height: 2px;
+  margin: calc(2.5em * var(--md-block-spacing)) 0;
+  border: none;
+  border-radius: 1px;
+  background: linear-gradient(90deg, transparent, #e8a33d 50%, transparent);
+  opacity: 0.8;
+  transform: none;
+  -webkit-transform: none;
+}
+
+/* ==================== 行内代码 ==================== */
+.codespan {
+  margin: 0 2px;
+  padding: 3px 6px;
+  border: none;
+  border-radius: 6px;
+  color: #8a5a12;
+  background: rgba(232, 163, 61, 0.15);
+  font-size: 0.9em;
+  font-weight: 600;
+}
+
+/* ==================== 代码块 ==================== */
+pre.code__pre,
+.hljs.code__pre {
+  margin: calc(0.8em * var(--md-block-spacing)) 8px;
+  padding: 0;
+  border: 1px solid rgba(232, 163, 61, 0.3);
+  border-radius: 10px;
+  background: #fdfaf2;
+}
+
+pre.code__pre > code,
+.hljs.code__pre > code {
+  padding: 0.7em 0.9em;
+  font-size: 0.875em;
+  line-height: 1.7;
+}
+
+/* ==================== 加粗 / 斜体 / 删除线 ==================== */
+strong {
+  color: #8a5a12;
+  font-weight: 700;
+}
+
+em {
+  font-style: italic;
+  color: #b8832a;
+}
+
+.del {
+  color: #b8ac93;
+  text-decoration: line-through;
+}
+
+/* ==================== 链接 ==================== */
+a {
+  color: #b8832a;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(232, 163, 61, 0.5);
+}
+
+/* ==================== 列表 ==================== */
+ul,
+ol {
+  margin: 0 8px calc(1.2em * var(--md-block-spacing));
+  padding-left: 1.3em;
+  color: #4d4433;
+}
+
+li {
+  margin: calc(0.3em * var(--md-block-spacing)) 0;
+  color: #4d4433;
+  line-height: 1.85;
+}
+
+li::marker {
+  color: #d99400;
+}
+
+/* ==================== 图片 ==================== */
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: calc(0.6em * var(--md-block-spacing)) auto;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 3px 12px rgba(232, 163, 61, 0.16);
+}
+
+figcaption,
+.md-figcaption {
+  text-align: center;
+  color: #b8ac93;
+  font-size: 0.8em;
+  letter-spacing: 0.5px;
+}
+
+/* ==================== 表格 ==================== */
+table {
+  color: #4d4433;
+}
+
+th {
+  padding: 9px 12px;
+  border: 1px solid rgba(232, 163, 61, 0.35);
+  background: rgba(232, 163, 61, 0.14);
+  color: #8a5a12;
+  font-weight: 700;
+  font-size: 0.95em;
+}
+
+td {
+  padding: 9px 12px;
+  border: 1px solid #f0e8d5;
+  color: #4d4433;
+  font-size: 0.95em;
+  line-height: 1.6;
+}
+
+/* ==================== 脚注 ==================== */
+p.footnotes {
+  margin: calc(0.8em * var(--md-block-spacing)) 8px;
+  color: #b8ac93;
+  font-size: 0.85em;
+}
+
+/* ==================== 标记类扩展 ==================== */
+.markup-highlight {
+  padding: 2px 5px;
+  border-radius: 4px;
+  background-color: #e8a33d;
+  color: #5c3a00;
+  font-weight: 700;
+}
+
+.markup-underline {
+  text-decoration-color: #e8a33d;
+}
+
+.markup-wavyline {
+  text-decoration-color: #e8a33d;
+}

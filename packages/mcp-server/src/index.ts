@@ -26,10 +26,10 @@ const headingStyleEnum = z.enum([`default`, `color-only`, `border-bottom`, `bord
 export const renderMarkdownInputSchema = z.object({
   markdown: z.string().describe(`The Markdown source text to render.`),
   theme: z
-    .enum([`default`, `grace`, `simple`, `weike`])
+    .enum([`default`, `grace`, `simple`, `weike`, `dopamine`, `rose`, `orange`, `ink`, `safflower`])
     .optional()
     .default(`default`)
-    .describe(`Visual theme to apply. One of: default (经典), grace (优雅), simple (简洁), weike (超赞绿).`),
+    .describe(`Visual theme to apply. One of: default (经典), grace (优雅), simple (简洁), weike (超赞绿), dopamine (多巴胺), rose (蔷薇紫), orange (橙心), ink (墨黑), safflower (山吹).`),
   primaryColor: z
     .string()
     .regex(/^#[0-9A-F]{6}$/i, `Must be a valid 6-digit hex color`)
@@ -408,7 +408,7 @@ server.registerTool(
   },
   () => jsonText({
     options: [
-      { name: `theme`, type: `'default' | 'grace' | 'simple' | 'weike'`, default: `default`, description: `Visual theme.` },
+      { name: `theme`, type: `'default' | 'grace' | 'simple' | 'weike' | 'dopamine' | 'rose' | 'orange' | 'ink' | 'safflower'`, default: `default`, description: `Visual theme.` },
       { name: `primaryColor`, type: `string (hex)`, default: `theme colour (e.g. #21A675 for weike)`, description: `Primary accent color via --md-primary-color. Omit to use the theme's own colour.` },
       { name: `fontFamily`, type: `string`, default: `system sans-serif stack`, description: `CSS font-family. See list_fonts.` },
       { name: `fontSize`, type: `string (px)`, default: `16px`, description: `Base font size. See list_font_sizes.` },

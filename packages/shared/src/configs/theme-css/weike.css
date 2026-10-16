@@ -23,23 +23,36 @@ p {
   line-height: 1.9;
 }
 
-/* ==================== H1：绿丝带 + 斜切角 + 底线 ====================
- * 单个 h1 元素画出原设计的三段结构：
- *   [绿色丝带文字] [米色斜切角]
- *   └──────── 2px 绿色底线 ────────┘
- * 原理：
- *   - border-right: 20px transparent 在右侧留出一块「透明边框区」
- *   - 米色三角形是第二层背景，画在这块边框区里（background-clip: border-box）
- *   - 绿色只画到 padding-box，所以不会盖住三角形
+/* ==================== H1：通栏底线 + 绿色丝带 + 斜切角 ====================
+ * 还原原文的三段式结构（工作台风格说明.md 第一节）：
+ *   外层 section   display:block; width:100%; border-bottom:2px 通栏横线
+ *   └ flex 骨架    align-items:flex-end，丝带贴底，横线向右撑满整行
+ * 这里没有外层容器可用，改为：
+ *   - h1 自身 block 化，用 border-bottom 画通栏横线
+ *   - 丝带（绿底 + 白字 + 右侧米色斜切角）画在内层 span 上
+ * 渲染器会给 h1 的文字包一层 <span>（renderer-impl.ts 的 heading()）。
+ * line-height:0 消除行盒 descender 间隙，让丝带底边紧贴横线。
  */
 h1 {
+  display: block;
+  box-sizing: border-box;
+  margin: calc(2em * var(--md-block-spacing)) 0 calc(1em * var(--md-block-spacing));
+  padding: 0;
+  border-bottom: 2px solid var(--md-primary-color);
+  background: transparent;
+  font-size: calc(var(--md-font-size) * 1.25);
+  font-weight: bold;
+  line-height: 0;
+  text-align: left;
+}
+
+/* 丝带本体：绿色底 + 白字 + 右侧米色斜切角（双层背景） */
+h1 > span {
   display: inline-block;
   box-sizing: border-box;
   max-width: 100%;
-  margin: calc(2em * var(--md-block-spacing)) 0 calc(1em * var(--md-block-spacing));
   padding: 0.25em 0.5em;
   border-right: calc(var(--md-font-size) * 1.25) solid transparent;
-  border-bottom: 2px solid var(--md-primary-color);
   border-radius: 5px 5px 0 0;
   color: rgb(247, 247, 247);
   background-color: var(--md-primary-color);
@@ -54,7 +67,6 @@ h1 {
   font-weight: bold;
   line-height: 1.4;
   letter-spacing: -0.3px;
-  text-align: left;
 }
 
 /* ==================== H2：绿色加粗 ==================== */

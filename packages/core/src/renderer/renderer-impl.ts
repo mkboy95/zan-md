@@ -282,7 +282,11 @@ export function initRenderer(opts: IOpts = {}): RendererAPI {
     heading({ tokens, depth }: Tokens.Heading) {
       const text = this.parser.parseInline(tokens)
       const tag = `h${depth}`
-      return styledContent(tag, text)
+      // h1 wraps its text in a span so themes can paint a ribbon inside the
+      // heading box while the h1 itself stays block-level (e.g. a full-width
+      // rule underneath the ribbon). Other levels keep bare inline content.
+      const content = depth === 1 ? `<span>${text}</span>` : text
+      return styledContent(tag, content)
     },
 
     paragraph({ tokens }: Tokens.Paragraph): string {

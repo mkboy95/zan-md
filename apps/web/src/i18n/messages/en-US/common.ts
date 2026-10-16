@@ -205,6 +205,11 @@ export default {
       grace: { label: `Grace`, desc: `{'@'}brzhang` },
       simple: { label: `Simple`, desc: `{'@'}okooo5km` },
       weike: { label: `Zan Green`, desc: `Ribbon headings` },
+      dopamine: { label: `Dopamine`, desc: `High-saturation clash` },
+      rose: { label: `Rose Violet`, desc: `Elegant soft violet` },
+      orange: { label: `Orange Heart`, desc: `Warm and lively` },
+      ink: { label: `Ink Black`, desc: `Monochrome minimal` },
+      safflower: { label: `Safflower`, desc: `Warm golden` },
     },
     fontFamily: {
       sansSerif: { label: `Sans`, desc: `Font123Abc` },

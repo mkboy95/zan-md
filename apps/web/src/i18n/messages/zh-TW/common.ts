@@ -205,6 +205,11 @@ export default {
       grace: { label: `優雅`, desc: `{'@'}brzhang` },
       simple: { label: `簡潔`, desc: `{'@'}okooo5km` },
       weike: { label: `超贊綠`, desc: `綠絲帶標題` },
+      dopamine: { label: `多巴胺`, desc: `高飽和撞色` },
+      rose: { label: `薔薇紫`, desc: `優雅柔紫` },
+      orange: { label: `橙心`, desc: `暖橙活力` },
+      ink: { label: `墨黑`, desc: `黑白極簡` },
+      safflower: { label: `山吹`, desc: `暖金黃` },
     },
     fontFamily: {
       sansSerif: { label: `無襯線`, desc: `字型123Abc` },

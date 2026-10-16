@@ -32,6 +32,32 @@ export const themeOptionsMap = {
     value: `weike`,
     desc: `绿丝带标题`,
   },
+  // 以下五套为新增模板主题（mdnice 一系高人气用色 + 多巴胺撞色的重排）
+  dopamine: {
+    label: `多巴胺`,
+    value: `dopamine`,
+    desc: `高饱和撞色`,
+  },
+  rose: {
+    label: `蔷薇紫`,
+    value: `rose`,
+    desc: `优雅柔紫`,
+  },
+  orange: {
+    label: `橙心`,
+    value: `orange`,
+    desc: `暖橙活力`,
+  },
+  ink: {
+    label: `墨黑`,
+    value: `ink`,
+    desc: `黑白极简`,
+  },
+  safflower: {
+    label: `山吹`,
+    value: `safflower`,
+    desc: `暖金黄`,
+  },
 }
 
 export const themeOptions: IConfigOption<ThemeName>[] = [
@@ -54,5 +80,30 @@ export const themeOptions: IConfigOption<ThemeName>[] = [
     label: `超赞绿`,
     value: `weike`,
     desc: `绿丝带标题`,
+  },
+  {
+    label: `多巴胺`,
+    value: `dopamine`,
+    desc: `高饱和撞色`,
+  },
+  {
+    label: `蔷薇紫`,
+    value: `rose`,
+    desc: `优雅柔紫`,
+  },
+  {
+    label: `橙心`,
+    value: `orange`,
+    desc: `暖橙活力`,
+  },
+  {
+    label: `墨黑`,
+    value: `ink`,
+    desc: `黑白极简`,
+  },
+  {
+    label: `山吹`,
+    value: `safflower`,
+    desc: `暖金黄`,
   },
 ]

@@ -26,6 +26,11 @@ export const themeOptions = [
   { value: `grace`, label: `优雅`, desc: `@brzhang` },
   { value: `simple`, label: `简洁`, desc: `@okooo5km` },
   { value: `weike`, label: `超赞绿`, desc: `绿丝带标题` },
+  { value: `dopamine`, label: `多巴胺`, desc: `高饱和撞色` },
+  { value: `rose`, label: `蔷薇紫`, desc: `优雅柔紫` },
+  { value: `orange`, label: `橙心`, desc: `暖橙活力` },
+  { value: `ink`, label: `墨黑`, desc: `黑白极简` },
+  { value: `safflower`, label: `山吹`, desc: `暖金黄` },
 ] as const
 
 export const fontFamilyOptions = [
