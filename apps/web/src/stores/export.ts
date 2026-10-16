@@ -1,14 +1,17 @@
 import type { PdfExportOptions } from '@/services/export'
 import { t } from '@/i18n/translate'
 import {
+  copyZhihuHtml,
   DEFAULT_PNG_SEGMENT_HEIGHT,
   downloadMD,
+  downloadZhihuHtmlFile,
   exportHTML,
   exportPDF,
   exportPNG,
   exportPNGPoster,
   exportPNGSegments,
   exportPureHTML,
+  exportXiaohongshu,
   getHtmlContent,
 } from '@/services/export'
 import { usePostStore } from './post'
@@ -119,6 +122,72 @@ export const useExportStore = defineStore(`export`, () => {
     downloadMD(content, currentPost.title)
   }
 
+  /** Copy the article as Zhihu-ready semantic HTML. */
+  const copyAsZhihu = async () => {
+    const toastId = toast.loading(t(`store.platform.zhihuStart`))
+    try {
+      const { hasPendingAsyncContent } = await copyZhihuHtml()
+      if (hasPendingAsyncContent)
+        toast.warning(t(`toast.asyncContentPending`), { id: toastId })
+      toast.success(t(`store.platform.zhihuCopied`), { id: toastId })
+    }
+    catch (error) {
+      const message = error instanceof Error ? error.message : String(error)
+      toast.error(t(`store.platform.zhihuFailed`, { message }), { id: toastId })
+    }
+  }
+
+  /** Download the article as a standalone Zhihu-ready `.html` file. */
+  const downloadAsZhihuHtml = async () => {
+    const currentPost = postStore.currentPost
+    if (!currentPost)
+      return
+
+    const toastId = toast.loading(t(`store.platform.zhihuStart`))
+    try {
+      await downloadZhihuHtmlFile(currentPost.title)
+      toast.success(t(`store.platform.zhihuDownloadDone`), { id: toastId })
+    }
+    catch (error) {
+      const message = error instanceof Error ? error.message : String(error)
+      toast.error(t(`store.platform.zhihuFailed`, { message }), { id: toastId })
+    }
+  }
+
+  /** Export a Xiaohongshu long image and copy the trimmed caption. */
+  const exportAsXiaohongshu = async (markdown: string) => {
+    const currentPost = postStore.currentPost
+    if (!currentPost)
+      return
+
+    const toastId = toast.loading(t(`store.platform.xhsStart`))
+    try {
+      const { images, mode, downscaled, copied } = await exportXiaohongshu({
+        previewDevice: uiStore.previewDevice,
+        title: currentPost.title,
+        markdown,
+        onProgress: (done, total) => {
+          toast.loading(t(`store.png.segmentsProgress`, { done, total }), { id: toastId })
+        },
+      })
+
+      if (images === 0)
+        toast.error(t(`store.platform.xhsEmpty`), { id: toastId })
+      else if (mode === `segments`)
+        toast.success(t(`store.platform.xhsFallbackDone`, { count: images }), { id: toastId })
+      else if (!copied)
+        toast.warning(t(`store.platform.xhsNoCaption`), { id: toastId })
+      else if (downscaled)
+        toast.success(t(`store.platform.xhsDoneScaled`), { id: toastId })
+      else
+        toast.success(t(`store.platform.xhsDone`), { id: toastId })
+    }
+    catch (error) {
+      const message = error instanceof Error ? error.message : String(error)
+      toast.error(t(`store.platform.xhsFailed`, { message }), { id: toastId })
+    }
+  }
+
   return {
     editorContent2HTML,
     exportEditorContent2HTML,
@@ -126,6 +195,9 @@ export const useExportStore = defineStore(`export`, () => {
     downloadAsCardImage,
     downloadAsSegmentedImages,
     downloadAsPosterImage,
+    copyAsZhihu,
+    downloadAsZhihuHtml,
+    exportAsXiaohongshu,
     exportEditorContent2PDF,
     exportEditorContent2MD,
   }

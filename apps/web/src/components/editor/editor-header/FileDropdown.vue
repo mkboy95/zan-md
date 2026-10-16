@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Cloud, Download, FileCode, FileCog, FileText, FolderKanban, FolderOpen, Images, Package, Rows3, Settings, Share2, Upload } from '@lucide/vue'
+import { BookOpen, Cloud, Download, FileCode, FileCog, FileText, FolderKanban, FolderOpen, ImagePlus, Images, Newspaper, Package, Rows3, Settings, Share2, Upload } from '@lucide/vue'
 import { PNG_SEGMENT_HEIGHTS } from '@/services/export'
 import { isShareUiEnabled } from '@/services/share/client'
 import { isSyncUiEnabled } from '@/services/sync/client'
@@ -59,6 +59,18 @@ function downloadAsSegmentedImages(maxSegmentHeight: number) {
 
 function downloadAsPosterImage() {
   exportStore.downloadAsPosterImage()
+}
+
+function copyAsZhihu() {
+  exportStore.copyAsZhihu()
+}
+
+function downloadAsZhihuHtml() {
+  exportStore.downloadAsZhihuHtml()
+}
+
+function exportAsXiaohongshu() {
+  exportStore.exportAsXiaohongshu(editorStore.getContent())
 }
 
 function exportEditorContent2PDF() {
@@ -136,6 +148,27 @@ function exportEditorContent2PDF() {
                 @click="downloadAsSegmentedImages(height)"
               >
                 {{ t('menu.exportPngSegmentHeight', { height }) }}
+              </MenubarItem>
+            </MenubarSubContent>
+          </MenubarSub>
+
+          <MenubarSub>
+            <MenubarSubTrigger>
+              <Newspaper class="mr-2 size-4" />
+              {{ t('menu.multiPlatform') }}
+            </MenubarSubTrigger>
+            <MenubarSubContent class="min-w-56">
+              <MenubarItem @click="copyAsZhihu()">
+                <BookOpen class="mr-2 size-4" />
+                {{ t('menu.copyToZhihu') }}
+              </MenubarItem>
+              <MenubarItem @click="exportAsXiaohongshu()">
+                <ImagePlus class="mr-2 size-4" />
+                {{ t('menu.exportXiaohongshu') }}
+              </MenubarItem>
+              <MenubarItem @click="downloadAsZhihuHtml()">
+                <FileCode class="mr-2 size-4" />
+                {{ t('menu.downloadZhihuHtml') }}
               </MenubarItem>
             </MenubarSubContent>
           </MenubarSub>
@@ -249,6 +282,27 @@ function exportEditorContent2PDF() {
                 @click="downloadAsSegmentedImages(height)"
               >
                 {{ t('menu.exportPngSegmentHeight', { height }) }}
+              </MenubarItem>
+            </MenubarSubContent>
+          </MenubarSub>
+
+          <MenubarSub>
+            <MenubarSubTrigger>
+              <Newspaper class="mr-2 size-4" />
+              {{ t('menu.multiPlatform') }}
+            </MenubarSubTrigger>
+            <MenubarSubContent class="min-w-56">
+              <MenubarItem @click="copyAsZhihu()">
+                <BookOpen class="mr-2 size-4" />
+                {{ t('menu.copyToZhihu') }}
+              </MenubarItem>
+              <MenubarItem @click="exportAsXiaohongshu()">
+                <ImagePlus class="mr-2 size-4" />
+                {{ t('menu.exportXiaohongshu') }}
+              </MenubarItem>
+              <MenubarItem @click="downloadAsZhihuHtml()">
+                <FileCode class="mr-2 size-4" />
+                {{ t('menu.downloadZhihuHtml') }}
               </MenubarItem>
             </MenubarSubContent>
           </MenubarSub>

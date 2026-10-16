@@ -34,3 +34,13 @@ export {
   PNG_SEGMENT_HEIGHTS,
 } from './png-segments'
 export { getExportStyles, getShareExportStyles } from './share-styles'
+export {
+  buildXiaohongshuCaption,
+  exportXiaohongshu,
+  stripMarkdownToPlain,
+  XIAOHONGSHU_DEFAULT_BODY_EXCERPT,
+  XIAOHONGSHU_TITLE_MAX,
+  type XiaohongshuExportOptions,
+  type XiaohongshuExportResult,
+} from './xiaohongshu'
+export { copyZhihuHtml, downloadZhihuHtmlFile, toZhihuHtml, type ZhihuCopyResult } from './zhihu'
