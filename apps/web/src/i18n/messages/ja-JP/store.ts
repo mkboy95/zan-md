@@ -84,6 +84,11 @@ export default {
       segmentsDone: `{count} 枚の画像を書き出しました`,
       segmentsEmpty: `書き出す内容がありません`,
       segmentsFailed: `長い画像の書き出しに失敗しました: {message}`,
+      posterStart: `長い画像を準備中…`,
+      posterDone: `長い画像を書き出しました`,
+      posterDoneScaled: `長い画像を書き出しました（縮小して収めています）`,
+      posterFallbackDone: `画像が長すぎるため、分割画像を {count} 枚書き出しました`,
+      posterFailed: `長い画像の書き出しに失敗しました: {message}`,
     },
     relativeTime: {
       justNow: `たった今`,

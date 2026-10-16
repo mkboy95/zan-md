@@ -84,6 +84,11 @@ export default {
       segmentsDone: `已导出 {count} 张长图`,
       segmentsEmpty: `没有可导出的内容`,
       segmentsFailed: `长图导出失败：{message}`,
+      posterStart: `正在生成长图…`,
+      posterDone: `已导出长图`,
+      posterDoneScaled: `已导出长图（已缩放以适应尺寸）`,
+      posterFallbackDone: `长图过长，已导出 {count} 张分段图片`,
+      posterFailed: `长图导出失败：{message}`,
     },
     relativeTime: {
       justNow: `刚刚`,

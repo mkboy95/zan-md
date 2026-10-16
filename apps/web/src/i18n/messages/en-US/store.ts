@@ -84,6 +84,11 @@ export default {
       segmentsDone: `Exported {count} images`,
       segmentsEmpty: `Nothing to export`,
       segmentsFailed: `Long image export failed: {message}`,
+      posterStart: `Preparing long image…`,
+      posterDone: `Long image exported`,
+      posterDoneScaled: `Long image exported (downscaled to fit)`,
+      posterFallbackDone: `Article too tall; exported {count} split images`,
+      posterFailed: `Long image export failed: {message}`,
     },
     relativeTime: {
       justNow: `Just now`,

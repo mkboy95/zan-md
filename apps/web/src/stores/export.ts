@@ -6,6 +6,7 @@ import {
   exportHTML,
   exportPDF,
   exportPNG,
+  exportPNGPoster,
   exportPNGSegments,
   exportPureHTML,
   getHtmlContent,
@@ -72,6 +73,36 @@ export const useExportStore = defineStore(`export`, () => {
     }
   }
 
+  const downloadAsPosterImage = async (showCover = true) => {
+    const currentPost = postStore.currentPost
+    if (!currentPost)
+      return
+
+    const toastId = toast.loading(t(`store.png.posterStart`))
+    try {
+      const { count, mode, downscaled } = await exportPNGPoster(currentPost.title, {
+        previewDevice: uiStore.previewDevice,
+        showCover,
+        onProgress: (done, total) => {
+          toast.loading(t(`store.png.segmentsProgress`, { done, total }), { id: toastId })
+        },
+      })
+
+      if (count === 0)
+        toast.error(t(`store.png.segmentsEmpty`), { id: toastId })
+      else if (mode === `segments`)
+        toast.success(t(`store.png.posterFallbackDone`, { count }), { id: toastId })
+      else if (downscaled)
+        toast.success(t(`store.png.posterDoneScaled`), { id: toastId })
+      else
+        toast.success(t(`store.png.posterDone`), { id: toastId })
+    }
+    catch (error) {
+      const message = error instanceof Error ? error.message : String(error)
+      toast.error(t(`store.png.posterFailed`, { message }), { id: toastId })
+    }
+  }
+
   const exportEditorContent2PDF = async (options?: Partial<PdfExportOptions>) => {
     const currentPost = postStore.currentPost
     if (!currentPost)
@@ -94,6 +125,7 @@ export const useExportStore = defineStore(`export`, () => {
     exportEditorContent2PureHTML,
     downloadAsCardImage,
     downloadAsSegmentedImages,
+    downloadAsPosterImage,
     exportEditorContent2PDF,
     exportEditorContent2MD,
   }

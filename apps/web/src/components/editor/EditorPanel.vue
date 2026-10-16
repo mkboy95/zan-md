@@ -13,6 +13,7 @@ import { useLocalizedUploadHostOptions } from '@/composables/useLocalizedUploadH
 import { useSlashCommand } from '@/composables/useSlashCommand'
 import { CONTENT_FONT_LANG } from '@/i18n/constants'
 import { toStoredDateTime } from '@/lib/format/datetime'
+import { htmlToMarkdown } from '@/lib/html-to-markdown'
 import { jumpToAdjacentHeading } from '@/lib/markdown/headingNavigation'
 import { contentHasMath, loadMathJax, MATHJAX_READY_EVENT } from '@/lib/preview/mathjax'
 import { collectClipboardImages } from '@/lib/upload/clipboard-images'
@@ -364,6 +365,17 @@ function mdLocalToRemote() {
 }
 
 // --- Image paste handler for CodeMirror ---
+function readClipboardHtml(data: DataTransfer | null | undefined): string {
+  if (!data)
+    return ``
+  try {
+    return data.getData(`text/html`) ?? ``
+  }
+  catch {
+    return ``
+  }
+}
+
 function createPasteHandler() {
   return (event: ClipboardEvent, view: EditorView) => {
     const imageFiles = collectClipboardImages(event.clipboardData)
@@ -381,6 +393,18 @@ function createPasteHandler() {
           await uploadImage(item)
       })()
       return true
+    }
+
+    // Rich text (Notion / Word / 飞书 …) arrives as text/html; convert it to
+    // Markdown so pasted structure survives. Falls through to the plain-text
+    // path when the fragment carries nothing convertible.
+    const html = readClipboardHtml(event.clipboardData)
+    if (html) {
+      const markdown = htmlToMarkdown(html)
+      if (markdown) {
+        view.dispatch(view.state.replaceSelection(markdown))
+        return true
+      }
     }
 
     const text = event.clipboardData?.getData('text/plain')

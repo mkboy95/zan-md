@@ -16,6 +16,19 @@ export {
 } from './pdf'
 export { exportPNG } from './png'
 export {
+  computePosterPixelRatio,
+  exportPNGPoster,
+  type ExportPNGPosterOptions,
+  POSTER_IDEAL_PIXEL_RATIO,
+  POSTER_MAX_CANVAS_AREA,
+  POSTER_MAX_CANVAS_DIMENSION,
+  POSTER_MIN_PIXEL_RATIO,
+  type PosterExportMode,
+  type PosterExportResult,
+  type PosterScaleInput,
+  type PosterScaleResult,
+} from './png-poster'
+export {
   DEFAULT_PNG_SEGMENT_HEIGHT,
   exportPNGSegments,
   PNG_SEGMENT_HEIGHTS,

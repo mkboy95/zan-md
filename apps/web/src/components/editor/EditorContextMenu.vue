@@ -17,6 +17,7 @@ import {
   Heading5,
   Heading6,
   Image,
+  Images,
   Import,
   Italic,
   Link,
@@ -166,6 +167,10 @@ function downloadAsCardImage() {
 
 function downloadAsSegmentedImages(maxSegmentHeight: number) {
   exportStore.downloadAsSegmentedImages(maxSegmentHeight)
+}
+
+function downloadAsPosterImage() {
+  exportStore.downloadAsPosterImage()
 }
 </script>
 
@@ -326,6 +331,10 @@ function downloadAsSegmentedImages(maxSegmentHeight: number) {
           <ContextMenuItem @click="downloadAsCardImage()">
             <FileImage class="mr-2 h-4 w-4" />
             {{ t('contextMenu.exportPng') }}
+          </ContextMenuItem>
+          <ContextMenuItem @click="downloadAsPosterImage()">
+            <Images class="mr-2 h-4 w-4" />
+            {{ t('contextMenu.exportPoster') }}
           </ContextMenuItem>
           <ContextMenuSub>
             <ContextMenuSubTrigger>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Cloud, Download, FileCode, FileCog, FileText, FolderKanban, FolderOpen, Package, Rows3, Settings, Share2, Upload } from '@lucide/vue'
+import { Cloud, Download, FileCode, FileCog, FileText, FolderKanban, FolderOpen, Images, Package, Rows3, Settings, Share2, Upload } from '@lucide/vue'
 import { PNG_SEGMENT_HEIGHTS } from '@/services/export'
 import { isShareUiEnabled } from '@/services/share/client'
 import { isSyncUiEnabled } from '@/services/sync/client'
@@ -55,6 +55,10 @@ function downloadAsCardImage() {
 
 function downloadAsSegmentedImages(maxSegmentHeight: number) {
   exportStore.downloadAsSegmentedImages(maxSegmentHeight)
+}
+
+function downloadAsPosterImage() {
+  exportStore.downloadAsPosterImage()
 }
 
 function exportEditorContent2PDF() {
@@ -115,6 +119,10 @@ function exportEditorContent2PDF() {
           <MenubarItem @click="downloadAsCardImage()">
             <Download class="mr-2 size-4" />
             {{ t('menu.exportPng') }}
+          </MenubarItem>
+          <MenubarItem @click="downloadAsPosterImage()">
+            <Images class="mr-2 size-4" />
+            {{ t('menu.exportPoster') }}
           </MenubarItem>
           <MenubarSub>
             <MenubarSubTrigger>
@@ -224,6 +232,10 @@ function exportEditorContent2PDF() {
           <MenubarItem @click="downloadAsCardImage()">
             <Download class="mr-2 size-4" />
             {{ t('menu.exportPng') }}
+          </MenubarItem>
+          <MenubarItem @click="downloadAsPosterImage()">
+            <Images class="mr-2 size-4" />
+            {{ t('menu.exportPoster') }}
           </MenubarItem>
           <MenubarSub>
             <MenubarSubTrigger>

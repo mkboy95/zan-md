@@ -105,6 +105,7 @@ export default {
     exportHtmlNoStyle: `HTML（纯）`,
     exportPdf: `PDF 文档`,
     exportPng: `PNG 图片`,
+    exportPoster: `长图 / 海报`,
     exportPngSegments: `PNG 分段长图`,
     exportPngSegmentHeight: `每段约 {height}px`,
     templateManage: `模板管理`,

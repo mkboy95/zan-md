@@ -50,6 +50,7 @@ export default {
     exportHtml: `匯出 .html`,
     exportPdf: `匯出 .pdf`,
     exportPng: `匯出 .png`,
+    exportPoster: `匯出長圖`,
     exportPngSegments: `匯出分段長圖`,
   },
   search: {

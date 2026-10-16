@@ -50,6 +50,7 @@ export default {
     exportHtml: `Export .html`,
     exportPdf: `Export .pdf`,
     exportPng: `Export .png`,
+    exportPoster: `Export long image`,
     exportPngSegments: `Export split .png`,
   },
   search: {

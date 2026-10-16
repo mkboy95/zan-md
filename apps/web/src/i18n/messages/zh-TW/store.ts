@@ -84,6 +84,11 @@ export default {
       segmentsDone: `已匯出 {count} 張長圖`,
       segmentsEmpty: `沒有可匯出的內容`,
       segmentsFailed: `長圖匯出失敗：{message}`,
+      posterStart: `正在產生長圖…`,
+      posterDone: `已匯出長圖`,
+      posterDoneScaled: `已匯出長圖（已縮放以符合尺寸）`,
+      posterFallbackDone: `長圖過長，已匯出 {count} 張分段圖片`,
+      posterFailed: `長圖匯出失敗：{message}`,
     },
     relativeTime: {
       justNow: `剛剛`,
