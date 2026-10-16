@@ -14,6 +14,8 @@
  * (e.g. from a test) never pulls in the render pipeline.
  */
 
+import { resolvePrimaryPaletteVars } from '@md/shared/configs'
+
 /** Tags kept verbatim in the Zhihu output. */
 const ZHIHU_ALLOWED_TAGS = new Set([
   `H1`,
@@ -257,16 +259,19 @@ function removeEmptyElements(container: HTMLElement) {
  * Convert rendered preview HTML into clean semantic HTML for Zhihu.
  *
  * @param html Rendered article HTML (typically `#output`'s innerHTML).
+ * @param primaryColor When given, `var(--md-primary-*)` references are resolved
+ *   to literal colours — Zhihu keeps no `:root`, so unresolved vars lose colour.
  * @returns Semantic HTML with WeChat containers / decoration removed.
  */
-export function toZhihuHtml(html: string): string {
+export function toZhihuHtml(html: string, primaryColor?: string): string {
   if (!html || !html.trim())
     return ``
   const container = document.createElement(`div`)
   container.innerHTML = html
   cleanNode(container)
   removeEmptyElements(container)
-  return container.innerHTML
+  const result = container.innerHTML
+  return primaryColor ? resolvePrimaryPaletteVars(result, primaryColor) : result
 }
 
 /** Last-resort text view when Markdown conversion yields nothing. */
@@ -279,6 +284,12 @@ function stripTags(html: string): string {
     .replace(/&gt;/gi, `>`)
     .replace(/\s+/g, ` `)
     .trim()
+}
+
+/** Current theme colour, used to resolve `var(--md-primary-*)` for the target platform. */
+async function currentPrimaryColor(): Promise<string> {
+  const { useThemeStore } = await import(`@/stores/theme`)
+  return useThemeStore().primaryColor
 }
 
 export interface ZhihuCopyResult {
@@ -307,7 +318,7 @@ export async function copyZhihuHtml(): Promise<ZhihuCopyResult> {
   ])
 
   const previewReady = await waitForPreviewReady()
-  const html = toZhihuHtml(getHtmlContent())
+  const html = toZhihuHtml(getHtmlContent(), await currentPrimaryColor())
   if (!html)
     throw new Error(`No rendered content to copy.`)
 
@@ -332,7 +343,7 @@ export async function downloadZhihuHtmlFile(title: string = `untitled`): Promise
     import(`@md/shared/utils/fileHelpers`),
   ])
 
-  const body = toZhihuHtml(getHtmlContent())
+  const body = toZhihuHtml(getHtmlContent(), await currentPrimaryColor())
   const safeTitle = sanitizeTitle(title)
   const htmlDocument = `<!DOCTYPE html>
 <html>

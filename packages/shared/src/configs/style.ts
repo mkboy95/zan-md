@@ -471,11 +471,23 @@ export const perThemeSettingOverrides: Partial<Record<ThemeName, Partial<PerThem
     fontFamily: fontFamilyOptions[0].value,
     lineHeight: `1.85`,
   },
-  // 祖母绿：卡片式杂志排版，翡翠主色 + 无衬线 + 大行高
+  // 祖母绿：整篇大卡片，翡翠主色 + 无衬线 + 大行高
   emerald: {
     primaryColor: `#059669`,
     fontFamily: fontFamilyOptions[0].value,
     lineHeight: `1.9`,
+  },
+  // 杂志刊头：对称通栏纸刊感，墨蓝主色 + 衬线 + 大行高
+  journal: {
+    primaryColor: `#1F3A5F`,
+    fontFamily: fontFamilyOptions[1].value,
+    lineHeight: `1.9`,
+  },
+  // 便签卡：贴纸标签，琥珀主色 + 无衬线 + 中等行高
+  notecard: {
+    primaryColor: `#D97706`,
+    fontFamily: fontFamilyOptions[0].value,
+    lineHeight: `1.85`,
   },
 }
 

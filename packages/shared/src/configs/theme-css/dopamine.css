@@ -1,19 +1,24 @@
 /**
  * MD 多巴胺主题 — 高饱和撞色
  *
- * 设计语言：电光紫为主，亮粉 / 明黄 / 青绿撞色；大圆角、色块鲜明、节奏轻快。
- * 借鉴同类高人气主题的用色思路（mdnice 系），按多巴胺配色重新编排：
- * 每一层标题用不同强调色，正文保持中性，靠「色」而不是「线」制造记忆点。
+ * 设计语言：大圆角、色块鲜明、节奏轻快，靠「色」而不是「线」制造记忆点。
  *
- * 微信兼容约定（与其它内置主题一致）：
- *   - 不用 color-mix()，一律 rgba 字面量
- *   - 间距乘 var(--md-block-spacing)，跟随「段间距」设置
- *   - 字号 calc(var(--md-font-size) * N)
+ * 配色约定：**强调色取自 var(--md-primary-*)**（由主题色按钮实时推导，
+ * 见 primaryPalette.ts）：标题胶囊、淡底、描边、渐变、投影、表头整体跟着变。
+ * 撞色（亮粉 / 明黄 / 青绿）只保留 2 处签名装饰 —— h1 通栏彩虹底线与
+ * hr 彩虹渐变；其余位置（标题字、边框、清单符号、下划线）一律回到主色派生
+ * 变量，撞色不再承担主要标题色。中性墨色阶与语义警示橙（#ff4c00）保留。
+ *
+ * 实现约定（与其它内置主题一致）：
+ *   - 不用 color-mix()、不用伪元素 content:（微信端不认）
+ *   - 字号用 calc(var(--md-font-size) * N)
+ *   - 所有间距乘 var(--md-block-spacing)，跟随「段间距」设置
  */
 
-/* ==================== H1：电光紫胶囊 + 通栏彩虹底线 ====================
+/* ==================== H1：主色胶囊 + 通栏彩虹底线 ====================
  * 与超赞绿同款三段式：h1 自身 block 化画通栏底线，丝带画在内层 span 上
  * （渲染器会给 h1 文字包一层 <span>）。
+ * 彩虹线是签名装饰之一：起点用主色，后面三截撞色固定不变。
  */
 h1 {
   display: block;
@@ -22,7 +27,7 @@ h1 {
   padding: 0;
   /* 通栏彩虹线：多巴胺的签名特征 */
   border-bottom: 4px solid transparent;
-  border-image: linear-gradient(90deg, #7c4dff 0%, #ff4d8d 35%, #ffc72c 68%, #00c9a7 100%) 1;
+  border-image: linear-gradient(90deg, var(--md-primary-color) 0%, #ff4d8d 35%, #ffc72c 68%, #00c9a7 100%) 1;
   background: transparent;
   font-size: calc(var(--md-font-size) * 1.35);
   font-weight: 800;
@@ -37,23 +42,27 @@ h1 > span {
   padding: 0.34em 1em;
   border-radius: 1.2em;
   color: #ffffff;
-  background-color: #7c4dff;
-  box-shadow: 0 4px 14px rgba(124, 77, 255, 0.28);
+  background-color: var(--md-primary-color);
+  background-image: linear-gradient(135deg, var(--md-primary-color) 0%, var(--md-primary-ink) 100%);
+  box-shadow: 0 4px 14px var(--md-primary-halo);
   font-size: calc(var(--md-font-size) * 1.25);
   font-weight: 800;
   line-height: 1.4;
   letter-spacing: 0.5px;
 }
 
-/* ==================== H2：亮粉字 + 紫色粗底线 ==================== */
+/* ==================== H2：主色字 + 主色粗底线 ====================
+ * 原来是「亮粉左条 + 紫底线」，撞色退场后改为主色的两级浓淡：左条用 35%
+ * （--md-primary-line），底线用实色。
+ */
 h2 {
   display: block;
   margin: calc(2em * var(--md-block-spacing)) 0 calc(0.9em * var(--md-block-spacing));
   padding: 0 0 0.3em;
-  border-left: 5px solid #ff4d8d;
-  border-bottom: 3px solid #7c4dff;
+  border-left: 5px solid var(--md-primary-line);
+  border-bottom: 3px solid var(--md-primary-color);
   border-radius: 0 0 4px 4px;
-  color: #7c4dff;
+  color: var(--md-primary-color);
   background: transparent;
   font-size: calc(var(--md-font-size) * 1.25);
   font-weight: 800;
@@ -61,13 +70,13 @@ h2 {
   text-align: left;
 }
 
-/* ==================== H3：青绿竖条 + 主色字 ==================== */
+/* ==================== H3：主色竖条 + 加深主色字 ==================== */
 h3 {
   margin: calc(1.6em * var(--md-block-spacing)) 0 calc(0.6em * var(--md-block-spacing));
   padding: 0 0 0 12px;
-  border-left: 5px solid #00c9a7;
+  border-left: 5px solid var(--md-primary-line);
   border-radius: 3px;
-  color: #0f9c87;
+  color: var(--md-primary-ink);
   background: transparent;
   font-size: calc(var(--md-font-size) * 1.125);
   font-weight: 700;
@@ -79,8 +88,8 @@ h3 {
 h4 {
   margin: calc(1.4em * var(--md-block-spacing)) 0 calc(0.5em * var(--md-block-spacing));
   padding: 0 0 0 10px;
-  border-left: 4px solid #ffc72c;
-  color: #7c4dff;
+  border-left: 4px solid var(--md-primary-line);
+  color: var(--md-primary-color);
   font-size: var(--md-font-size);
   font-weight: 700;
   line-height: 1.6;
@@ -90,7 +99,7 @@ h4 {
 h5,
 h6 {
   margin: calc(1.2em * var(--md-block-spacing)) 0 calc(0.5em * var(--md-block-spacing));
-  color: #ff4d8d;
+  color: var(--md-primary-ink);
   font-size: var(--md-font-size);
   font-weight: 700;
   line-height: 1.6;
@@ -100,31 +109,37 @@ h6 {
 /* ==================== 正文 ==================== */
 p {
   margin: calc(1.1em * var(--md-block-spacing)) 8px;
-  color: #3d3d4d;
+  color: #374151;
   font-size: 1em;
   line-height: 1.85;
   letter-spacing: 0.3px;
 }
 
-/* ==================== 引用：明黄淡底 + 亮粉左边框 ==================== */
+/* ==================== 引用：主色淡底 + 主色左边框 ====================
+ * 原文是「明黄淡底 + 亮粉边」，改为主色 12% 淡底 + 实色左边框，
+ * 底上的文字用 --md-primary-ink 保证对比度。
+ */
 blockquote {
   margin: 0 8px calc(1.2em * var(--md-block-spacing));
   padding: 12px 16px;
-  border-left: 4px solid #ff4d8d;
+  border-left: 4px solid var(--md-primary-color);
   border-radius: 0 12px 12px 0;
-  background: rgba(255, 199, 44, 0.12);
+  background: var(--md-primary-soft);
   font-style: normal;
-  color: #6b5b2a;
+  color: var(--md-primary-ink);
 }
 
 blockquote > p {
   margin: 4px 0;
-  color: #6b5b2a;
+  color: var(--md-primary-ink);
   font-size: 0.96em;
   line-height: 1.8;
 }
 
-/* ==================== 提示框：彩虹各色 ==================== */
+/* ==================== 提示框：按语义分三级 ====================
+ * 原来每种语义一个撞色，现在改为「主色浓淡 + 语义警示橙」：
+ * 正向 7% / 信息 12% / 注意与危险用橙（警示色不随主题色变化）。
+ */
 .markdown-alert-note,
 .markdown-alert-tip,
 .markdown-alert-info,
@@ -156,13 +171,15 @@ blockquote > p {
   font-style: normal;
 }
 
+/* 正向：主色 7% 淡底 */
 .markdown-alert-note,
 .markdown-alert-tip,
 .markdown-alert-success,
 .markdown-alert-done {
-  background: rgba(0, 201, 167, 0.13);
+  background: var(--md-primary-tint);
 }
 
+/* 信息：主色 12% 淡底 */
 .markdown-alert-info,
 .markdown-alert-summary,
 .markdown-alert-tldr,
@@ -171,37 +188,39 @@ blockquote > p {
 .markdown-alert-help,
 .markdown-alert-faq,
 .markdown-alert-abstract {
-  background: rgba(61, 159, 255, 0.13);
+  background: var(--md-primary-soft);
 }
 
+/* 注意：语义橙，不随主题色变化 */
 .markdown-alert-warning,
 .markdown-alert-caution,
 .markdown-alert-important,
 .markdown-alert-attention {
-  background: rgba(255, 199, 44, 0.16);
+  background: rgba(255, 76, 0, 0.06);
 }
 
+/* 危险：语义橙，比「注意」更重一档 */
 .markdown-alert-danger,
 .markdown-alert-error,
 .markdown-alert-failure,
 .markdown-alert-fail,
 .markdown-alert-missing,
 .markdown-alert-bug {
-  background: rgba(255, 77, 141, 0.12);
+  background: rgba(255, 76, 0, 0.1);
 }
 
 .markdown-alert-example,
 .markdown-alert-quote,
 .markdown-alert-cite {
-  background: rgba(124, 77, 255, 0.10);
+  background: var(--md-primary-tint);
 }
 
-/* 提示框标题：跟随所属色 */
+/* 提示框标题：跟随所属底色的对比色 */
 .alert-title-note,
 .alert-title-tip,
 .alert-title-success,
 .alert-title-done {
-  color: #00a88d;
+  color: var(--md-primary-ink);
 }
 
 .alert-title-info,
@@ -212,14 +231,14 @@ blockquote > p {
 .alert-title-help,
 .alert-title-faq,
 .alert-title-abstract {
-  color: #2b7fd6;
+  color: var(--md-primary-ink);
 }
 
 .alert-title-warning,
 .alert-title-caution,
 .alert-title-important,
 .alert-title-attention {
-  color: #d99400;
+  color: #ff4c00;
 }
 
 .alert-title-danger,
@@ -228,47 +247,49 @@ blockquote > p {
 .alert-title-fail,
 .alert-title-missing,
 .alert-title-bug {
-  color: #e02f6e;
+  color: #ff4c00;
 }
 
 .alert-title-example,
 .alert-title-quote,
 .alert-title-cite {
-  color: #6b3fe0;
+  color: var(--md-primary-ink);
 }
 
-/* ==================== 分割线：彩虹渐变 ==================== */
+/* ==================== 分割线：彩虹渐变 ====================
+ * 签名装饰之二。起点跟主色，其余三截撞色固定。
+ */
 hr {
   height: 4px;
   margin: calc(2.5em * var(--md-block-spacing)) 0;
   border: none;
   border-radius: 2px;
-  background: linear-gradient(90deg, #7c4dff 0%, #ff4d8d 35%, #ffc72c 68%, #00c9a7 100%);
+  background: linear-gradient(90deg, var(--md-primary-color) 0%, #ff4d8d 35%, #ffc72c 68%, #00c9a7 100%);
   opacity: 0.85;
   transform: none;
   -webkit-transform: none;
 }
 
-/* ==================== 行内代码：亮粉淡底 ==================== */
+/* ==================== 行内代码：主色淡底 ==================== */
 .codespan {
   margin: 0 3px;
   padding: 3px 7px;
   border: none;
   border-radius: 8px;
-  color: #e02f6e;
-  background: rgba(255, 77, 141, 0.12);
+  color: var(--md-primary-ink);
+  background: var(--md-primary-soft);
   font-size: 0.9em;
   font-weight: 700;
 }
 
-/* ==================== 代码块：紫色描边 + 淡紫底 ==================== */
+/* ==================== 代码块：主色描边 ==================== */
 pre.code__pre,
 .hljs.code__pre {
   margin: calc(0.8em * var(--md-block-spacing)) 8px;
   padding: 0;
-  border: 1px solid rgba(124, 77, 255, 0.22);
+  border: 1px solid var(--md-primary-edge);
   border-radius: 14px;
-  background: #faf8ff;
+  background: #f9fafb;
 }
 
 pre.code__pre > code,
@@ -280,26 +301,26 @@ pre.code__pre > code,
 
 /* ==================== 加粗 / 斜体 / 删除线 ==================== */
 strong {
-  color: #7c4dff;
+  color: var(--md-primary-color);
   font-weight: 800;
 }
 
 em {
   font-style: italic;
-  color: #e02f6e;
+  color: var(--md-primary-ink);
 }
 
 .del {
-  color: #9a9aa8;
+  color: #9ca3af;
   text-decoration: line-through;
 }
 
 /* ==================== 链接 ==================== */
 a {
-  color: #7c4dff;
+  color: var(--md-primary-ink);
   font-weight: 700;
   text-decoration: none;
-  border-bottom: 2px solid rgba(124, 77, 255, 0.4);
+  border-bottom: 2px solid var(--md-primary-line);
 }
 
 /* ==================== 列表 ==================== */
@@ -307,17 +328,17 @@ ul,
 ol {
   margin: 0 8px calc(1.2em * var(--md-block-spacing));
   padding-left: 1.4em;
-  color: #3d3d4d;
+  color: #374151;
 }
 
 li {
   margin: calc(0.3em * var(--md-block-spacing)) 0;
-  color: #3d3d4d;
+  color: #374151;
   line-height: 1.85;
 }
 
 li::marker {
-  color: #ff4d8d;
+  color: var(--md-primary-color);
   font-weight: 700;
 }
 
@@ -329,37 +350,37 @@ img {
   margin: calc(0.6em * var(--md-block-spacing)) auto;
   border: none;
   border-radius: 14px;
-  box-shadow: 0 4px 16px rgba(124, 77, 255, 0.14);
+  box-shadow: 0 4px 16px var(--md-primary-halo);
 }
 
 figcaption,
 .md-figcaption {
   text-align: center;
-  color: #9a9aa8;
+  color: #9ca3af;
   font-size: 0.8em;
   letter-spacing: 0.5px;
 }
 
 /* ==================== 表格 ==================== */
 table {
-  color: #3d3d4d;
+  color: #374151;
   letter-spacing: 0.3px;
 }
 
 th {
   padding: 10px 12px;
-  border: 1px solid rgba(124, 77, 255, 0.25);
+  border: 1px solid var(--md-primary-edge);
   border-radius: 4px;
-  background: rgba(124, 77, 255, 0.10);
-  color: #6b3fe0;
+  background: var(--md-primary-soft);
+  color: var(--md-primary-ink);
   font-weight: 800;
   font-size: 0.95em;
 }
 
 td {
   padding: 10px 12px;
-  border: 1px solid #ece9f7;
-  color: #3d3d4d;
+  border: 1px solid #e5e7eb;
+  color: #374151;
   font-size: 0.95em;
   line-height: 1.6;
 }
@@ -367,7 +388,7 @@ td {
 /* ==================== 脚注 ==================== */
 p.footnotes {
   margin: calc(0.8em * var(--md-block-spacing)) 8px;
-  color: #9a9aa8;
+  color: #9ca3af;
   font-size: 0.85em;
 }
 
@@ -375,15 +396,15 @@ p.footnotes {
 .markup-highlight {
   padding: 2px 6px;
   border-radius: 8px;
-  background-color: #7c4dff;
-  color: #fff;
+  background-color: var(--md-primary-wash);
+  color: var(--md-primary-ink);
   font-weight: 700;
 }
 
 .markup-underline {
-  text-decoration-color: #ff4d8d;
+  text-decoration-color: var(--md-primary-color);
 }
 
 .markup-wavyline {
-  text-decoration-color: #ffc72c;
+  text-decoration-color: var(--md-primary-line);
 }

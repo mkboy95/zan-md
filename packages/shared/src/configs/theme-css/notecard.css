@@ -1,0 +1,515 @@
+/**
+ * MD 便签卡主题 — 块标签 + 贴纸卡版式
+ *
+ * 第三种结构语言：既不是祖母绿的「整篇大卡片」，也不是杂志的「对称通栏」，
+ * 而是把每个区块当成一张**贴纸**：
+ *   1. h1 是粗竖条大题（左侧 6px 主色条 + 下方 hairline）
+ *   2. h2 是**实底标签块**（主色底白字 + 圆角，像贴上去的标签）
+ *   3. h3 是荧光下划线（inline-block + 2px 主色下线）
+ *   4. 引用 / 提示是便签贴纸：纸黄底 + 圆角 + 轻投影
+ *   5. 加粗走荧光笔下划线，强调感强但不压行
+ *
+ * 配色约定：强调色一律取自 var(--md-primary-*)，主题色按钮一改整篇跟随；
+ * 纸黄底（#fffbeb）是「纸」的材质色，属于结构，不随主题色变化。
+ *
+ * 微信兼容：不用 color-mix()、不用伪元素 content:、不用 flex gap、不做斑马纹；
+ * 字号 calc(var(--md-font-size) * N)，间距乘 var(--md-block-spacing)。
+ */
+
+/* ==================== 容器（无外框） ==================== */
+.container {
+  box-sizing: border-box;
+  max-width: 677px;
+  margin: 0 auto calc(1.5em * var(--md-block-spacing));
+  padding: 12px 22px 24px;
+  border: none;
+  background: #ffffff;
+  color: #374151;
+  font-family: var(--md-font-family);
+  font-size: calc(var(--md-font-size) * 0.9375);
+  line-height: 1.85;
+  letter-spacing: 0.2px;
+  text-align: left;
+}
+
+/* ==================== 正文 ==================== */
+p {
+  margin: 0 0 calc(0.9em * var(--md-block-spacing));
+  color: #374151;
+  font-size: 1em;
+  line-height: 1.85;
+  letter-spacing: 0.2px;
+  text-align: justify;
+}
+
+/* ==================== H1：粗竖条大题 ====================
+ * 渲染器会给 h1 文字包一层 <span>。
+ */
+h1 {
+  display: block;
+  box-sizing: border-box;
+  margin: calc(0.8em * var(--md-block-spacing)) 0 calc(1.1em * var(--md-block-spacing));
+  padding: 2px 0 12px 14px;
+  border-left: 6px solid var(--md-primary-color);
+  border-bottom: 1px solid var(--md-primary-edge);
+  color: #1f2937;
+  background: transparent;
+  font-size: calc(var(--md-font-size) * 1.45);
+  font-weight: 800;
+  line-height: 1.35;
+  letter-spacing: -0.5px;
+  text-align: left;
+}
+
+h1 > span {
+  display: inline-block;
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+/* ==================== H2：实底标签块 ==================== */
+h2 {
+  display: inline-block;
+  box-sizing: border-box;
+  margin: calc(1.8em * var(--md-block-spacing)) 0 calc(0.8em * var(--md-block-spacing));
+  padding: 6px 15px;
+  border: none;
+  border-radius: 8px;
+  background: var(--md-primary-color);
+  color: #ffffff;
+  font-size: calc(var(--md-font-size) * 1.05);
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.5px;
+  text-align: left;
+}
+
+/* ==================== H3：荧光下划线 ==================== */
+h3 {
+  display: inline-block;
+  box-sizing: border-box;
+  margin: calc(1.5em * var(--md-block-spacing)) 0 calc(0.5em * var(--md-block-spacing));
+  padding: 0 2px 3px;
+  border-bottom: 2px solid var(--md-primary-wash);
+  color: var(--md-primary-ink);
+  background: transparent;
+  font-size: calc(var(--md-font-size) * 1.02);
+  font-weight: 700;
+  line-height: 1.6;
+  letter-spacing: 0.3px;
+}
+
+/* ==================== H4 / H5 / H6 ==================== */
+h4 {
+  margin: calc(1.4em * var(--md-block-spacing)) 0 calc(0.5em * var(--md-block-spacing));
+  padding: 0;
+  color: #1f2937;
+  font-size: var(--md-font-size);
+  font-weight: 800;
+  line-height: 1.6;
+  letter-spacing: 0.2px;
+}
+
+h5 {
+  margin: calc(1.2em * var(--md-block-spacing)) 0 calc(0.5em * var(--md-block-spacing));
+  color: #374151;
+  font-size: var(--md-font-size);
+  font-weight: 700;
+}
+
+h6 {
+  margin: calc(1.2em * var(--md-block-spacing)) 0 calc(0.5em * var(--md-block-spacing));
+  color: #6b7280;
+  font-size: calc(var(--md-font-size) * 0.95);
+  font-weight: 700;
+}
+
+/* ==================== 引用：便签贴纸 ==================== */
+blockquote {
+  box-sizing: border-box;
+  margin: 0 0 calc(1.2em * var(--md-block-spacing));
+  padding: 14px 16px;
+  border: 1px solid var(--md-primary-edge);
+  border-left: 4px solid var(--md-primary-color);
+  border-radius: 10px;
+  background: #fffbeb;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  color: #4b5563;
+  font-style: normal;
+  font-size: 0.95em;
+  line-height: 1.8;
+}
+
+blockquote > p {
+  margin: 4px 0;
+  color: #4b5563;
+  font-size: 1em;
+  line-height: 1.8;
+  letter-spacing: 0.2px;
+}
+
+/* ==================== 提示框：同款贴纸 ==================== */
+.markdown-alert-note,
+.markdown-alert-tip,
+.markdown-alert-info,
+.markdown-alert-important,
+.markdown-alert-warning,
+.markdown-alert-caution,
+.markdown-alert-abstract,
+.markdown-alert-summary,
+.markdown-alert-tldr,
+.markdown-alert-todo,
+.markdown-alert-success,
+.markdown-alert-done,
+.markdown-alert-question,
+.markdown-alert-help,
+.markdown-alert-faq,
+.markdown-alert-failure,
+.markdown-alert-fail,
+.markdown-alert-missing,
+.markdown-alert-danger,
+.markdown-alert-error,
+.markdown-alert-bug,
+.markdown-alert-example,
+.markdown-alert-quote,
+.markdown-alert-cite {
+  box-sizing: border-box;
+  margin: 0 0 calc(1.2em * var(--md-block-spacing));
+  padding: 13px 16px;
+  border: 1px solid var(--md-primary-edge);
+  border-left: 4px solid var(--md-primary-color);
+  border-radius: 10px;
+  background: var(--md-primary-tint);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  font-style: normal;
+}
+
+.markdown-alert-note,
+.markdown-alert-tip,
+.markdown-alert-hint,
+.markdown-alert-success,
+.markdown-alert-check,
+.markdown-alert-done,
+.markdown-alert-info,
+.markdown-alert-abstract,
+.markdown-alert-summary,
+.markdown-alert-tldr,
+.markdown-alert-todo,
+.markdown-alert-question,
+.markdown-alert-help,
+.markdown-alert-faq {
+  background: var(--md-primary-tint);
+}
+
+.markdown-alert-warning,
+.markdown-alert-caution,
+.markdown-alert-attention,
+.markdown-alert-important,
+.markdown-alert-danger,
+.markdown-alert-error,
+.markdown-alert-failure,
+.markdown-alert-fail,
+.markdown-alert-missing,
+.markdown-alert-bug {
+  border-left-color: #ff4c00;
+  background: rgba(255, 76, 0, 0.05);
+}
+
+.markdown-alert-quote,
+.markdown-alert-cite,
+.markdown-alert-example {
+  border-left-color: #9ca3af;
+  background: #f9fafb;
+}
+
+.markdown-alert-note > p,
+.markdown-alert-tip > p,
+.markdown-alert-info > p,
+.markdown-alert-important > p,
+.markdown-alert-warning > p,
+.markdown-alert-caution > p,
+.markdown-alert-abstract > p,
+.markdown-alert-summary > p,
+.markdown-alert-tldr > p,
+.markdown-alert-todo > p,
+.markdown-alert-success > p,
+.markdown-alert-done > p,
+.markdown-alert-question > p,
+.markdown-alert-help > p,
+.markdown-alert-faq > p,
+.markdown-alert-failure > p,
+.markdown-alert-fail > p,
+.markdown-alert-missing > p,
+.markdown-alert-danger > p,
+.markdown-alert-error > p,
+.markdown-alert-bug > p,
+.markdown-alert-example > p,
+.markdown-alert-quote > p,
+.markdown-alert-cite > p {
+  margin: 4px 0;
+  color: #4b5563;
+  font-size: 0.95em;
+  line-height: 1.8;
+  letter-spacing: 0.2px;
+}
+
+.alert-title-note,
+.alert-title-tip,
+.alert-title-hint,
+.alert-title-info,
+.alert-title-abstract,
+.alert-title-summary,
+.alert-title-tldr,
+.alert-title-todo,
+.alert-title-question,
+.alert-title-help,
+.alert-title-faq,
+.alert-title-success,
+.alert-title-check,
+.alert-title-done {
+  color: var(--md-primary-ink);
+}
+
+.alert-title-warning,
+.alert-title-caution,
+.alert-title-attention,
+.alert-title-important,
+.alert-title-danger,
+.alert-title-error,
+.alert-title-failure,
+.alert-title-fail,
+.alert-title-missing,
+.alert-title-bug {
+  color: #ff4c00;
+}
+
+.alert-title-quote,
+.alert-title-cite,
+.alert-title-example {
+  color: #6b7280;
+}
+
+.alert-icon-note,
+.alert-icon-tip,
+.alert-icon-hint,
+.alert-icon-info,
+.alert-icon-abstract,
+.alert-icon-summary,
+.alert-icon-tldr,
+.alert-icon-todo,
+.alert-icon-question,
+.alert-icon-help,
+.alert-icon-faq,
+.alert-icon-success,
+.alert-icon-check,
+.alert-icon-done {
+  fill: var(--md-primary-color);
+}
+
+.alert-icon-warning,
+.alert-icon-caution,
+.alert-icon-attention,
+.alert-icon-important,
+.alert-icon-danger,
+.alert-icon-error,
+.alert-icon-failure,
+.alert-icon-fail,
+.alert-icon-missing,
+.alert-icon-bug {
+  fill: #ff4c00;
+}
+
+.alert-icon-quote,
+.alert-icon-cite,
+.alert-icon-example {
+  fill: #9ca3af;
+}
+
+.markdown-alert-theorem,
+.markdown-alert-lemma,
+.markdown-alert-corollary,
+.markdown-alert-proposition,
+.markdown-alert-definition,
+.markdown-alert-axiom,
+.markdown-alert-postulate,
+.markdown-alert-assumption,
+.markdown-alert-proof,
+.markdown-alert-remark {
+  border-left-color: var(--md-primary-color);
+  background: var(--md-primary-tint);
+}
+
+/* ==================== 分割线：渐隐细线 ==================== */
+hr {
+  height: 1px;
+  margin: calc(2em * var(--md-block-spacing)) 0;
+  border: none;
+  background: linear-gradient(to right, var(--md-primary-line), var(--md-primary-fade));
+  opacity: 1;
+  transform: none;
+  -webkit-transform: none;
+}
+
+/* ==================== 行内代码 ==================== */
+.codespan {
+  margin: 0 2px;
+  padding: 2px 6px;
+  border: none;
+  border-radius: 6px;
+  color: var(--md-primary-ink);
+  background: var(--md-primary-soft);
+  font-size: 0.88em;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+/* ==================== 代码块：贴纸 ==================== */
+pre.code__pre,
+.hljs.code__pre {
+  box-sizing: border-box;
+  margin: 0 0 calc(1.2em * var(--md-block-spacing));
+  border: 1px solid var(--md-primary-edge);
+  border-radius: 10px;
+  background: #f9fafb;
+}
+
+pre.code__pre > code,
+.hljs.code__pre > code {
+  padding: 0.8em 1em;
+  font-size: 0.85em;
+  line-height: 1.8;
+  letter-spacing: 0;
+}
+
+/* ==================== 加粗：荧光笔下划线 ==================== */
+strong {
+  color: var(--md-primary-ink);
+  background: transparent;
+  font-weight: 700;
+  border-bottom: 2px solid var(--md-primary-wash);
+}
+
+em {
+  font-style: italic;
+  color: #4b5563;
+}
+
+.del {
+  color: #d1d5db;
+  text-decoration: line-through;
+}
+
+/* ==================== 链接 ==================== */
+a {
+  color: var(--md-primary-color);
+  text-decoration: none;
+  border-bottom: 1px solid var(--md-primary-line);
+}
+
+/* ==================== 列表：简洁贴纸感 ==================== */
+ul,
+ol {
+  box-sizing: border-box;
+  margin: 0 0 calc(1.1em * var(--md-block-spacing));
+  padding-left: 1.4em;
+  border: none;
+  background: transparent;
+  color: #374151;
+}
+
+li {
+  display: list-item;
+  margin: calc(0.25em * var(--md-block-spacing)) 0;
+  color: #374151;
+  line-height: 1.85;
+  letter-spacing: 0.2px;
+}
+
+ul > li::marker {
+  color: var(--md-primary-color);
+}
+
+ol > li::marker {
+  color: var(--md-primary-color);
+  font-weight: 700;
+}
+
+/* ==================== 图片 ==================== */
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: calc(0.8em * var(--md-block-spacing)) auto;
+  border: 1px solid var(--md-primary-edge);
+  border-radius: 10px;
+  box-shadow: none;
+}
+
+figcaption,
+.md-figcaption {
+  text-align: center;
+  color: #9ca3af;
+  font-size: 0.85em;
+  letter-spacing: 1px;
+}
+
+/* ==================== 表格：淡底表头 ==================== */
+table {
+  margin: 0 0 calc(1.2em * var(--md-block-spacing));
+  border-collapse: collapse;
+  color: #374151;
+  font-size: 0.92em;
+  letter-spacing: 0.2px;
+}
+
+th {
+  padding: 9px 12px;
+  border: none;
+  background: var(--md-primary-soft);
+  color: var(--md-primary-ink);
+  font-weight: 700;
+  font-size: 1em;
+  text-align: left;
+}
+
+td {
+  padding: 9px 12px;
+  border: none;
+  border-bottom: 1px solid #e5e7eb;
+  color: #374151;
+  font-size: 1em;
+  line-height: 1.7;
+}
+
+td strong {
+  color: var(--md-primary-ink);
+}
+
+/* ==================== 脚注 ==================== */
+p.footnotes {
+  margin: calc(1em * var(--md-block-spacing)) 0;
+  color: #9ca3af;
+  font-size: 0.85em;
+  letter-spacing: 0.3px;
+}
+
+/* ==================== 标记类扩展 ==================== */
+.markup-highlight {
+  padding: 2px 5px;
+  border-radius: 6px;
+  background-color: var(--md-primary-wash);
+  color: var(--md-primary-ink);
+}
+
+.markup-underline {
+  text-decoration-color: var(--md-primary-color);
+}
+
+.markup-wavyline {
+  text-decoration-color: var(--md-primary-color);
+}
+
+.markup-superscript {
+  color: var(--md-primary-color);
+  font-size: 0.75em;
+}

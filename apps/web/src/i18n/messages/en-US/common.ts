@@ -222,6 +222,8 @@ export default {
       techblue: { label: `Tech Blue`, desc: `Modern tech vibe` },
       sakura: { label: `Sakura`, desc: `Soft pink` },
       emerald: { label: `Emerald`, desc: `Magazine card` },
+      journal: { label: `Journal`, desc: `Symmetric spread` },
+      notecard: { label: `Note Card`, desc: `Sticker tags` },
     },
     fontFamily: {
       sansSerif: { label: `Sans`, desc: `Font123Abc` },

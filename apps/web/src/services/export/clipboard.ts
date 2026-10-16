@@ -1,3 +1,4 @@
+import { resolvePrimaryPaletteVars } from '@md/shared/configs'
 import { inlineEmojiImagesAsBase64 } from '@/lib/export/inlineEmojiImages'
 import { stripUnresolvedAsyncPlaceholders, waitForPreviewReady } from '@/lib/preview/preview-ready'
 import { useEditorStore } from '@/stores/editor'
@@ -82,16 +83,17 @@ export async function processClipboardContent(primaryColor: string) {
 
     clipboardDiv.querySelectorAll(`a[href^="#"]`).forEach(a => a.removeAttribute(`href`))
 
-    clipboardDiv.innerHTML = clipboardDiv.innerHTML
+    // Derived palette vars (washes, card edges, gradients) resolve to literals:
+    // WeChat keeps no `:root`, so unresolved var() silently loses the colour.
+    clipboardDiv.innerHTML = resolvePrimaryPaletteVars(clipboardDiv.innerHTML
       .replace(/([^-])top:(.*?)em/g, `$1transform: translateY($2em)`)
       .replace(/hsl\(var\(--foreground\)\)/g, `#3f3f3f`)
       .replace(/var\(--blockquote-background\)/g, `#f7f7f7`)
-      .replace(/var\(--md-primary-color\)/g, primaryColor)
       .replace(/var\(--md-font-family\)/g, themeStore.fontFamily)
       .replace(/var\(--md-font-size\)/g, themeStore.fontSize)
       .replace(/var\(--md-line-height\)/g, themeStore.lineHeight)
       .replace(/var\(--md-block-spacing\)/g, themeStore.blockSpacing)
-      .replace(/--md-primary-color:.+?;/g, ``)
+      .replace(/--md-primary-[a-z-]+:[^;]*;/g, ``)
       .replace(/--md-font-family:.+?;/g, ``)
       .replace(/--md-font-size:.+?;/g, ``)
       .replace(/--md-line-height:.+?;/g, ``)
@@ -105,7 +107,7 @@ export async function processClipboardContent(primaryColor: string) {
       .replace(
         /<span class="edgeLabel"([^>]*)><p[^>]*>(.*?)<\/p><\/span>/g,
         `<span class="edgeLabel"$1>$2</span>`,
-      )
+      ), primaryColor)
 
     solveWeChatImage(clipboardDiv)
 

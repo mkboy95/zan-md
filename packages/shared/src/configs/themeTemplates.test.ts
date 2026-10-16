@@ -20,7 +20,11 @@ const readTheme = (file: string) => fs.readFileSync(path.join(themeDir, file), `
 interface TemplateTheme {
   id: string
   file: string
-  /** Signature accent colour, lowercase hex as written in the CSS. */
+  /**
+   * The theme's own accent, lowercase hex. It must NOT appear in the stylesheet:
+   * themes describe structure, colour comes from the theme-colour picker via
+   * `var(--md-primary-*)`. See configs/primaryPalette.ts.
+   */
   accent: string
   /** Primary colour the per-theme defaults must resolve to. */
   primaryColor: string
@@ -36,6 +40,8 @@ const templates: TemplateTheme[] = [
   { id: `techblue`, file: `techblue.css`, accent: `#165dff`, primaryColor: `#165DFF` },
   { id: `sakura`, file: `sakura.css`, accent: `#eba0b6`, primaryColor: `#EBA0B6` },
   { id: `emerald`, file: `emerald.css`, accent: `#059669`, primaryColor: `#059669` },
+  { id: `journal`, file: `journal.css`, accent: `#1f3a5f`, primaryColor: `#1F3A5F` },
+  { id: `notecard`, file: `notecard.css`, accent: `#d97706`, primaryColor: `#D97706` },
 ]
 
 describe.each(templates)(`$id template theme`, ({ id, file, accent, primaryColor }) => {
@@ -52,8 +58,12 @@ describe.each(templates)(`$id template theme`, ({ id, file, accent, primaryColor
     expect(perThemeDefaultSettings(id as never).primaryColor).toBe(primaryColor)
   })
 
-  it(`uses its accent colour in the stylesheet`, () => {
-    expect(css).toContain(accent)
+  it(`never hard-codes its accent: colour comes from the theme-colour picker`, () => {
+    // Themes own the structure; every wash/edge/gradient is derived at runtime
+    // from --md-primary-color, so switching the colour repaints the whole article.
+    expect(css).toContain(`var(--md-primary-`)
+    // Comments may still name the signature colour; the rules themselves must not.
+    expect(cssWithoutComments.toLowerCase()).not.toContain(accent)
   })
 
   it(`paints the h1 as a block heading with a full-width rule and a span ribbon`, () => {

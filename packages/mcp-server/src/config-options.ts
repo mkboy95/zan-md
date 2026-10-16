@@ -31,6 +31,12 @@ export const themeOptions = [
   { value: `orange`, label: `橙心`, desc: `暖橙活力` },
   { value: `ink`, label: `墨黑`, desc: `黑白极简` },
   { value: `safflower`, label: `山吹`, desc: `暖金黄` },
+  { value: `morandi`, label: `莫兰迪`, desc: `低饱和灰调` },
+  { value: `techblue`, label: `科技蓝`, desc: `现代科技感` },
+  { value: `sakura`, label: `樱花粉`, desc: `柔和粉色` },
+  { value: `emerald`, label: `祖母绿`, desc: `杂志卡片` },
+  { value: `journal`, label: `杂志刊头`, desc: `对称通栏` },
+  { value: `notecard`, label: `便签卡`, desc: `贴纸标签` },
 ] as const
 
 export const fontFamilyOptions = [

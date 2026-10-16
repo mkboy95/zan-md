@@ -1,22 +1,27 @@
 /**
  * MD 樱花粉主题 — 柔和粉色
  *
- * 设计语言：以樱花粉（#EBA0B6）为主，深粉（#D96B8F）作强调；
- * 浅粉底、圆角、柔和光晕，走「甜美温柔」的少女感路线，
- * 适合情感、生活、穿搭、手账类内容。
+ * 设计语言：浅粉底、圆角、柔和光晕，走「甜美温柔」的少女感路线。
  *
- * 微信兼容约定（与其它内置主题一致）：
- *   - 不用 color-mix()，一律 rgba / hex 字面量
- *   - 间距乘 var(--md-block-spacing)，跟随「段间距」设置
- *   - 字号 calc(var(--md-font-size) * N)
+ * 配色约定：**所有强调色都取自 var(--md-primary-*)**（由主题色按钮实时推导，
+ * 见 primaryPalette.ts）。原来写死的两个粉色阶（主色 / 加深）分别映射到
+ * --md-primary-color 与 --md-primary-ink，淡底按 alpha 就近映射；
+ * 通篇浅粉底改用 --md-primary-fade（3%）。
+ *
+ * 实现约定（与其它内置主题一致）：
+ *   - 不用 color-mix()、不用伪元素 content:（微信端不认）
+ *   - 字号用 calc(var(--md-font-size) * N)
+ *   - 所有间距乘 var(--md-block-spacing)，跟随「段间距」设置
  */
 
-/* ==================== 整体浅粉底 ==================== */
+/* ==================== 整体淡粉底 ====================
+ * 3% 主色淡底，观感等价于原来的浅粉底，但会跟着主题色走。
+ */
 section {
-  background-color: #fff6f9;
+  background-color: var(--md-primary-fade);
 }
 
-/* ==================== H1：粉底白字胶囊 + 通栏粉线 ====================
+/* ==================== H1：主色胶囊 + 通栏主色线 ====================
  * 三段式结构：h1 block 化画通栏底线，丝带画在内层 span 上。
  */
 h1 {
@@ -24,7 +29,7 @@ h1 {
   box-sizing: border-box;
   margin: calc(2.2em * var(--md-block-spacing)) 0 calc(1.2em * var(--md-block-spacing));
   padding: 0;
-  border-bottom: 2px solid #eba0b6;
+  border-bottom: 2px solid var(--md-primary-color);
   background: transparent;
   font-size: calc(var(--md-font-size) * 1.3);
   font-weight: 700;
@@ -39,23 +44,23 @@ h1 > span {
   padding: 0.32em 0.95em;
   border-radius: 1.1em;
   color: #ffffff;
-  background-color: #eba0b6;
-  background-image: linear-gradient(135deg, #f2b6c8 0%, #d96b8f 100%);
-  box-shadow: 0 3px 10px rgba(217, 107, 143, 0.25);
+  background-color: var(--md-primary-color);
+  background-image: linear-gradient(135deg, var(--md-primary-color) 0%, var(--md-primary-ink) 100%);
+  box-shadow: 0 3px 10px var(--md-primary-halo);
   font-size: calc(var(--md-font-size) * 1.2);
   font-weight: 700;
   line-height: 1.4;
   letter-spacing: 0.3px;
 }
 
-/* ==================== H2：主色字 + 深粉底线 ==================== */
+/* ==================== H2：加深主色字 + 主色底线 ==================== */
 h2 {
   display: block;
   margin: calc(2em * var(--md-block-spacing)) 0 calc(0.9em * var(--md-block-spacing));
   padding: 0 0 0.34em;
-  border-bottom: 3px solid #d96b8f;
+  border-bottom: 3px solid var(--md-primary-color);
   border-radius: 0 0 6px 6px;
-  color: #d96b8f;
+  color: var(--md-primary-ink);
   background: transparent;
   font-size: calc(var(--md-font-size) * 1.22);
   font-weight: 700;
@@ -63,12 +68,12 @@ h2 {
   text-align: left;
 }
 
-/* ==================== H3：深粉竖条 + 主色字 ==================== */
+/* ==================== H3：主色竖条 + 加深主色字 ==================== */
 h3 {
   margin: calc(1.6em * var(--md-block-spacing)) 0 calc(0.6em * var(--md-block-spacing));
   padding: 0 0 0 12px;
-  border-left: 4px solid #eba0b6;
-  color: #d96b8f;
+  border-left: 4px solid var(--md-primary-color);
+  color: var(--md-primary-ink);
   background: transparent;
   font-size: calc(var(--md-font-size) * 1.125);
   font-weight: 700;
@@ -79,7 +84,7 @@ h3 {
 /* ==================== H4 / H5 / H6 ==================== */
 h4 {
   margin: calc(1.4em * var(--md-block-spacing)) 0 calc(0.5em * var(--md-block-spacing));
-  color: #eba0b6;
+  color: var(--md-primary-color);
   font-size: var(--md-font-size);
   font-weight: 700;
   line-height: 1.6;
@@ -89,7 +94,7 @@ h4 {
 h5,
 h6 {
   margin: calc(1.2em * var(--md-block-spacing)) 0 calc(0.5em * var(--md-block-spacing));
-  color: #eba0b6;
+  color: var(--md-primary-color);
   font-size: var(--md-font-size);
   font-weight: 700;
   line-height: 1.6;
@@ -99,31 +104,31 @@ h6 {
 /* ==================== 正文 ==================== */
 p {
   margin: calc(1.1em * var(--md-block-spacing)) 8px;
-  color: #5a4a4f;
+  color: #4b5563;
   font-size: 1em;
   line-height: 1.85;
   letter-spacing: 0.3px;
 }
 
-/* ==================== 引用：浅粉底 + 深粉左边框 ==================== */
+/* ==================== 引用：主色淡底 + 主色左边框 ==================== */
 blockquote {
   margin: 0 8px calc(1.2em * var(--md-block-spacing));
   padding: 12px 16px;
-  border-left: 4px solid #d96b8f;
+  border-left: 4px solid var(--md-primary-color);
   border-radius: 0 10px 10px 0;
-  background: rgba(217, 107, 143, 0.1);
+  background: var(--md-primary-tint);
   font-style: normal;
-  color: #7a5a63;
+  color: var(--md-primary-ink);
 }
 
 blockquote > p {
   margin: 4px 0;
-  color: #7a5a63;
+  color: var(--md-primary-ink);
   font-size: 0.96em;
   line-height: 1.8;
 }
 
-/* ==================== 提示框：樱花粉一系 ==================== */
+/* ==================== 提示框：主色一系 ==================== */
 .markdown-alert-note,
 .markdown-alert-tip,
 .markdown-alert-info,
@@ -152,7 +157,7 @@ blockquote > p {
   padding: 12px 16px;
   border-left: none;
   border-radius: 10px;
-  background: rgba(217, 107, 143, 0.1);
+  background: var(--md-primary-tint);
   font-style: normal;
 }
 
@@ -180,7 +185,7 @@ blockquote > p {
 .alert-title-example,
 .alert-title-quote,
 .alert-title-cite {
-  color: #d96b8f;
+  color: var(--md-primary-ink);
 }
 
 .alert-icon-note,
@@ -207,16 +212,16 @@ blockquote > p {
 .alert-icon-example,
 .alert-icon-quote,
 .alert-icon-cite {
-  fill: #eba0b6;
+  fill: var(--md-primary-color);
 }
 
-/* ==================== 分割线：粉线两端淡出 ==================== */
+/* ==================== 分割线：主色线两端淡出 ==================== */
 hr {
   height: 2px;
   margin: calc(2.5em * var(--md-block-spacing)) 0;
   border: none;
   border-radius: 1px;
-  background: linear-gradient(90deg, transparent, #eba0b6 50%, transparent);
+  background: linear-gradient(90deg, transparent, var(--md-primary-line) 50%, transparent);
   opacity: 0.7;
   transform: none;
   -webkit-transform: none;
@@ -228,8 +233,8 @@ hr {
   padding: 3px 6px;
   border: none;
   border-radius: 6px;
-  color: #d96b8f;
-  background: rgba(217, 107, 143, 0.12);
+  color: var(--md-primary-ink);
+  background: var(--md-primary-soft);
   font-size: 0.9em;
   font-weight: 600;
 }
@@ -239,9 +244,9 @@ pre.code__pre,
 .hljs.code__pre {
   margin: calc(0.8em * var(--md-block-spacing)) 8px;
   padding: 0;
-  border: 1px solid rgba(217, 107, 143, 0.2);
+  border: 1px solid var(--md-primary-edge);
   border-radius: 10px;
-  background: #fff7fa;
+  background: #f9fafb;
 }
 
 pre.code__pre > code,
@@ -253,25 +258,25 @@ pre.code__pre > code,
 
 /* ==================== 加粗 / 斜体 / 删除线 ==================== */
 strong {
-  color: #d96b8f;
+  color: var(--md-primary-ink);
   font-weight: 700;
 }
 
 em {
   font-style: italic;
-  color: #eba0b6;
+  color: var(--md-primary-color);
 }
 
 .del {
-  color: #c9a9b3;
+  color: #9ca3af;
   text-decoration: line-through;
 }
 
 /* ==================== 链接 ==================== */
 a {
-  color: #d96b8f;
+  color: var(--md-primary-ink);
   text-decoration: none;
-  border-bottom: 1px solid rgba(217, 107, 143, 0.4);
+  border-bottom: 1px solid var(--md-primary-line);
 }
 
 /* ==================== 列表 ==================== */
@@ -279,17 +284,17 @@ ul,
 ol {
   margin: 0 8px calc(1.2em * var(--md-block-spacing));
   padding-left: 1.3em;
-  color: #5a4a4f;
+  color: #4b5563;
 }
 
 li {
   margin: calc(0.3em * var(--md-block-spacing)) 0;
-  color: #5a4a4f;
+  color: #4b5563;
   line-height: 1.85;
 }
 
 li::marker {
-  color: #eba0b6;
+  color: var(--md-primary-color);
 }
 
 /* ==================== 图片 ==================== */
@@ -300,35 +305,35 @@ img {
   margin: calc(0.6em * var(--md-block-spacing)) auto;
   border: none;
   border-radius: 10px;
-  box-shadow: 0 3px 12px rgba(217, 107, 143, 0.16);
+  box-shadow: 0 3px 12px var(--md-primary-halo);
 }
 
 figcaption,
 .md-figcaption {
   text-align: center;
-  color: #c9a9b3;
+  color: #9ca3af;
   font-size: 0.8em;
   letter-spacing: 0.5px;
 }
 
 /* ==================== 表格 ==================== */
 table {
-  color: #5a4a4f;
+  color: #4b5563;
 }
 
 th {
   padding: 9px 12px;
-  border: 1px solid rgba(217, 107, 143, 0.22);
-  background: rgba(217, 107, 143, 0.1);
-  color: #d96b8f;
+  border: 1px solid var(--md-primary-edge);
+  background: var(--md-primary-soft);
+  color: var(--md-primary-ink);
   font-weight: 700;
   font-size: 0.95em;
 }
 
 td {
   padding: 9px 12px;
-  border: 1px solid #f6e2ea;
-  color: #5a4a4f;
+  border: 1px solid #e5e7eb;
+  color: #4b5563;
   font-size: 0.95em;
   line-height: 1.6;
 }
@@ -336,7 +341,7 @@ td {
 /* ==================== 脚注 ==================== */
 p.footnotes {
   margin: calc(0.8em * var(--md-block-spacing)) 8px;
-  color: #c9a9b3;
+  color: #9ca3af;
   font-size: 0.85em;
 }
 
@@ -344,14 +349,14 @@ p.footnotes {
 .markup-highlight {
   padding: 2px 5px;
   border-radius: 4px;
-  background-color: #eba0b6;
-  color: #fff;
+  background-color: var(--md-primary-wash);
+  color: var(--md-primary-ink);
 }
 
 .markup-underline {
-  text-decoration-color: #d96b8f;
+  text-decoration-color: var(--md-primary-line);
 }
 
 .markup-wavyline {
-  text-decoration-color: #d96b8f;
+  text-decoration-color: var(--md-primary-line);
 }

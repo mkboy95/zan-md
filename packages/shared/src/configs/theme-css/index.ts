@@ -7,7 +7,9 @@ import dopamineCSS from './dopamine.css?raw'
 import emeraldCSS from './emerald.css?raw'
 import graceCSS from './grace.css?raw'
 import inkCSS from './ink.css?raw'
+import journalCSS from './journal.css?raw'
 import morandiCSS from './morandi.css?raw'
+import notecardCSS from './notecard.css?raw'
 import orangeCSS from './orange.css?raw'
 import roseCSS from './rose.css?raw'
 import safflowerCSS from './safflower.css?raw'
@@ -32,6 +34,8 @@ export const themeMap = {
   techblue: techblueCSS,
   sakura: sakuraCSS,
   emerald: emeraldCSS,
+  journal: journalCSS,
+  notecard: notecardCSS,
 } as const
 
 export type BuiltinThemeName = keyof typeof themeMap

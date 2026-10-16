@@ -222,6 +222,8 @@ export default {
       techblue: { label: `テックブルー`, desc: `モダンな科技感` },
       sakura: { label: `サクラ`, desc: `柔らかいピンク` },
       emerald: { label: `エメラルド`, desc: `マガジンカード` },
+      journal: { label: `ジャーナル`, desc: `シンメトリー段組み` },
+      notecard: { label: `メモカード`, desc: `ステッカータグ` },
     },
     fontFamily: {
       sansSerif: { label: `ゴシック`, desc: `Font123Abc` },

@@ -73,11 +73,23 @@ export const themeOptionsMap = {
     value: `sakura`,
     desc: `柔和粉色`,
   },
-  // 祖母绿：卡片式杂志排版（翡翠描边卡片 + 超粗深墨标题 + 胶囊小标题）
+  // 祖母绿：整篇大卡片（描边圆角卡 + 章节条 + 胶囊小标题 + 二级卡片）
   emerald: {
     label: `祖母绿`,
     value: `emerald`,
     desc: `杂志卡片`,
+  },
+  // 杂志刊头：对称通栏（双线刊头 + 居中栏目名 + 左右竖线引语）
+  journal: {
+    label: `杂志刊头`,
+    value: `journal`,
+    desc: `对称通栏`,
+  },
+  // 便签卡：贴纸版式（实底标签标题 + 便签贴纸块 + 荧光下划线）
+  notecard: {
+    label: `便签卡`,
+    value: `notecard`,
+    desc: `贴纸标签`,
   },
 }
 
@@ -146,5 +158,15 @@ export const themeOptions: IConfigOption<ThemeName>[] = [
     label: `祖母绿`,
     value: `emerald`,
     desc: `杂志卡片`,
+  },
+  {
+    label: `杂志刊头`,
+    value: `journal`,
+    desc: `对称通栏`,
+  },
+  {
+    label: `便签卡`,
+    value: `notecard`,
+    desc: `贴纸标签`,
   },
 ]

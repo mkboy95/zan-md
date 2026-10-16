@@ -1,6 +1,7 @@
 /** Dynamic CSS variable generation from editor config */
 
 import type { HeadingLevel, HeadingStyles, HeadingStyleType } from '@md/shared/configs'
+import { generatePrimaryPaletteCSS } from '@md/shared/configs'
 
 export interface CSSVariableConfig {
   primaryColor: string
@@ -33,10 +34,15 @@ export function generateCSSVariables(config: CSSVariableConfig): string {
     ? `\n  --md-blockquote-background: ${config.blockquoteBackground};`
     : ``
 
+  // Derived from the picked colour so themes can define structure (washes,
+  // card edges, gradients) without hard-coding any accent of their own.
+  const palette = generatePrimaryPaletteCSS(config.primaryColor)
+
   return `
 :root {
   /* Theme config */
   --md-primary-color: ${config.primaryColor};
+${palette}
   --md-font-family: ${config.fontFamily};
   --md-font-size: ${config.fontSize};
   --md-line-height: ${config.lineHeight || DEFAULT_LINE_HEIGHT};

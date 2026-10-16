@@ -222,6 +222,8 @@ export default {
       techblue: { label: `科技藍`, desc: `現代科技感` },
       sakura: { label: `櫻花粉`, desc: `柔和粉色` },
       emerald: { label: `祖母綠`, desc: `雜誌卡片` },
+      journal: { label: `雜誌刊頭`, desc: `對稱通欄` },
+      notecard: { label: `便籤卡`, desc: `貼紙標籤` },
     },
     fontFamily: {
       sansSerif: { label: `無襯線`, desc: `字型123Abc` },
