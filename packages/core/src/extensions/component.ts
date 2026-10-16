@@ -138,6 +138,31 @@ export const BUILT_IN_COMPONENTS: CustomComponentDef[] = [
     ],
     example: `<Emoji id="liulei" alt="流泪" />`,
   },
+  {
+    id: `builtin-chat`,
+    name: `ChatBlock`,
+    description: `对话块组件，将 [A]/[B] 角色消息渲染为左右聊天气泡`,
+    builtIn: true,
+    props: [
+      { name: `title`, description: `对话标题（可选）` },
+      { name: `me`, description: `己方角色代号，显示在右侧（如 A 或 B）`, default: `B` },
+      { name: `nameA`, description: `角色 A 的显示名称（可选）` },
+      { name: `nameB`, description: `角色 B 的显示名称（可选）` },
+      { name: `avatarA`, description: `角色 A 头像图片 URL（可选）` },
+      { name: `avatarB`, description: `角色 B 头像图片 URL（可选）` },
+      {
+        name: `messages`,
+        description: `JSON 数组消息，可替代 [A]/[B] 正文写法`,
+        default: `[["A","在吗？帮我看下这段代码"],["B","在的，发过来吧"],["A","好的，谢谢！"]]`,
+      },
+    ],
+    template: ``,
+    example: `<ChatBlock title="项目群" me="B" nameA="小红" nameB="我">
+[A] 在吗？帮我看下这段代码
+[B] 在的，发过来吧
+[A] 好的，谢谢！
+</ChatBlock>`,
+  },
 ]
 
 /** Names reserved for system inline components; not parsed as block tags. */
@@ -261,9 +286,136 @@ function renderInfoGrid(props: Record<string, string>): string {
   return html
 }
 
+// Chat block (WeChat-safe): renders [A]/[B] role messages as left/right bubbles.
+// No color-mix(), no pseudo-element content — only block/flex + rounded bubbles.
+
+interface ChatMessage {
+  role: string
+  text: string
+}
+
+const CHAT_LINE_REGEX = /^\[([^\]]+)\](.*)$/
+
+/**
+ * Parse raw `[Role] text` lines into messages. A line that does not match the
+ * `[Role]` prefix is treated as a continuation of the previous bubble, so
+ * multi-line messages stay grouped.
+ */
+function parseChatChildren(children: string): ChatMessage[] {
+  const messages: ChatMessage[] = []
+  let last: ChatMessage | null = null
+  for (const rawLine of children.split(`\n`)) {
+    const line = rawLine.trim()
+    if (!line)
+      continue
+    const match = line.match(CHAT_LINE_REGEX)
+    if (match) {
+      const message: ChatMessage = { role: match[1]!.trim(), text: match[2]!.trimStart() }
+      messages.push(message)
+      last = message
+    }
+    else if (last) {
+      last.text += `\n${line}`
+    }
+  }
+  return messages
+}
+
+/**
+ * Parse a JSON array of messages. Accepts both `[role, text]` tuples and
+ * `{ role, text }` objects as items.
+ */
+function parseChatMessages(raw: string): ChatMessage[] {
+  let data: unknown = null
+  try {
+    data = JSON.parse(raw)
+  }
+  catch {
+    return []
+  }
+  if (!Array.isArray(data))
+    return []
+  return data.map((item): ChatMessage => {
+    if (Array.isArray(item))
+      return { role: String(item[0] ?? ``), text: String(item[1] ?? ``) }
+    if (item && typeof item === `object`) {
+      const obj = item as Record<string, unknown>
+      return { role: String(obj.role ?? ``), text: String(obj.text ?? ``) }
+    }
+    return { role: ``, text: String(item ?? ``) }
+  })
+}
+
+function chatDisplayName(role: string, props: Record<string, string>): string {
+  if (role === `A`)
+    return props.nameA || `A`
+  if (role === `B`)
+    return props.nameB || `B`
+  return role
+}
+
+function chatAvatarUrl(role: string, props: Record<string, string>): string {
+  if (role === `A`)
+    return props.avatarA || ``
+  if (role === `B`)
+    return props.avatarB || ``
+  return ``
+}
+
+/** Avatar: image when a URL is given, otherwise a neutral initial block. */
+function renderChatAvatar(role: string, props: Record<string, string>): string {
+  const url = chatAvatarUrl(role, props)
+  if (url) {
+    return `<div class="md-chat-avatar"><img src="${escapeHtml(url)}" alt="" style="width:36px;height:36px;border-radius:6px;object-fit:cover;display:block;" /></div>`
+  }
+  const name = chatDisplayName(role, props)
+  const letter = name ? escapeHtml(name.slice(0, 1)) : `?`
+  return `<div class="md-chat-avatar" style="width:36px;height:36px;border-radius:6px;background:#c8c8c8;color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;flex:0 0 auto;">${letter}</div>`
+}
+
+/**
+ * Render a WeChat-safe chat block: an optional title plus a row of bubbles per
+ * message. The `me` role is right-aligned; others are left-aligned.
+ */
+function renderChatBlock(props: Record<string, string>): string {
+  const children = (props.children || ``).trim()
+  // Prefer inline [A]/[B] lines; fall back to the JSON `messages` prop.
+  const messages = children ? parseChatChildren(children) : parseChatMessages(props.messages || ``)
+
+  const title = props.title ? escapeHtml(props.title) : ``
+  const me = props.me || `B`
+
+  const rows = messages.map((message) => {
+    const isMe = message.role === me
+    const name = escapeHtml(chatDisplayName(message.role, props))
+    const text = escapeHtml(message.text)
+    const avatar = renderChatAvatar(message.role, props)
+    const bubbleBg = isMe ? `#95ec69` : `#ffffff`
+    const bodyAlign = isMe ? `text-align:right;` : ``
+    const bubbleMargin = isMe ? `margin-left:8px;margin-right:0;` : `margin-right:8px;margin-left:0;`
+    return `<div class="md-chat-row ${isMe ? `md-chat-right` : `md-chat-left`}" style="display:flex;align-items:flex-start;margin:10px 0;${isMe ? `flex-direction:row-reverse;` : ``}">
+  ${avatar}
+  <div class="md-chat-body" style="max-width:75%;${bubbleMargin}${bodyAlign}">
+    <div class="md-chat-name" style="font-size:12px;color:#999;margin:0 0 4px;${bodyAlign}">${name}</div>
+    <div class="md-chat-bubble" style="display:inline-block;padding:8px 12px;border-radius:8px;font-size:14px;line-height:1.5;color:#333;background:${bubbleBg};text-align:left;word-break:break-word;white-space:pre-wrap;">${text}</div>
+  </div>
+</div>`
+  }).join(``)
+
+  const titleHtml = title
+    ? `<p class="md-chat-title" style="font-size:13px;font-weight:600;color:#666;margin:0 0 8px;">${title}</p>`
+    : ``
+
+  return `<section class="md-chat" style="margin:16px 0;padding:12px;box-sizing:border-box;background:var(--md-comp-bg-secondary,#f5f5f5);border-radius:8px;">
+  ${titleHtml}
+  ${rows}
+</section>`
+}
+
 const SPECIAL_RENDERERS: Record<string, (props: Record<string, string>) => string> = {
   TableBlock: renderTableBlock,
   InfoGrid: renderInfoGrid,
+  ChatBlock: renderChatBlock,
 }
 
 // TipBlock type colors

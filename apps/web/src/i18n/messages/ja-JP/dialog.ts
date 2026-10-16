@@ -255,6 +255,18 @@ export default {
       label: `文字数カウント`,
       hint: `プレビュー上部に文字数と読了時間を表示`,
     },
+    typographyEnhance: {
+      label: `タイポグラフィ強化`,
+      hint: `外部リンクの脚注化や画像ギャラリーなどの拡張表示を制御`,
+    },
+    autoLinkFootnote: {
+      label: `外部リンク→脚注`,
+      hint: `本文中の外部リンクを脚注に変換し、末尾に参考文献リストを生成`,
+    },
+    imageGallery: {
+      label: `画像ギャラリー`,
+      hint: `連続する複数画像をレスポンシブなギャラリーとして配置`,
+    },
   },
   pdfExport: {
     title: `PDF をエクスポート`,

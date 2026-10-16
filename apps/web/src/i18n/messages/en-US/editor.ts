@@ -378,6 +378,18 @@ export default {
           align: `Alignment when on its own line: left, center, or right (optional)`,
         },
       },
+      ChatBlock: {
+        description: `Chat block that renders [A]/[B] role messages as chat bubbles`,
+        props: {
+          title: `Chat title (optional)`,
+          me: `Your role code shown on the right, e.g. A or B`,
+          nameA: `Display name for role A (optional)`,
+          nameB: `Display name for role B (optional)`,
+          avatarA: `Avatar image URL for role A (optional)`,
+          avatarB: `Avatar image URL for role B (optional)`,
+          messages: `JSON array of messages; alternative to [A]/[B] syntax`,
+        },
+      },
     },
   },
   mpAccount: {

@@ -40,7 +40,7 @@ const {
   enableScrollSync,
 } = storeToRefs(uiStore)
 
-const { isCountStatus } = storeToRefs(themeStore)
+const { isCountStatus, autoLinkFootnote, imageGallery } = storeToRefs(themeStore)
 
 const activeTab = ref(`general`)
 
@@ -69,6 +69,16 @@ const localeOptions = computed(() =>
 
 function setCountStatus(value: boolean) {
   isCountStatus.value = value
+  editorRefresh()
+}
+
+function setAutoLinkFootnote(value: boolean) {
+  autoLinkFootnote.value = value
+  editorRefresh()
+}
+
+function setImageGallery(value: boolean) {
+  imageGallery.value = value
   editorRefresh()
 }
 
@@ -209,6 +219,43 @@ function onLocaleChange(value: string) {
             class="shrink-0"
             :model-value="isCountStatus"
             @update:model-value="setCountStatus($event)"
+          />
+        </div>
+
+        <div class="mt-4 mb-1 text-sm font-medium text-foreground">
+          {{ t('preferences.typographyEnhance.label') }}
+        </div>
+        <p class="mb-2 text-xs text-muted-foreground">
+          {{ t('preferences.typographyEnhance.hint') }}
+        </p>
+
+        <div class="flex items-center justify-between gap-4 border-b py-3">
+          <div class="min-w-0 space-y-0.5">
+            <Label for="pref-image-gallery">{{ t('preferences.imageGallery.label') }}</Label>
+            <p class="text-xs text-muted-foreground">
+              {{ t('preferences.imageGallery.hint') }}
+            </p>
+          </div>
+          <Switch
+            id="pref-image-gallery"
+            class="shrink-0"
+            :model-value="imageGallery"
+            @update:model-value="setImageGallery($event)"
+          />
+        </div>
+
+        <div class="flex items-center justify-between gap-4 py-3">
+          <div class="min-w-0 space-y-0.5">
+            <Label for="pref-autolink-footnote">{{ t('preferences.autoLinkFootnote.label') }}</Label>
+            <p class="text-xs text-muted-foreground">
+              {{ t('preferences.autoLinkFootnote.hint') }}
+            </p>
+          </div>
+          <Switch
+            id="pref-autolink-footnote"
+            class="shrink-0"
+            :model-value="autoLinkFootnote"
+            @update:model-value="setAutoLinkFootnote($event)"
           />
         </div>
       </TabsContent>

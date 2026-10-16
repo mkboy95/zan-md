@@ -255,6 +255,18 @@ export default {
       label: `Word count`,
       hint: `Show word count and reading time at the top of the preview`,
     },
+    typographyEnhance: {
+      label: `Typography enhancements`,
+      hint: `Toggle layout helpers such as footnote links and image galleries`,
+    },
+    autoLinkFootnote: {
+      label: `External links → footnotes`,
+      hint: `Turn inline external links into footnotes and list references at the end`,
+    },
+    imageGallery: {
+      label: `Image gallery`,
+      hint: `Arrange consecutive images into a responsive gallery`,
+    },
   },
   pdfExport: {
     title: `Export PDF`,

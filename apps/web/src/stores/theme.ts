@@ -95,6 +95,8 @@ export const useThemeStore = defineStore(`theme`, () => {
 
   const isCiteStatus = store.reactive(`isCiteStatus`, defaultStyleConfig.isCiteStatus)
   const isCountStatus = store.reactive(`isCountStatus`, defaultStyleConfig.isCountStatus)
+  const autoLinkFootnote = store.reactive(`autoLinkFootnote`, false)
+  const imageGallery = store.reactive(`imageGallery`, true)
   const isUseIndent = store.reactive(addPrefix(`use_indent`), false)
   const isUseJustify = store.reactive(addPrefix(`use_justify`), false)
   const legend = store.reactive(`legend`, defaultStyleConfig.legend)
@@ -106,6 +108,8 @@ export const useThemeStore = defineStore(`theme`, () => {
   const toggleShowLineNumber = useToggle(isShowLineNumber)
   const toggleCiteStatus = useToggle(isCiteStatus)
   const toggleCountStatus = useToggle(isCountStatus)
+  const toggleAutoLinkFootnote = useToggle(autoLinkFootnote)
+  const toggleImageGallery = useToggle(imageGallery)
   const toggleUseIndent = useToggle(isUseIndent)
   const toggleUseJustify = useToggle(isUseJustify)
 
@@ -116,6 +120,8 @@ export const useThemeStore = defineStore(`theme`, () => {
     }
     isCiteStatus.value = defaultStyleConfig.isCiteStatus
     isCountStatus.value = defaultStyleConfig.isCountStatus
+    autoLinkFootnote.value = false
+    imageGallery.value = true
     legend.value = defaultStyleConfig.legend
     isUseIndent.value = false
     isUseJustify.value = false
@@ -204,6 +210,8 @@ export const useThemeStore = defineStore(`theme`, () => {
     isShowLineNumber,
     isCiteStatus,
     isCountStatus,
+    autoLinkFootnote,
+    imageGallery,
     isUseIndent,
     isUseJustify,
     previewWidth,
@@ -212,6 +220,8 @@ export const useThemeStore = defineStore(`theme`, () => {
     toggleShowLineNumber,
     toggleCiteStatus,
     toggleCountStatus,
+    toggleAutoLinkFootnote,
+    toggleImageGallery,
     toggleUseIndent,
     toggleUseJustify,
     resetStyle,

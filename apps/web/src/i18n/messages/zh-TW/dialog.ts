@@ -255,6 +255,18 @@ export default {
       label: `字數統計`,
       hint: `在預覽文章頂部顯示字數與閱讀時間`,
     },
+    typographyEnhance: {
+      label: `排版增強`,
+      hint: `控制外鏈轉腳註與圖片畫廊等排版增強能力`,
+    },
+    autoLinkFootnote: {
+      label: `外鏈轉腳註`,
+      hint: `將正文中的外鏈轉為腳註，並在文末生成參考文獻列表`,
+    },
+    imageGallery: {
+      label: `圖片畫廊`,
+      hint: `將連續的多張圖片排布為響應式畫廊`,
+    },
   },
   pdfExport: {
     title: `匯出 PDF`,

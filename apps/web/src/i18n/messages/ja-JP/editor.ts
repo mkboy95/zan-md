@@ -378,6 +378,18 @@ export default {
           align: `単独行のときの揃え：left、center、right（任意）`,
         },
       },
+      ChatBlock: {
+        description: `[A]/[B] ロールのメッセージをチャット吹き出しとして描画する対話ブロック`,
+        props: {
+          title: `チャットのタイトル（任意）`,
+          me: `右側に表示する自分のロール（A や B など）`,
+          nameA: `ロール A の表示名（任意）`,
+          nameB: `ロール B の表示名（任意）`,
+          avatarA: `ロール A のアバター画像 URL（任意）`,
+          avatarB: `ロール B のアバター画像 URL（任意）`,
+          messages: `JSON 配列のメッセージ。[A]/[B] 記法の代わりに利用`,
+        },
+      },
     },
   },
   mpAccount: {

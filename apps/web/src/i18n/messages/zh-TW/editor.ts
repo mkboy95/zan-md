@@ -378,6 +378,18 @@ export default {
           align: `獨佔一行時的對齊：left、center、right（可選）`,
         },
       },
+      ChatBlock: {
+        description: `對話塊元件，將 [A]/[B] 角色訊息渲染為聊天气泡`,
+        props: {
+          title: `對話標題（可選）`,
+          me: `己方角色代號（顯示在右側），如 A 或 B`,
+          nameA: `角色 A 的顯示名稱（可選）`,
+          nameB: `角色 B 的顯示名稱（可選）`,
+          avatarA: `角色 A 頭像圖片 URL（可選）`,
+          avatarB: `角色 B 頭像圖片 URL（可選）`,
+          messages: `JSON 陣列訊息，可替代 [A]/[B] 正文寫法`,
+        },
+      },
     },
   },
   mpAccount: {

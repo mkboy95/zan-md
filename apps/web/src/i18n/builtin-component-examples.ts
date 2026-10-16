@@ -10,6 +10,11 @@ const EXAMPLES: Record<AppLocale, Record<string, string>> = {
     InfoGrid: `<InfoGrid items='[{"label":"作者","value":"yanglbme"},{"label":"版本","value":"v1.0"},{"label":"许可证","value":"MIT"},{"label":"语言","value":"TypeScript"}]' cols="2" />`,
     BadgeGroup: `<BadgeGroup tags='["Vue 3","TypeScript","Vite","Tailwind CSS"]' color="#07c160" />`,
     Emoji: `<Emoji id="liulei" alt="流泪" />`,
+    ChatBlock: `<ChatBlock title="项目群" me="B" nameA="小红" nameB="我">
+[A] 在吗？帮我看下这段代码
+[B] 在的，发过来吧
+[A] 好的，谢谢！
+</ChatBlock>`,
   },
   'zh-TW': {
     MpProfile: `<MpProfile mpId="MzIxNjA5ODQ0OQ==" nickname="Doocs" headimg="https://cdn-doocs.oss-cn-shenzhen.aliyuncs.com/gh/doocs/md/images/mp-logo.png" signature="GitHub 開源組織" serviceType="1" verifyStatus="1" />`,
@@ -20,6 +25,11 @@ const EXAMPLES: Record<AppLocale, Record<string, string>> = {
     InfoGrid: `<InfoGrid items='[{"label":"作者","value":"yanglbme"},{"label":"版本","value":"v1.0"},{"label":"授權條款","value":"MIT"},{"label":"語言","value":"TypeScript"}]' cols="2" />`,
     BadgeGroup: `<BadgeGroup tags='["Vue 3","TypeScript","Vite","Tailwind CSS"]' color="#07c160" />`,
     Emoji: `<Emoji id="liulei" alt="流淚" />`,
+    ChatBlock: `<ChatBlock title="專案群" me="B" nameA="小紅" nameB="我">
+[A] 在嗎？幫我看一下這段程式碼
+[B] 在的，傳過來吧
+[A] 好的，謝謝！
+</ChatBlock>`,
   },
   'en-US': {
     MpProfile: `<MpProfile mpId="MzIxNjA5ODQ0OQ==" nickname="Doocs" headimg="https://cdn-doocs.oss-cn-shenzhen.aliyuncs.com/gh/doocs/md/images/mp-logo.png" signature="Open-source organization on GitHub" serviceType="1" verifyStatus="1" />`,
@@ -30,6 +40,11 @@ const EXAMPLES: Record<AppLocale, Record<string, string>> = {
     InfoGrid: `<InfoGrid items='[{"label":"Author","value":"yanglbme"},{"label":"Version","value":"v1.0"},{"label":"License","value":"MIT"},{"label":"Language","value":"TypeScript"}]' cols="2" />`,
     BadgeGroup: `<BadgeGroup tags='["Vue 3","TypeScript","Vite","Tailwind CSS"]' color="#07c160" />`,
     Emoji: `<Emoji id="liulei" alt="tears" />`,
+    ChatBlock: `<ChatBlock title="Project group" me="B" nameA="Xiaohong" nameB="Me">
+[A] Are you there? Help me check this code
+[B] Sure, send it over
+[A] Thanks!
+</ChatBlock>`,
   },
   'ja-JP': {
     MpProfile: `<MpProfile mpId="MzIxNjA5ODQ0OQ==" nickname="Doocs" headimg="https://cdn-doocs.oss-cn-shenzhen.aliyuncs.com/gh/doocs/md/images/mp-logo.png" signature="GitHub のオープンソース組織" serviceType="1" verifyStatus="1" />`,
@@ -40,6 +55,11 @@ const EXAMPLES: Record<AppLocale, Record<string, string>> = {
     InfoGrid: `<InfoGrid items='[{"label":"作者","value":"yanglbme"},{"label":"バージョン","value":"v1.0"},{"label":"ライセンス","value":"MIT"},{"label":"言語","value":"TypeScript"}]' cols="2" />`,
     BadgeGroup: `<BadgeGroup tags='["Vue 3","TypeScript","Vite","Tailwind CSS"]' color="#07c160" />`,
     Emoji: `<Emoji id="liulei" alt="涙" />`,
+    ChatBlock: `<ChatBlock title="プロジェクトグループ" me="B" nameA="田中" nameB="私">
+[A] いますか？このコードを見てください
+[B] いますよ、送ってください
+[A] ありがとう！
+</ChatBlock>`,
   },
 }
 
