@@ -37,6 +37,17 @@ export interface IOpts {
   isMacCodeBlock?: boolean
   isShowLineNumber?: boolean
   themeMode?: 'light' | 'dark'
+  /**
+   * Auto external-link → footnote. When on, inline http(s) links keep their
+   * text but gain a marker, and a "参考文献 / References" list is appended.
+   * @default false
+   */
+  autoLinkFootnote?: boolean
+  /**
+   * Image gallery. When on, 2+ consecutive standalone images are wrapped in a
+   * responsive grid. @default true
+   */
+  imageGallery?: boolean
   /** Custom component registry */
   components?: ComponentRegistry
   /** Async diagram load/error copy (injected by locale on Web) */

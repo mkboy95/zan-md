@@ -7,6 +7,7 @@ import { decodeHTML } from 'entities'
 import hljs from 'highlight.js/lib/core'
 import { Marked } from 'marked'
 import {
+  applyAutoLinkFootnote,
   getBuiltInRegistry,
   markedAlert,
   markedComponent,
@@ -20,6 +21,7 @@ import {
   markedSlider,
   markedToc,
   MDKatex,
+  wrapImageGalleries,
 } from '../extensions'
 import { escapeHtml } from '../utils/basicHelpers'
 import { parseFrontMatter } from '../utils/front-matter'
@@ -507,7 +509,16 @@ export function initRenderer(opts: IOpts = {}): RendererAPI {
     reset,
     parseFrontMatterAndContent,
     renderMarkdownToHtml(markdown: string) {
-      return markdownParser.parse(markdown) as string
+      let html = markdownParser.parse(markdown) as string
+      // Image gallery (default ON): wrap 2+ consecutive standalone images in a
+      // WeChat-safe responsive grid. Applied once on the whole document so it
+      // never runs on marked's per-inline sub-parses.
+      if (opts.imageGallery !== false)
+        html = wrapImageGalleries(html)
+      // Auto external-link → footnote (default OFF; opt-in via IOpts.autoLinkFootnote).
+      if (opts.autoLinkFootnote === true)
+        html = applyAutoLinkFootnote(html)
+      return html
     },
     buildReadingTime,
     createContainer(content: string) {

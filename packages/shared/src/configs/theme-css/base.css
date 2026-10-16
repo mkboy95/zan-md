@@ -73,3 +73,72 @@ section img.md-asset-img {
   vertical-align: text-bottom;
   display: inline;
 }
+
+/* ==================== Image gallery (core extension: imageGallery) ====================
+ * WeChat-safe responsive grid: flex-wrap + percentage-width children.
+ * Scoped to the wrapper so single images elsewhere keep their own width.
+ * Applied only when the renderer wraps 2+ consecutive images in this section.
+ */
+.md-image-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  margin: calc(0.6em * var(--md-block-spacing)) auto;
+}
+
+/* WeChat-safe spacing: avoid flex `gap` (poorly supported in WeChat),
+   use cell padding instead so 2-up / 3-up grids keep a small gutter. */
+.md-image-gallery figure {
+  margin: 0;
+  padding: 2px;
+  width: 50%;
+  box-sizing: border-box;
+}
+
+.md-image-gallery[data-cols='3'] figure {
+  width: 33.33%;
+}
+
+.md-image-gallery img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  border-radius: 8px;
+}
+
+/* ==================== Auto link → footnote (core extension: autoLinkFootnote) ====================
+ * Inline marker appended after external links, plus the trailing references list.
+ * All WeChat-safe (no color-mix, no pseudo-element content).
+ */
+.md-link-ref {
+  font-size: 0.72em;
+  color: var(--md-primary-color);
+  margin-left: 2px;
+  vertical-align: super;
+  line-height: 0;
+}
+
+.md-references {
+  margin: calc(1.2em * var(--md-block-spacing)) 8px;
+  color: #888;
+  font-size: 0.85em;
+}
+
+.md-references-title {
+  margin: 0 0 0.4em;
+  font-size: 0.95em;
+  font-weight: 700;
+  color: #666;
+}
+
+.md-references ol {
+  margin: 0;
+  padding-left: 1.4em;
+}
+
+.md-references li {
+  margin: calc(0.2em * var(--md-block-spacing)) 0;
+  line-height: 1.7;
+  word-break: break-all;
+}

@@ -58,6 +58,21 @@ export const themeOptionsMap = {
     value: `safflower`,
     desc: `暖金黄`,
   },
+  morandi: {
+    label: `莫兰迪`,
+    value: `morandi`,
+    desc: `低饱和灰调`,
+  },
+  techblue: {
+    label: `科技蓝`,
+    value: `techblue`,
+    desc: `现代科技感`,
+  },
+  sakura: {
+    label: `樱花粉`,
+    value: `sakura`,
+    desc: `柔和粉色`,
+  },
 }
 
 export const themeOptions: IConfigOption<ThemeName>[] = [
@@ -105,5 +120,20 @@ export const themeOptions: IConfigOption<ThemeName>[] = [
     label: `山吹`,
     value: `safflower`,
     desc: `暖金黄`,
+  },
+  {
+    label: `莫兰迪`,
+    value: `morandi`,
+    desc: `低饱和灰调`,
+  },
+  {
+    label: `科技蓝`,
+    value: `techblue`,
+    desc: `现代科技感`,
+  },
+  {
+    label: `樱花粉`,
+    value: `sakura`,
+    desc: `柔和粉色`,
   },
 ]

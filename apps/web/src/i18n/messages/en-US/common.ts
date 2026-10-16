@@ -173,6 +173,9 @@ export default {
     style: `Style`,
     theme: `Theme`,
     emoji: `Emoji`,
+    favorites: `Favorites`,
+    favorite: `Favorite theme`,
+    unfavorite: `Unfavorite`,
   },
   toast: {
     copiedMarkdown: `Markdown source copied to clipboard.`,
@@ -210,6 +213,9 @@ export default {
       orange: { label: `Orange Heart`, desc: `Warm and lively` },
       ink: { label: `Ink Black`, desc: `Monochrome minimal` },
       safflower: { label: `Safflower`, desc: `Warm golden` },
+      morandi: { label: `Morandi`, desc: `Low-saturation grey` },
+      techblue: { label: `Tech Blue`, desc: `Modern tech vibe` },
+      sakura: { label: `Sakura`, desc: `Soft pink` },
     },
     fontFamily: {
       sansSerif: { label: `Sans`, desc: `Font123Abc` },

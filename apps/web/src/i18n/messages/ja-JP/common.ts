@@ -173,6 +173,9 @@ export default {
     style: `スタイル`,
     theme: `テーマ`,
     emoji: `スタンプ`,
+    favorites: `お気に入り`,
+    favorite: `テーマをお気に入り`,
+    unfavorite: `お気に入り解除`,
   },
   toast: {
     copiedMarkdown: `Markdown ソースをクリップボードにコピーしました。`,
@@ -210,6 +213,9 @@ export default {
       orange: { label: `オレンジハート`, desc: `暖かく活力ある` },
       ink: { label: `インクブラック`, desc: `白黒ミニマル` },
       safflower: { label: `ヤマブキ`, desc: `暖かい黄金色` },
+      morandi: { label: `モランディ`, desc: `低彩度のグレー` },
+      techblue: { label: `テックブルー`, desc: `モダンな科技感` },
+      sakura: { label: `サクラ`, desc: `柔らかいピンク` },
     },
     fontFamily: {
       sansSerif: { label: `ゴシック`, desc: `Font123Abc` },

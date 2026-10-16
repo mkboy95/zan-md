@@ -455,6 +455,22 @@ export const perThemeSettingOverrides: Partial<Record<ThemeName, Partial<PerThem
     fontFamily: fontFamilyOptions[0].value,
     lineHeight: `1.85`,
   },
+  // 新增三套高颜值模板主题：各自的设计主色（与 CSS 文件里的强调色一致）
+  morandi: {
+    primaryColor: `#8A8B7F`,
+    fontFamily: fontFamilyOptions[0].value,
+    lineHeight: `1.85`,
+  },
+  techblue: {
+    primaryColor: `#165DFF`,
+    fontFamily: fontFamilyOptions[0].value,
+    lineHeight: `1.85`,
+  },
+  sakura: {
+    primaryColor: `#EBA0B6`,
+    fontFamily: fontFamilyOptions[0].value,
+    lineHeight: `1.85`,
+  },
 }
 
 /** Settings a theme starts from: generic defaults plus its own overrides. */

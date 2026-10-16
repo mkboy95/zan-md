@@ -173,6 +173,9 @@ export default {
     style: `样式`,
     theme: `主题`,
     emoji: `表情`,
+    favorites: `收藏`,
+    favorite: `收藏主题`,
+    unfavorite: `取消收藏`,
   },
   toast: {
     copiedMarkdown: `已复制 Markdown 源码到剪贴板。`,
@@ -210,6 +213,9 @@ export default {
       orange: { label: `橙心`, desc: `暖橙活力` },
       ink: { label: `墨黑`, desc: `黑白极简` },
       safflower: { label: `山吹`, desc: `暖金黄` },
+      morandi: { label: `莫兰迪`, desc: `低饱和灰调` },
+      techblue: { label: `科技蓝`, desc: `现代科技感` },
+      sakura: { label: `樱花粉`, desc: `柔和粉色` },
     },
     fontFamily: {
       sansSerif: { label: `无衬线`, desc: `字体123Abc` },
