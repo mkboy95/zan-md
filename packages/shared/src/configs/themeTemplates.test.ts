@@ -35,6 +35,7 @@ const templates: TemplateTheme[] = [
   { id: `morandi`, file: `morandi.css`, accent: `#8a8b7f`, primaryColor: `#8A8B7F` },
   { id: `techblue`, file: `techblue.css`, accent: `#165dff`, primaryColor: `#165DFF` },
   { id: `sakura`, file: `sakura.css`, accent: `#eba0b6`, primaryColor: `#EBA0B6` },
+  { id: `emerald`, file: `emerald.css`, accent: `#059669`, primaryColor: `#059669` },
 ]
 
 describe.each(templates)(`$id template theme`, ({ id, file, accent, primaryColor }) => {

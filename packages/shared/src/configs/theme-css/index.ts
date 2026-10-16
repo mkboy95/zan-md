@@ -4,6 +4,7 @@ import type { MarketplaceThemeKey } from '../../types/marketplace'
 import baseCSS from './base.css?raw'
 import defaultCSS from './default.css?raw'
 import dopamineCSS from './dopamine.css?raw'
+import emeraldCSS from './emerald.css?raw'
 import graceCSS from './grace.css?raw'
 import inkCSS from './ink.css?raw'
 import morandiCSS from './morandi.css?raw'
@@ -30,6 +31,7 @@ export const themeMap = {
   morandi: morandiCSS,
   techblue: techblueCSS,
   sakura: sakuraCSS,
+  emerald: emeraldCSS,
 } as const
 
 export type BuiltinThemeName = keyof typeof themeMap

@@ -1,0 +1,538 @@
+/**
+ * MD 祖母绿主题 — 杂志卡片排版
+ *
+ * 移植自一篇公众号「工具评测」排版（样式系逐条读取原文行内 style 提取），
+ * 设计语言取自其辨识特征：
+ *   1. 外围是一张卡片：1.5px 淡翡翠描边 + 20px 圆角 + 轻投影，内容留白 32/28
+ *   2. 主色祖母绿 #059669，渐变端 #10B981 / #34D399（原文的头部横线、页脚色带）
+ *   3. 标题体系：超粗深墨标题（字距收紧）＋ 翡翠胶囊小标题 ＋ 深墨强调
+ *   4. 表头是翡翠实底白字，正文行只用 1px 细线分隔
+ *   5. 正文 14px / 行高 1.9 / 字距 0.5px / 两端对齐
+ *
+ * 实现约定（与其它内置主题一致）：
+ *   - 强调色用 var(--md-primary-color)，换色时整篇跟随；其余用原文色值字面量
+ *   - 尺寸用 calc(var(--md-font-size) * N)，运行时求值成具体 px
+ *   - 不用 color-mix()、不用伪元素 content:（微信端不认），一律写 rgba 字面量
+ *   - 所有间距乘 var(--md-block-spacing)，跟随「段间距」设置
+ */
+
+/* ==================== 外层卡片 ==================== */
+.container {
+  box-sizing: border-box;
+  max-width: 677px;
+  margin: 0 auto calc(1.5em * var(--md-block-spacing));
+  padding: 32px 28px 28px;
+  border: 1.5px solid rgba(5, 150, 105, 0.15);
+  border-radius: 20px;
+  background: #ffffff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  color: #374151;
+  font-family: var(--md-font-family);
+  font-size: calc(var(--md-font-size) * 0.875);
+  line-height: 1.9;
+  letter-spacing: 0.5px;
+  text-align: left;
+}
+
+/* ==================== 正文 ==================== */
+p {
+  margin: 0 0 calc(1em * var(--md-block-spacing));
+  color: #374151;
+  font-size: 1em;
+  line-height: 1.9;
+  letter-spacing: 0.5px;
+  text-align: justify;
+}
+
+/* ==================== H1：封面主标题 ====================
+ * 原文封面标题是 24px / 900 / 字距 -2px 的深墨大字，下方压一条翡翠渐变短条。
+ * Markdown 里没有「短条」这个元素，改用 h1 的通栏底线承载这条翡翠横线；
+ * 渲染器会给 h1 的文字包一层 <span>（renderer-impl.ts 的 heading()）。
+ */
+h1 {
+  display: block;
+  box-sizing: border-box;
+  margin: calc(1.4em * var(--md-block-spacing)) 0 calc(1.2em * var(--md-block-spacing));
+  padding: 0 0 12px;
+  border-bottom: 3px solid var(--md-primary-color);
+  color: #111827;
+  background: transparent;
+  font-size: calc(var(--md-font-size) * 1.5);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -1.5px;
+  text-align: left;
+}
+
+h1 > span {
+  display: inline-block;
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+/* ==================== H2：章节标题条 ====================
+ * 对应原文的「编号 + 标题」区分栏：翡翠左条 + 极淡翡翠底 + 右侧圆角。
+ */
+h2 {
+  display: block;
+  box-sizing: border-box;
+  margin: calc(1.8em * var(--md-block-spacing)) 0 calc(1em * var(--md-block-spacing));
+  padding: 9px 16px;
+  border-left: 4px solid var(--md-primary-color);
+  border-radius: 0 12px 12px 0;
+  background: rgba(5, 150, 105, 0.06);
+  color: #111827;
+  font-size: calc(var(--md-font-size) * 1.125);
+  font-weight: 800;
+  line-height: 1.5;
+  letter-spacing: -0.3px;
+  text-align: left;
+}
+
+/* ==================== H3：翡翠胶囊小标题 ==================== */
+h3 {
+  display: inline-block;
+  box-sizing: border-box;
+  margin: calc(1.5em * var(--md-block-spacing)) 0 calc(0.6em * var(--md-block-spacing));
+  padding: 4px 14px;
+  border-radius: 999px;
+  background: rgba(5, 150, 105, 0.09);
+  color: var(--md-primary-color);
+  font-size: calc(var(--md-font-size) * 0.9);
+  font-weight: 700;
+  line-height: 1.6;
+  letter-spacing: 0.3px;
+}
+
+/* ==================== H4 / H5 / H6 ==================== */
+h4 {
+  margin: calc(1.4em * var(--md-block-spacing)) 0 calc(0.5em * var(--md-block-spacing));
+  padding: 0;
+  color: #111827;
+  font-size: var(--md-font-size);
+  font-weight: 800;
+  line-height: 1.6;
+  letter-spacing: 0.2px;
+}
+
+h5 {
+  margin: calc(1.2em * var(--md-block-spacing)) 0 calc(0.5em * var(--md-block-spacing));
+  color: #374151;
+  font-size: var(--md-font-size);
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+h6 {
+  margin: calc(1.2em * var(--md-block-spacing)) 0 calc(0.5em * var(--md-block-spacing));
+  color: #6b7280;
+  font-size: calc(var(--md-font-size) * 0.95);
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+/* ==================== 引用：卡片式提示板 ==================== */
+blockquote {
+  margin: 0 0 calc(1.2em * var(--md-block-spacing));
+  padding: 14px 16px;
+  border: 1px solid #e5e7eb;
+  border-left: 4px solid var(--md-primary-color);
+  border-radius: 10px;
+  background: #f9fafb;
+  color: #4b5563;
+  font-style: normal;
+  font-size: 0.95em;
+  line-height: 1.8;
+}
+
+blockquote > p {
+  margin: 4px 0;
+  color: #4b5563;
+  font-size: 1em;
+  line-height: 1.8;
+  letter-spacing: 0.4px;
+}
+
+/* ==================== 提示框（GFM 警告块） ====================
+ * 统一成原文那种「细描边卡片」，只有强调色按语义区分。
+ * 原文的警示色是 #FF4C00。
+ */
+.markdown-alert-note,
+.markdown-alert-tip,
+.markdown-alert-info,
+.markdown-alert-important,
+.markdown-alert-warning,
+.markdown-alert-caution,
+.markdown-alert-abstract,
+.markdown-alert-summary,
+.markdown-alert-tldr,
+.markdown-alert-todo,
+.markdown-alert-success,
+.markdown-alert-done,
+.markdown-alert-question,
+.markdown-alert-help,
+.markdown-alert-faq,
+.markdown-alert-failure,
+.markdown-alert-fail,
+.markdown-alert-missing,
+.markdown-alert-danger,
+.markdown-alert-error,
+.markdown-alert-bug,
+.markdown-alert-example,
+.markdown-alert-quote,
+.markdown-alert-cite {
+  margin: 0 0 calc(1.2em * var(--md-block-spacing));
+  padding: 12px 16px;
+  border: 1px solid #e5e7eb;
+  border-left: 4px solid var(--md-primary-color);
+  border-radius: 10px;
+  background: #f9fafb;
+  font-style: normal;
+}
+
+/* 正向：翡翠 */
+.markdown-alert-note,
+.markdown-alert-tip,
+.markdown-alert-hint,
+.markdown-alert-success,
+.markdown-alert-check,
+.markdown-alert-done,
+.markdown-alert-info,
+.markdown-alert-abstract,
+.markdown-alert-summary,
+.markdown-alert-tldr,
+.markdown-alert-todo,
+.markdown-alert-question,
+.markdown-alert-help,
+.markdown-alert-faq {
+  background: rgba(5, 150, 105, 0.05);
+}
+
+/* 警示：原文的橙色 #FF4C00 */
+.markdown-alert-warning,
+.markdown-alert-caution,
+.markdown-alert-attention,
+.markdown-alert-important,
+.markdown-alert-danger,
+.markdown-alert-error,
+.markdown-alert-failure,
+.markdown-alert-fail,
+.markdown-alert-missing,
+.markdown-alert-bug {
+  border-left-color: #ff4c00;
+  background: rgba(255, 76, 0, 0.05);
+}
+
+.markdown-alert-quote,
+.markdown-alert-cite,
+.markdown-alert-example {
+  border-left-color: #9ca3af;
+  background: #f9fafb;
+}
+
+/* 提示框正文 */
+.markdown-alert-note > p,
+.markdown-alert-tip > p,
+.markdown-alert-info > p,
+.markdown-alert-important > p,
+.markdown-alert-warning > p,
+.markdown-alert-caution > p,
+.markdown-alert-abstract > p,
+.markdown-alert-summary > p,
+.markdown-alert-tldr > p,
+.markdown-alert-todo > p,
+.markdown-alert-success > p,
+.markdown-alert-done > p,
+.markdown-alert-question > p,
+.markdown-alert-help > p,
+.markdown-alert-faq > p,
+.markdown-alert-failure > p,
+.markdown-alert-fail > p,
+.markdown-alert-missing > p,
+.markdown-alert-danger > p,
+.markdown-alert-error > p,
+.markdown-alert-bug > p,
+.markdown-alert-example > p,
+.markdown-alert-quote > p,
+.markdown-alert-cite > p {
+  margin: 4px 0;
+  color: #4b5563;
+  font-size: 0.95em;
+  line-height: 1.8;
+  letter-spacing: 0.4px;
+}
+
+/* 提示框标题：翡翠主色 */
+.alert-title-note,
+.alert-title-tip,
+.alert-title-hint,
+.alert-title-info,
+.alert-title-abstract,
+.alert-title-summary,
+.alert-title-tldr,
+.alert-title-todo,
+.alert-title-question,
+.alert-title-help,
+.alert-title-faq,
+.alert-title-success,
+.alert-title-check,
+.alert-title-done {
+  color: var(--md-primary-color);
+}
+
+/* 警示标题：原文橙 */
+.alert-title-warning,
+.alert-title-caution,
+.alert-title-attention,
+.alert-title-important,
+.alert-title-danger,
+.alert-title-error,
+.alert-title-failure,
+.alert-title-fail,
+.alert-title-missing,
+.alert-title-bug {
+  color: #ff4c00;
+}
+
+.alert-title-quote,
+.alert-title-cite,
+.alert-title-example {
+  color: #6b7280;
+}
+
+.alert-icon-note,
+.alert-icon-tip,
+.alert-icon-hint,
+.alert-icon-info,
+.alert-icon-abstract,
+.alert-icon-summary,
+.alert-icon-tldr,
+.alert-icon-todo,
+.alert-icon-question,
+.alert-icon-help,
+.alert-icon-faq,
+.alert-icon-success,
+.alert-icon-check,
+.alert-icon-done {
+  fill: #059669;
+}
+
+.alert-icon-warning,
+.alert-icon-caution,
+.alert-icon-attention,
+.alert-icon-important,
+.alert-icon-danger,
+.alert-icon-error,
+.alert-icon-failure,
+.alert-icon-fail,
+.alert-icon-missing,
+.alert-icon-bug {
+  fill: #ff4c00;
+}
+
+.alert-icon-quote,
+.alert-icon-cite,
+.alert-icon-example {
+  fill: #9ca3af;
+}
+
+/* 学术环境（原文没有，沿用翡翠，避免掉回默认主题配色） */
+.markdown-alert-theorem,
+.markdown-alert-lemma,
+.markdown-alert-corollary,
+.markdown-alert-proposition,
+.markdown-alert-definition,
+.markdown-alert-axiom,
+.markdown-alert-postulate,
+.markdown-alert-assumption,
+.markdown-alert-proof,
+.markdown-alert-remark {
+  border-left-color: var(--md-primary-color);
+  background: rgba(5, 150, 105, 0.05);
+}
+
+.markdown-alert-theorem > :not(.markdown-alert-title),
+.markdown-alert-lemma > :not(.markdown-alert-title),
+.markdown-alert-corollary > :not(.markdown-alert-title),
+.markdown-alert-proposition > :not(.markdown-alert-title),
+.markdown-alert-definition > :not(.markdown-alert-title),
+.markdown-alert-axiom > :not(.markdown-alert-title),
+.markdown-alert-postulate > :not(.markdown-alert-title),
+.markdown-alert-assumption > :not(.markdown-alert-title) {
+  font-style: normal;
+}
+
+/* ==================== 分割线：翡翠渐变短横线 ====================
+ * 原文头部那条「翡翠渐隐细线」：从左到右由浓转无。
+ */
+hr {
+  height: 1px;
+  margin: calc(2.4em * var(--md-block-spacing)) 0;
+  border: none;
+  background: linear-gradient(to right, rgba(5, 150, 105, 0.35), rgba(5, 150, 105, 0.04));
+  opacity: 1;
+  transform: none;
+  -webkit-transform: none;
+}
+
+/* ==================== 行内代码 ==================== */
+.codespan {
+  margin: 0 2px;
+  padding: 2px 6px;
+  border: none;
+  border-radius: 6px;
+  color: #047857;
+  background: rgba(5, 150, 105, 0.08);
+  font-size: 0.88em;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+/* ==================== 代码块 ==================== */
+pre.code__pre,
+.hljs.code__pre {
+  margin: 0 0 calc(1.2em * var(--md-block-spacing));
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #f9fafb;
+}
+
+pre.code__pre > code,
+.hljs.code__pre > code {
+  padding: 0.8em 1em;
+  font-size: 0.85em;
+  line-height: 1.8;
+  letter-spacing: 0;
+}
+
+/* ==================== 加粗 / 斜体 / 删除线 ==================== */
+strong {
+  color: var(--md-primary-color);
+  font-weight: 700;
+}
+
+em {
+  font-style: italic;
+  color: #4b5563;
+}
+
+.del {
+  color: #d1d5db;
+  text-decoration: line-through;
+}
+
+/* ==================== 链接 ==================== */
+a {
+  color: var(--md-primary-color);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(5, 150, 105, 0.4);
+}
+
+/* ==================== 列表：翡翠项目符号 ==================== */
+ul,
+ol {
+  margin: 0 0 calc(1.2em * var(--md-block-spacing));
+  padding-left: 1.3em;
+  color: #374151;
+}
+
+li {
+  display: list-item;
+  margin: calc(0.25em * var(--md-block-spacing)) 0;
+  color: #374151;
+  line-height: 1.9;
+  letter-spacing: 0.5px;
+}
+
+ul > li::marker {
+  color: var(--md-primary-color);
+}
+
+ol > li::marker {
+  color: var(--md-primary-color);
+  font-weight: 700;
+}
+
+/* ==================== 图片 ==================== */
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: calc(0.8em * var(--md-block-spacing)) auto;
+  border: none;
+  border-radius: 12px;
+  box-shadow: none;
+}
+
+figcaption,
+.md-figcaption {
+  text-align: center;
+  color: #9ca3af;
+  font-size: 0.85em;
+  letter-spacing: 1px;
+}
+
+/* ==================== 表格：翡翠实底表头 ====================
+ * 原文表头是 #059669 实底 + 白字，正文行只用 1px 细线分隔（无竖线、无斑马纹）。
+ */
+table {
+  margin: 0 0 calc(1.2em * var(--md-block-spacing));
+  border-collapse: collapse;
+  color: #374151;
+  font-size: 0.92em;
+  letter-spacing: 0.2px;
+}
+
+th {
+  padding: 9px 12px;
+  border: none;
+  background: var(--md-primary-color);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 1em;
+  text-align: left;
+}
+
+td {
+  padding: 9px 12px;
+  border: none;
+  border-bottom: 1px solid #e5e7eb;
+  color: #374151;
+  font-size: 1em;
+  line-height: 1.7;
+}
+
+/* 原文表格里的加粗特意用翡翠强调 */
+td strong {
+  color: var(--md-primary-color);
+}
+
+/* ==================== 脚注 ==================== */
+p.footnotes {
+  margin: calc(1em * var(--md-block-spacing)) 0;
+  color: #9ca3af;
+  font-size: 0.85em;
+  letter-spacing: 0.5px;
+}
+
+/* ==================== 标记类扩展 ==================== */
+.markup-highlight {
+  padding: 2px 5px;
+  border-radius: 6px;
+  background-color: rgba(5, 150, 105, 0.14);
+  color: #065f46;
+}
+
+.markup-underline {
+  text-decoration-color: var(--md-primary-color);
+}
+
+.markup-wavyline {
+  text-decoration-color: var(--md-primary-color);
+}
+
+.markup-superscript {
+  color: var(--md-primary-color);
+  font-size: 0.75em;
+}

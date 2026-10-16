@@ -221,6 +221,7 @@ export default {
       morandi: { label: `Morandi`, desc: `Low-saturation grey` },
       techblue: { label: `Tech Blue`, desc: `Modern tech vibe` },
       sakura: { label: `Sakura`, desc: `Soft pink` },
+      emerald: { label: `Emerald`, desc: `Magazine card` },
     },
     fontFamily: {
       sansSerif: { label: `Sans`, desc: `Font123Abc` },

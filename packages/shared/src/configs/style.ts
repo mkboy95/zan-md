@@ -471,6 +471,12 @@ export const perThemeSettingOverrides: Partial<Record<ThemeName, Partial<PerThem
     fontFamily: fontFamilyOptions[0].value,
     lineHeight: `1.85`,
   },
+  // 祖母绿：卡片式杂志排版，翡翠主色 + 无衬线 + 大行高
+  emerald: {
+    primaryColor: `#059669`,
+    fontFamily: fontFamilyOptions[0].value,
+    lineHeight: `1.9`,
+  },
 }
 
 /** Settings a theme starts from: generic defaults plus its own overrides. */

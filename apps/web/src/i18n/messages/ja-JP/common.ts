@@ -221,6 +221,7 @@ export default {
       morandi: { label: `モランディ`, desc: `低彩度のグレー` },
       techblue: { label: `テックブルー`, desc: `モダンな科技感` },
       sakura: { label: `サクラ`, desc: `柔らかいピンク` },
+      emerald: { label: `エメラルド`, desc: `マガジンカード` },
     },
     fontFamily: {
       sansSerif: { label: `ゴシック`, desc: `Font123Abc` },

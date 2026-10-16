@@ -73,6 +73,12 @@ export const themeOptionsMap = {
     value: `sakura`,
     desc: `柔和粉色`,
   },
+  // 祖母绿：卡片式杂志排版（翡翠描边卡片 + 超粗深墨标题 + 胶囊小标题）
+  emerald: {
+    label: `祖母绿`,
+    value: `emerald`,
+    desc: `杂志卡片`,
+  },
 }
 
 export const themeOptions: IConfigOption<ThemeName>[] = [
@@ -135,5 +141,10 @@ export const themeOptions: IConfigOption<ThemeName>[] = [
     label: `樱花粉`,
     value: `sakura`,
     desc: `柔和粉色`,
+  },
+  {
+    label: `祖母绿`,
+    value: `emerald`,
+    desc: `杂志卡片`,
   },
 ]

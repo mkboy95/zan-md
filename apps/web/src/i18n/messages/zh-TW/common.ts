@@ -221,6 +221,7 @@ export default {
       morandi: { label: `莫蘭迪`, desc: `低飽和灰調` },
       techblue: { label: `科技藍`, desc: `現代科技感` },
       sakura: { label: `櫻花粉`, desc: `柔和粉色` },
+      emerald: { label: `祖母綠`, desc: `雜誌卡片` },
     },
     fontFamily: {
       sansSerif: { label: `無襯線`, desc: `字型123Abc` },
