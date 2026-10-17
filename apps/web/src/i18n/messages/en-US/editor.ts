@@ -243,6 +243,7 @@ export default {
     appliedToPost: `Applied template "{name}" to current article`,
     applied: `Applied template "{name}"`,
     inserted: `Inserted template "{name}"`,
+    builtin: `Built-in`,
   },
   component: {
     title: `Components`,

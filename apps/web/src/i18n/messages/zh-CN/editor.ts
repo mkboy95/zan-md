@@ -243,6 +243,7 @@ export default {
     appliedToPost: `已应用模板「{name}」到当前文章`,
     applied: `已应用模板「{name}」`,
     inserted: `已插入模板「{name}」`,
+    builtin: `内置`,
   },
   component: {
     title: `组件`,

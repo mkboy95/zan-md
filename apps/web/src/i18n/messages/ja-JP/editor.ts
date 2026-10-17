@@ -243,6 +243,7 @@ export default {
     appliedToPost: `テンプレート「{name}」を現在の記事に適用しました`,
     applied: `テンプレート「{name}」を適用しました`,
     inserted: `テンプレート「{name}」を挿入しました`,
+    builtin: `組み込み`,
   },
   component: {
     title: `コンポーネント`,

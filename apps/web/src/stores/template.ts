@@ -1,5 +1,6 @@
 import type { CreateTemplateParams, Template, UpdateTemplateParams } from '@md/shared'
 import { uuidv4 } from '@md/shared/utils/uuid'
+import { BUILTIN_TEMPLATES } from '@/assets/templates/builtin'
 import { t } from '@/i18n/translate'
 import { store } from '@/storage'
 import { addPrefix } from '@/storage/prefix'
@@ -8,11 +9,14 @@ import { addPrefix } from '@/storage/prefix'
 export const useTemplateStore = defineStore(`template`, () => {
   const templates = store.reactive<Template[]>(addPrefix(`templates`), [])
 
-  const sortedTemplates = computed(() => {
+  const userSortedTemplates = computed(() => {
     return [...templates.value].sort((a, b) => b.createdAt - a.createdAt)
   })
 
-  const templateCount = computed(() => templates.value.length)
+  /** Built-ins first (stable order), then the user's own newest-first. */
+  const sortedTemplates = computed(() => [...BUILTIN_TEMPLATES, ...userSortedTemplates.value])
+
+  const templateCount = computed(() => BUILTIN_TEMPLATES.length + templates.value.length)
 
   function createTemplate(params: CreateTemplateParams): Template {
     const now = Date.now()
@@ -32,10 +36,15 @@ export const useTemplateStore = defineStore(`template`, () => {
   }
 
   function getTemplateById(id: string): Template | undefined {
-    return templates.value.find(t => t.id === id)
+    return BUILTIN_TEMPLATES.find(t => t.id === id) ?? templates.value.find(t => t.id === id)
   }
 
   function updateTemplate(id: string, params: UpdateTemplateParams): boolean {
+    if (BUILTIN_TEMPLATES.some(t => t.id === id)) {
+      toast.error(t('store.template.builtinReadonly'))
+      return false
+    }
+
     const index = templates.value.findIndex(t => t.id === id)
     if (index === -1) {
       toast.error(t('store.template.notFound'))
@@ -53,6 +62,11 @@ export const useTemplateStore = defineStore(`template`, () => {
   }
 
   function deleteTemplate(id: string): boolean {
+    if (BUILTIN_TEMPLATES.some(t => t.id === id)) {
+      toast.error(t('store.template.builtinReadonly'))
+      return false
+    }
+
     const index = templates.value.findIndex(t => t.id === id)
     if (index === -1) {
       toast.error(t('store.template.notFound'))

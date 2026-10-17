@@ -5,6 +5,7 @@ import { useConfirmStore } from '@/stores/confirm'
 import { useEditorStore } from '@/stores/editor'
 import { usePostStore } from '@/stores/post'
 import { useTemplateStore } from '@/stores/template'
+import { useThemeStore } from '@/stores/theme'
 import { useUIStore } from '@/stores/ui'
 
 const { t, locale } = useI18n()
@@ -12,6 +13,7 @@ const confirmStore = useConfirmStore()
 const editorStore = useEditorStore()
 const postStore = usePostStore()
 const templateStore = useTemplateStore()
+const themeStore = useThemeStore()
 const uiStore = useUIStore()
 
 const { toggleShowTemplateDialog } = uiStore
@@ -98,6 +100,11 @@ function cancelForm() {
 }
 
 function applyTemplate(template: Template) {
+  // A built-in template may pin its own layout theme (e.g. the verbatim HTML
+  // article must run on the transparent-container theme, not the card one).
+  if (template.theme)
+    themeStore.theme = template.theme as never
+
   const currentPost = postStore.currentPost
   if (currentPost) {
     postStore.updatePostContent(currentPost.id, template.content)
@@ -112,6 +119,9 @@ function applyTemplate(template: Template) {
 }
 
 function insertTemplate(template: Template) {
+  if (template.theme)
+    themeStore.theme = template.theme as never
+
   editorStore.insertAtCursor(template.content)
 
   const currentPost = postStore.currentPost
@@ -254,6 +264,12 @@ function onUpdate(val: boolean) {
                   <h4 class="font-medium truncate">
                     {{ template.name }}
                   </h4>
+                  <span
+                    v-if="template.builtin"
+                    class="rounded bg-muted px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground"
+                  >
+                    {{ t('template.builtin') }}
+                  </span>
                 </div>
 
                 <p v-if="template.description" class="text-sm text-muted-foreground mb-2 line-clamp-2">
@@ -294,6 +310,7 @@ function onUpdate(val: boolean) {
                   <FileDown class="size-4" />
                 </Button>
                 <Button
+                  v-if="!template.builtin"
                   variant="outline"
                   size="icon"
                   class="size-8"
@@ -304,6 +321,7 @@ function onUpdate(val: boolean) {
                   <Pencil class="size-4" />
                 </Button>
                 <Button
+                  v-if="!template.builtin"
                   variant="outline"
                   size="icon"
                   class="size-8 text-destructive hover:text-destructive"

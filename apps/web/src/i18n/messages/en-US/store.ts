@@ -18,6 +18,7 @@ export default {
       importNoValid: `Import failed: no valid template data`,
       importSuccess: `Imported {count} template(s) successfully`,
       importParseError: `Import failed: data parse error`,
+      builtinReadonly: `Built-in templates cannot be edited or deleted`,
     },
     component: {
       created: `Component "{name}" created`,

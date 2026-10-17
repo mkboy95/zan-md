@@ -18,6 +18,7 @@ export default {
       importNoValid: `匯入失敗：沒有有效的模板資料`,
       importSuccess: `成功匯入 {count} 個模板`,
       importParseError: `匯入失敗：資料解析錯誤`,
+      builtinReadonly: `內建範本不可修改或刪除`,
     },
     component: {
       created: `元件「{name}」建立成功`,

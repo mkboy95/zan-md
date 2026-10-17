@@ -18,6 +18,7 @@ export default {
       importNoValid: `インポート失敗: 有効なテンプレートデータがありません`,
       importSuccess: `{count} 件のテンプレートをインポートしました`,
       importParseError: `インポート失敗: データ解析エラー`,
+      builtinReadonly: `組み込みテンプレートは編集・削除できません`,
     },
     component: {
       created: `コンポーネント「{name}」を作成しました`,
