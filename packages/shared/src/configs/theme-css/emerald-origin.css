@@ -1,0 +1,54 @@
+/**
+ * MD 祖母绿 · 原版复刻 — 「容器透明」的原样嵌入版式
+ *
+ * 用于把公众号原文 HTML 逐字放进编辑器：原文自带封面卡片（描边/圆角/投影）
+ * 与正文留白（无卡片、左右 20px），若这里再给 .container 套一层卡片就会
+ * 出现「卡中卡」。因此本主题只保留居中与字体基线，不画卡片。
+ *
+ * 若用户仍用 Markdown 写作，h1 保留一条主色下划线，保证结构可读。
+ * 配色仍走 var(--md-primary-*)：换主题色时标题线会跟着变。
+ */
+
+.container {
+  box-sizing: border-box;
+  max-width: 677px;
+  margin: 0 auto calc(2em * var(--md-block-spacing));
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: #374151;
+  font-family: var(--md-font-family);
+  font-size: 16px;
+  line-height: normal;
+  letter-spacing: 0.5px;
+  text-align: left;
+}
+
+h1 {
+  display: block;
+  box-sizing: border-box;
+  margin: 0 0 calc(1em * var(--md-block-spacing));
+  padding-bottom: 8px;
+  font-size: calc(var(--md-font-size) * 1.5);
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: -1px;
+  border-bottom: 3px solid var(--md-primary-color);
+}
+
+/* default.css gives <p> an 8px side inset and 0.1em tracking. The verbatim
+ * article relies on full-width paragraphs inheriting the card's 0.5px tracking,
+ * so neutralise both or every line wraps early. Body paragraphs carry their own
+ * inline line-height: 1.9; the rest must stay `normal` to match the original. */
+p {
+  margin-left: 0;
+  margin-right: 0;
+  line-height: normal;
+  letter-spacing: 0.5px;
+}
+
+section {
+  line-height: normal;
+}

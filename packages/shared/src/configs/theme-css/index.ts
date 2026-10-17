@@ -4,6 +4,7 @@ import type { MarketplaceThemeKey } from '../../types/marketplace'
 import baseCSS from './base.css?raw'
 import defaultCSS from './default.css?raw'
 import dopamineCSS from './dopamine.css?raw'
+import emeraldOriginCSS from './emerald-origin.css?raw'
 import emeraldCSS from './emerald.css?raw'
 import graceCSS from './grace.css?raw'
 import inkCSS from './ink.css?raw'
@@ -21,21 +22,22 @@ import weikeCSS from './weike.css?raw'
 export const baseCSSContent = baseCSS
 
 export const themeMap = {
-  default: defaultCSS,
-  grace: graceCSS,
-  simple: simpleCSS,
-  weike: weikeCSS,
-  dopamine: dopamineCSS,
-  rose: roseCSS,
-  orange: orangeCSS,
-  ink: inkCSS,
-  safflower: safflowerCSS,
-  morandi: morandiCSS,
-  techblue: techblueCSS,
-  sakura: sakuraCSS,
-  emerald: emeraldCSS,
-  journal: journalCSS,
-  notecard: notecardCSS,
+  'default': defaultCSS,
+  'grace': graceCSS,
+  'simple': simpleCSS,
+  'weike': weikeCSS,
+  'dopamine': dopamineCSS,
+  'rose': roseCSS,
+  'orange': orangeCSS,
+  'ink': inkCSS,
+  'safflower': safflowerCSS,
+  'morandi': morandiCSS,
+  'techblue': techblueCSS,
+  'sakura': sakuraCSS,
+  'emerald': emeraldCSS,
+  'emerald-origin': emeraldOriginCSS,
+  'journal': journalCSS,
+  'notecard': notecardCSS,
 } as const
 
 export type BuiltinThemeName = keyof typeof themeMap

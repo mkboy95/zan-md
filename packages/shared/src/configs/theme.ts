@@ -10,83 +10,89 @@ export {
 } from './theme-css'
 
 export const themeOptionsMap = {
-  default: {
+  'default': {
     label: `经典`,
     value: `default`,
     desc: ``,
   },
-  grace: {
+  'grace': {
     label: `优雅`,
     value: `grace`,
     desc: `@brzhang`,
   },
-  simple: {
+  'simple': {
     label: `简洁`,
     value: `simple`,
     desc: `@okooo5km`,
   },
   // 超赞绿。id 沿用上游移植时的 `weike`：本地存储与云同步里的主题偏好都按 id 落盘，
   // 改 id 会让已选中的偏好失效，所以只改展示名。
-  weike: {
+  'weike': {
     label: `超赞绿`,
     value: `weike`,
     desc: `绿丝带标题`,
   },
   // 以下五套为新增模板主题（mdnice 一系高人气用色 + 多巴胺撞色的重排）
-  dopamine: {
+  'dopamine': {
     label: `多巴胺`,
     value: `dopamine`,
     desc: `高饱和撞色`,
   },
-  rose: {
+  'rose': {
     label: `蔷薇紫`,
     value: `rose`,
     desc: `优雅柔紫`,
   },
-  orange: {
+  'orange': {
     label: `橙心`,
     value: `orange`,
     desc: `暖橙活力`,
   },
-  ink: {
+  'ink': {
     label: `墨黑`,
     value: `ink`,
     desc: `黑白极简`,
   },
-  safflower: {
+  'safflower': {
     label: `山吹`,
     value: `safflower`,
     desc: `暖金黄`,
   },
-  morandi: {
+  'morandi': {
     label: `莫兰迪`,
     value: `morandi`,
     desc: `低饱和灰调`,
   },
-  techblue: {
+  'techblue': {
     label: `科技蓝`,
     value: `techblue`,
     desc: `现代科技感`,
   },
-  sakura: {
+  'sakura': {
     label: `樱花粉`,
     value: `sakura`,
     desc: `柔和粉色`,
   },
   // 祖母绿：整篇大卡片（描边圆角卡 + 章节条 + 胶囊小标题 + 二级卡片）
-  emerald: {
+  'emerald': {
     label: `祖母绿`,
     value: `emerald`,
     desc: `杂志卡片`,
   },
+  // 祖母绿 · 原版：容器透明，配合「原样嵌入」的公众号 HTML 模板使用
+  'emerald-origin': {
+    label: `祖母绿·原版`,
+    value: `emerald-origin`,
+    desc: `原样复刻`,
+  },
   // 杂志刊头：对称通栏（双线刊头 + 居中栏目名 + 左右竖线引语）
-  journal: {
+  'journal': {
     label: `杂志刊头`,
     value: `journal`,
     desc: `对称通栏`,
   },
   // 便签卡：贴纸版式（实底标签标题 + 便签贴纸块 + 荧光下划线）
-  notecard: {
+  'notecard': {
     label: `便签卡`,
     value: `notecard`,
     desc: `贴纸标签`,
@@ -158,6 +164,11 @@ export const themeOptions: IConfigOption<ThemeName>[] = [
     label: `祖母绿`,
     value: `emerald`,
     desc: `杂志卡片`,
+  },
+  {
+    label: `祖母绿·原版`,
+    value: `emerald-origin`,
+    desc: `原样复刻`,
   },
   {
     label: `杂志刊头`,

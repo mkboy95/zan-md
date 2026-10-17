@@ -40,6 +40,7 @@ const templates: TemplateTheme[] = [
   { id: `techblue`, file: `techblue.css`, accent: `#165dff`, primaryColor: `#165DFF` },
   { id: `sakura`, file: `sakura.css`, accent: `#eba0b6`, primaryColor: `#EBA0B6` },
   { id: `emerald`, file: `emerald.css`, accent: `#059669`, primaryColor: `#059669` },
+  { id: `emerald-origin`, file: `emerald-origin.css`, accent: `#059669`, primaryColor: `#059669` },
   { id: `journal`, file: `journal.css`, accent: `#1f3a5f`, primaryColor: `#1F3A5F` },
   { id: `notecard`, file: `notecard.css`, accent: `#d97706`, primaryColor: `#D97706` },
 ]

@@ -424,67 +424,73 @@ export function defaultPerThemeSettings(): PerThemeSettings {
  * preferences already stored under it keep working (only the label changed).
  */
 export const perThemeSettingOverrides: Partial<Record<ThemeName, Partial<PerThemeSettings>>> = {
-  weike: {
+  'weike': {
     primaryColor: `#21A675`,
     fontFamily: fontFamilyOptions[1].value,
     lineHeight: `1.9`,
   },
   // 新增模板主题：各自的设计主色（与 CSS 文件里的强调色一致）
-  dopamine: {
+  'dopamine': {
     primaryColor: `#7C4DFF`,
     fontFamily: fontFamilyOptions[0].value,
     lineHeight: `1.85`,
   },
-  rose: {
+  'rose': {
     primaryColor: `#A84478`,
     fontFamily: fontFamilyOptions[0].value,
     lineHeight: `1.85`,
   },
-  orange: {
+  'orange': {
     primaryColor: `#E8703A`,
     fontFamily: fontFamilyOptions[0].value,
     lineHeight: `1.85`,
   },
-  ink: {
+  'ink': {
     primaryColor: `#1A1A1A`,
     fontFamily: fontFamilyOptions[0].value,
     lineHeight: `1.9`,
   },
-  safflower: {
+  'safflower': {
     primaryColor: `#E8A33D`,
     fontFamily: fontFamilyOptions[0].value,
     lineHeight: `1.85`,
   },
   // 新增三套高颜值模板主题：各自的设计主色（与 CSS 文件里的强调色一致）
-  morandi: {
+  'morandi': {
     primaryColor: `#8A8B7F`,
     fontFamily: fontFamilyOptions[0].value,
     lineHeight: `1.85`,
   },
-  techblue: {
+  'techblue': {
     primaryColor: `#165DFF`,
     fontFamily: fontFamilyOptions[0].value,
     lineHeight: `1.85`,
   },
-  sakura: {
+  'sakura': {
     primaryColor: `#EBA0B6`,
     fontFamily: fontFamilyOptions[0].value,
     lineHeight: `1.85`,
   },
   // 祖母绿：整篇大卡片，翡翠主色 + 无衬线 + 大行高
-  emerald: {
+  'emerald': {
+    primaryColor: `#059669`,
+    fontFamily: fontFamilyOptions[0].value,
+    lineHeight: `1.9`,
+  },
+  // 祖母绿 · 原版：容器透明，主色与祖母绿一致
+  'emerald-origin': {
     primaryColor: `#059669`,
     fontFamily: fontFamilyOptions[0].value,
     lineHeight: `1.9`,
   },
   // 杂志刊头：对称通栏纸刊感，墨蓝主色 + 衬线 + 大行高
-  journal: {
+  'journal': {
     primaryColor: `#1F3A5F`,
     fontFamily: fontFamilyOptions[1].value,
     lineHeight: `1.9`,
   },
   // 便签卡：贴纸标签，琥珀主色 + 无衬线 + 中等行高
-  notecard: {
+  'notecard': {
     primaryColor: `#D97706`,
     fontFamily: fontFamilyOptions[0].value,
     lineHeight: `1.85`,
