@@ -48,6 +48,16 @@ export interface IOpts {
    * responsive grid. @default true
    */
   imageGallery?: boolean
+  /**
+   * Heading structure emitted by the renderer.
+   *
+   * - `plain` (default): bare inline content, every theme can style it.
+   * - `indexed`: h2 gains an auto number (`01` + `PART`) and a divider, h3
+   *   gains a leading dot. Used by magazine-style themes whose layout depends
+   *   on those parts; other themes must keep `plain` so their CSS still
+   *   targets the bare heading.
+   */
+  headingStructure?: 'plain' | 'indexed'
   /** Custom component registry */
   components?: ComponentRegistry
   /** Async diagram load/error copy (injected by locale on Web) */

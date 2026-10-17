@@ -170,3 +170,19 @@ export const themeOptions: IConfigOption<ThemeName>[] = [
     desc: `贴纸标签`,
   },
 ]
+
+/**
+ * Themes whose layout needs structural nodes inside headings.
+ *
+ * `indexed` tells the renderer to emit `01 / PART / 竖线 / 标题` inside h2 and
+ * a leading dot inside h3. Only list themes here: the extra nodes are inert in
+ * other themes' CSS and would show up as stray text in other export targets.
+ */
+const THEME_HEADING_STRUCTURE: Record<string, 'indexed'> = {
+  emerald: `indexed`,
+}
+
+/** Heading structure a theme expects. Defaults to plain inline headings. */
+export function getThemeHeadingStructure(theme: string): 'plain' | 'indexed' {
+  return THEME_HEADING_STRUCTURE[theme] ?? `plain`
+}

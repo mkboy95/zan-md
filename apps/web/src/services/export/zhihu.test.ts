@@ -26,6 +26,19 @@ describe(`toZhihuHtml`, () => {
     expect(output).toContain(`正文 重点`)
   })
 
+  it(`drops theme heading decorations (number / PART / divider / pill dot)`, () => {
+    const input = `
+      <h2><span class="md-num">01<span class="md-num-label">PART</span></span><span class="md-num-bar">&nbsp;</span><span class="md-sec-title">为什么同步这么难？</span></h2>
+      <h3><span class="md-dot">&nbsp;</span><span class="md-sub-title">官方同步服务</span></h3>`
+
+    const output = toZhihuHtml(input)
+
+    expect(output).toContain(`为什么同步这么难？`)
+    expect(output).toContain(`官方同步服务`)
+    expect(output).not.toContain(`PART`)
+    expect(output).not.toContain(`01`)
+  })
+
   it(`keeps the semantic tags and structure (headings, lists, quote, code, table, link, emphasis, image)`, () => {
     const input = `
       <h2>H2</h2>

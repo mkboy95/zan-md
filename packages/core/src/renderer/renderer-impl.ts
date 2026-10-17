@@ -199,6 +199,8 @@ export function initRenderer(opts: IOpts = {}): RendererAPI {
   const listOrderedStack: boolean[] = []
   const listCounters: number[] = []
   const headings: CollectedHeading[] = []
+  /** Running h2 counter for `headingStructure: 'indexed'`. */
+  let indexedHeadingCount = 0
   const markdownParser = new Marked()
 
   markdownParser.setOptions({
@@ -209,13 +211,13 @@ export function initRenderer(opts: IOpts = {}): RendererAPI {
     return opts
   }
 
-  function styledContent(styleLabel: string, content: string, tagName?: string, style?: string): string {
+  function styledContent(styleLabel: string, content: string, tagName?: string, style?: string, headingText?: string): string {
     const tag = tagName ?? styleLabel
     const className = `${styleLabel.replace(UNDERSCORE_REGEX, `-`)}`
     const isHeading = HEADING_TAG_REGEX.test(tag)
     // Collect headings during render so consumers (outline/TOC) don't need a DOM pass.
     if (isHeading)
-      headings.push({ level: Number(tag.slice(1)), text: stripInlineHtml(content) })
+      headings.push({ level: Number(tag.slice(1)), text: headingText ?? stripInlineHtml(content) })
     const headingAttr = isHeading ? ` data-heading="true"` : ``
     const styleAttr = style ? ` style="${style}"` : ``
     return `<${tag} class="${className}"${headingAttr}${styleAttr}>${content}</${tag}>`
@@ -237,6 +239,7 @@ export function initRenderer(opts: IOpts = {}): RendererAPI {
     listOrderedStack.length = 0
     listCounters.length = 0
     headings.length = 0
+    indexedHeadingCount = 0
     setOptions(newOpts)
   }
 
@@ -287,8 +290,35 @@ export function initRenderer(opts: IOpts = {}): RendererAPI {
       // h1 wraps its text in a span so themes can paint a ribbon inside the
       // heading box while the h1 itself stays block-level (e.g. a full-width
       // rule underneath the ribbon). Other levels keep bare inline content.
-      const content = depth === 1 ? `<span>${text}</span>` : text
-      return styledContent(tag, content)
+      if (depth === 1)
+        return styledContent(tag, `<span>${text}</span>`)
+
+      // Magazine themes lay h2 out as `<number> | <title>` and h3 as a pill
+      // with a leading dot. Both need extra nodes, which CSS cannot invent
+      // (WeChat strips pseudo-elements), so the renderer emits them here.
+      if (opts.headingStructure === `indexed`) {
+        const plainText = stripInlineHtml(text)
+        if (depth === 2) {
+          indexedHeadingCount += 1
+          const number = String(indexedHeadingCount).padStart(2, `0`)
+          return styledContent(tag, [
+            `<span class="md-num">${number}<span class="md-num-label">PART</span></span>`,
+            `<span class="md-num-bar">&nbsp;</span>`,
+            `<span class="md-sec-title">${text}</span>`,
+          ].join(``), undefined, undefined, plainText)
+        }
+        if (depth === 3) {
+          return styledContent(
+            tag,
+            `<span class="md-dot">&nbsp;</span><span class="md-sub-title">${text}</span>`,
+            undefined,
+            undefined,
+            plainText,
+          )
+        }
+      }
+
+      return styledContent(tag, text)
     },
 
     paragraph({ tokens }: Tokens.Paragraph): string {
@@ -509,6 +539,8 @@ export function initRenderer(opts: IOpts = {}): RendererAPI {
     reset,
     parseFrontMatterAndContent,
     renderMarkdownToHtml(markdown: string) {
+      // Numbering is per-render, not per-renderer instance.
+      indexedHeadingCount = 0
       let html = markdownParser.parse(markdown) as string
       // Image gallery (default ON): wrap 2+ consecutive standalone images in a
       // WeChat-safe responsive grid. Applied once on the whole document so it

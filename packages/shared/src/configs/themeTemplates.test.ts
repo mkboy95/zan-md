@@ -66,12 +66,13 @@ describe.each(templates)(`$id template theme`, ({ id, file, accent, primaryColor
     expect(cssWithoutComments.toLowerCase()).not.toContain(accent)
   })
 
-  it(`paints the h1 as a block heading with a full-width rule and a span ribbon`, () => {
-    // Same three-part structure as 超赞绿: h1 block-level + border-bottom rule,
-    // ribbon on the inner span (the renderer wraps h1 text in a <span>).
+  it(`uses a block-level h1 whose rule spans the full width`, () => {
+    // The rule (border-bottom or a background rule) must sit on h1 itself.
+    // Painting it on the inline <span> shrinks it to the text width — that bug
+    // is what made an earlier 超赞绿 build lose its full-width underline.
     expect(css).toMatch(/h1\s*\{[^}]*display:\s*block/)
-    expect(css).toMatch(/h1\s*\{[^}]*border-bottom:[^;]*(solid|transparent)/)
-    expect(css).toMatch(/h1\s*>\s*span\s*\{[^}]*display:\s*inline-block/)
+    expect(css).toMatch(/h1\s*\{[^}]*(border-bottom:|background-image:|background-size:)/)
+    expect(css).not.toMatch(/h1\s*>\s*span\s*\{[^}]*border-bottom:/)
   })
 
   it(`keeps WeChat compatibility: no color-mix, no pseudo-element content`, () => {

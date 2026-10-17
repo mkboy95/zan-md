@@ -155,6 +155,13 @@ const ZHIHU_ALLOWED_ATTRS: Record<string, ReadonlySet<string>> = {
 const COMMENT_NODE = 8
 const ELEMENT_NODE = 1
 
+/**
+ * Structural decorations a theme injected into headings (number, PART label,
+ * divider, pill dot). They only make sense with that theme's layout, so Zhihu
+ * gets the plain heading text instead of `01PART 标题`.
+ */
+const ZHIHU_DROP_CLASSES = new Set([`md-num`, `md-num-bar`, `md-dot`])
+
 /** Keep only whitelisted declarations, normalising `PROP: value` spacing. */
 function filterStyle(style: string): string {
   const parts: string[] = []
@@ -219,6 +226,11 @@ function cleanNode(node: Node) {
 
     const el = child as Element
     const tag = el.tagName.toUpperCase()
+
+    if ([...el.classList].some(c => ZHIHU_DROP_CLASSES.has(c))) {
+      el.remove()
+      continue
+    }
 
     if (ZHIHU_DROP_TAGS.has(tag)) {
       el.remove()

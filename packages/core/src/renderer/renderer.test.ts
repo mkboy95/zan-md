@@ -155,3 +155,41 @@ $$ITE_{i}=Y_{i,1}-Y_{i,0} \\tag{1}$$`
     expect(html).not.toContain(`about:blank`)
   })
 })
+
+describe(`headingStructure`, () => {
+  it(`keeps bare headings by default`, () => {
+    const renderer = initRenderer({})
+    const { html } = renderMarkdown(`## 一\n\n### 小`, renderer)
+
+    expect(html).not.toContain(`md-num`)
+    expect(html).not.toContain(`md-dot`)
+  })
+
+  it(`numbers h2 and marks h3 when indexed`, () => {
+    const renderer = initRenderer({ headingStructure: `indexed` })
+    const { html } = renderMarkdown(`## 一\n\n### 小\n\n## 二`, renderer)
+
+    expect(html).toContain(`class="md-num"`)
+    expect(html).toContain(`>01<`)
+    expect(html).toContain(`>02<`)
+    expect(html).toContain(`md-num-label`)
+    expect(html).toContain(`class="md-dot"`)
+    expect(html).toContain(`md-sec-title`)
+  })
+
+  it(`keeps outline text free of the numbering parts`, () => {
+    const renderer = initRenderer({ headingStructure: `indexed` })
+    renderMarkdown(`## 一\n\n## 二`, renderer)
+
+    expect(renderer.getHeadings().map(h => h.text)).toEqual([`一`, `二`])
+  })
+
+  it(`restarts numbering on every render`, () => {
+    const renderer = initRenderer({ headingStructure: `indexed` })
+    renderMarkdown(`## A\n\n## B`, renderer)
+    const { html } = renderMarkdown(`## C`, renderer)
+
+    expect(html).toContain(`>01<`)
+    expect(html).not.toContain(`>02<`)
+  })
+})

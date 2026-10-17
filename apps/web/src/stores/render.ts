@@ -1,5 +1,6 @@
 import type { RendererAPI } from '@md/shared/types'
 import { postProcessHtml, renderMarkdown } from '@md/core/utils'
+import { getThemeHeadingStructure } from '@md/shared/configs'
 import { t } from '@/i18n/translate'
 import { resolveAssetUrl } from '@/services/emoji/urlResolver'
 import { useCustomComponentStore } from './customComponent'
@@ -91,6 +92,7 @@ export const useRenderStore = defineStore(`render`, () => {
       themeStore.isShowLineNumber ? `1` : `0`,
       themeStore.autoLinkFootnote ? `1` : `0`,
       themeStore.imageGallery ? `1` : `0`,
+      getThemeHeadingStructure(themeStore.theme),
       buildComponentFingerprint(componentStore),
       t(`store.count.summary`, { words: `{words}`, minutes: `{minutes}` }),
       t(`store.render.footnoteTitle`),
@@ -141,6 +143,7 @@ export const useRenderStore = defineStore(`render`, () => {
       isShowLineNumber: themeStore.isShowLineNumber,
       autoLinkFootnote: themeStore.autoLinkFootnote,
       imageGallery: themeStore.imageGallery,
+      headingStructure: getThemeHeadingStructure(themeStore.theme),
       themeMode,
       components: componentStore.registry,
       diagramMessages: buildDiagramMessages(),
