@@ -163,6 +163,38 @@ export const BUILT_IN_COMPONENTS: CustomComponentDef[] = [
 [A] 好的，谢谢！
 </ChatBlock>`,
   },
+  {
+    id: `builtin-cover`,
+    name: `CoverBlock`,
+    description: `杂志封面卡：眉标条 + 划线引题 + 双色大标题 + 副标 + 主色作者栏`,
+    builtIn: true,
+    props: [
+      { name: `eyebrow`, description: `眉标文字，如 REVIEW · 工具评测` },
+      { name: `date`, description: `眉标右侧日期，如 2026.08` },
+      { name: `kicker`, description: `标题上方带删除线的引题（可选）` },
+      { name: `title`, description: `大标题第一行` },
+      { name: `accent`, description: `第一行末尾用主色高亮的字（可选）` },
+      { name: `title2`, description: `大标题第二行（主色，可选）` },
+      { name: `subtitle`, description: `标题下方灰色副标` },
+      { name: `author`, description: `作者栏左侧文字` },
+      { name: `chips`, description: `作者栏右侧胶囊，逗号分隔（可选）` },
+    ],
+    template: ``,
+    example: `<CoverBlock eyebrow="REVIEW · 工具评测" date="2026.08" kicker="同步方案那么多，怎么选？" title="Obsidian 多端同步，" accent="实测" title2="4 种免费方案怎么选" subtitle="方案对比 · 上手实测 · 免费 · 全平台" author="跟着大洲学AI" chips="免费方案,零折腾" />`,
+  },
+  {
+    id: `builtin-parts`,
+    name: `PartCards`,
+    description: `可横滑的分节目录卡：首张主色实心，其余白底描边`,
+    builtIn: true,
+    props: [
+      { name: `label`, description: `目录行左侧文字`, default: `📦 4 Parts + Conclusion` },
+      { name: `hint`, description: `目录行右侧提示`, default: `👉 滑动` },
+      { name: `items`, description: `卡片列表，分号分隔，每项形如 编号|标题|英文副标`, required: true },
+    ],
+    template: ``,
+    example: `<PartCards items="01|为什么同步这么难|WHY SYNC;02|免费方案怎么选|FREE OPTIONS;03|Mac 端 5 分钟装好|SETUP;04|踩坑实录|PITFALLS" />`,
+  },
 ]
 
 /** Names reserved for system inline components; not parsed as block tags. */
@@ -412,10 +444,110 @@ function renderChatBlock(props: Record<string, string>): string {
 </section>`
 }
 
+/** Split a list prop on both ASCII and full-width commas. */
+function splitList(value?: string): string[] {
+  return (value ?? ``).split(/[,，]/).map(s => s.trim()).filter(Boolean)
+}
+
+/**
+ * 杂志封面卡（祖母绿版式）：眉标条 → 划线引题 → 双色大标题 → 渐变短条 →
+ * 副标 → 主色作者栏。卡片由封面自带，正文排在白底上，所以主题容器不再画卡片。
+ *
+ * 装饰节点里放 `&nbsp;`：微信会清洗空标签承载的形状。
+ * 不用 flex `gap`（微信不稳），间距一律 margin。
+ */
+function renderCoverBlock(props: Record<string, string>): string {
+  const esc = (v?: string) => escapeHtml(v ?? ``)
+  const chips = splitList(props.chips)
+
+  const eyebrowRow = (props.eyebrow || props.date)
+    ? `<section style="display: flex;align-items: center;margin-bottom: 28px;">
+  <span style="font-size: 11px;font-weight: 700;letter-spacing: 3px;color: var(--md-primary-color, #059669);">${esc(props.eyebrow)}</span>
+  <section style="flex: 1 1 0%;height: 1px;overflow: hidden;background: linear-gradient(to right, var(--md-primary-wash, rgba(5, 150, 105, 0.12)), transparent);margin: 0 8px;"><span>&nbsp;</span></section>
+  <span style="font-size: 10px;color: #d1d5db;font-weight: 600;">${esc(props.date)}</span>
+</section>`
+    : ``
+
+  const kickerRow = props.kicker
+    ? `<p style="font-size: 15px;color: #d1d5db;margin: 0px 0px 6px;text-decoration: line-through;letter-spacing: 0.5px;">${esc(props.kicker)}</p>`
+    : ``
+
+  const accentHtml = props.accent
+    ? `<span style="color: var(--md-primary-color, #059669);">${esc(props.accent)}</span>`
+    : ``
+
+  const titleRow = props.title
+    ? `<p style="font-size: 24px;font-weight: 900;color: rgb(17, 24, 39);margin: 0px;line-height: 1.05;letter-spacing: -2px;">${esc(props.title)}${accentHtml}</p>`
+    : ``
+
+  const title2Row = props.title2
+    ? `<p style="font-size: 24px;font-weight: 900;color: var(--md-primary-color, #059669);margin: 0px 0px 16px;line-height: 1.05;letter-spacing: -2px;">${esc(props.title2)}</p>`
+    : ``
+
+  const underline = `<section style="width: 48px;height: 3px;background: linear-gradient(to right, var(--md-primary-color, #059669), var(--md-primary-halo, #10b981));border-radius: 2px;margin-bottom: 12px;"><span>&nbsp;</span></section>`
+
+  const subtitleRow = props.subtitle
+    ? `<p style="font-size: 13px;color: rgb(156, 163, 175);margin: 0px;line-height: 1.7;letter-spacing: 0.5px;">${esc(props.subtitle)}</p>`
+    : ``
+
+  const chipsHtml = chips.length
+    ? `<section>${chips.map(c => `<span style="background: rgba(255, 255, 255, 0.2);padding: 1px 6px;border-radius: 3px;font-size: 8px;color: rgb(255, 255, 255);font-weight: 600;margin-left: 4px;">${esc(c)}</span>`).join(``)}</section>`
+    : `<section></section>`
+
+  const authorRow = `<section style="background: linear-gradient(135deg, var(--md-primary-color, #059669), var(--md-primary-halo, #10b981));padding: 12px 28px;display: flex;align-items: center;justify-content: space-between;">
+  <p style="font-size: 12px;color: rgba(255, 255, 255, 0.9);margin: 0px;font-weight: 600;letter-spacing: 0.5px;">${esc(props.author)}</p>
+  ${chipsHtml}
+</section>`
+
+  return `<section class="md-cover" style="margin: 0px -8px 32px;border: 1.5px solid var(--md-primary-edge, rgba(5, 150, 105, 0.15));border-radius: 20px;overflow: hidden;box-shadow: rgba(0, 0, 0, 0.06) 0px 4px 20px;background: #ffffff;">
+<section style="padding: 32px 28px 28px;">${eyebrowRow}${kickerRow}${titleRow}${title2Row}${underline}${subtitleRow}</section>
+${authorRow}
+</section>`
+}
+
+/**
+ * 可横滑的分节目录卡：`items` 用分号分隔，每项 `编号|标题|英文副标`。
+ * 首张为主色实心卡（当前章节），其余为白底描边卡。
+ */
+function renderPartCards(props: Record<string, string>): string {
+  const esc = (v?: string) => escapeHtml(v ?? ``)
+  const items = (props.items ?? ``)
+    .split(`;`)
+    .map(s => s.trim())
+    .filter(Boolean)
+    .map(s => s.split(`|`))
+
+  const cards = items.map(([num, title, sub], index) => {
+    const first = index === 0
+    const skin = first
+      ? `background: linear-gradient(135deg, var(--md-primary-color, #059669), var(--md-primary-halo, #10b981));`
+      : `background: rgb(255, 255, 255);border: 1px solid rgb(229, 231, 235);box-shadow: rgba(0, 0, 0, 0.04) 0px 2px 6px;`
+    const labelColor = first ? `rgba(255, 255, 255, 0.7)` : `rgb(156, 163, 175)`
+    const titleColor = first ? `rgb(255, 255, 255)` : `rgb(17, 24, 39)`
+    const subColor = first ? `rgba(255, 255, 255, 0.7)` : `rgb(156, 163, 175)`
+
+    return `<section style="display: inline-block;white-space: normal;vertical-align: top;width: 110px;border-radius: 12px;padding: 12px;margin-right: 8px;${skin}">
+  <p style="font-size: 9px;font-weight: 700;color: ${labelColor};letter-spacing: 1px;margin: 0px 0px 5px;">${esc(num)}</p>
+  <p style="font-size: 13px;font-weight: 800;color: ${titleColor};margin: 0px 0px 3px;">${esc(title ?? ``)}</p>
+  <p style="font-size: 10px;color: ${subColor};margin: 0px;">${esc(sub ?? ``)}</p>
+</section>`
+  }).join(`<span>&nbsp;</span>`)
+
+  return `<section class="md-parts" style="margin: 0px 0px 32px;">
+<section style="display: flex;align-items: center;justify-content: space-between;margin-bottom: 10px;">
+  <p style="font-size: 10px;color: rgb(156, 163, 175);margin: 0px;letter-spacing: 2px;font-weight: 600;">${esc(props.label)}</p>
+  <p style="font-size: 10px;color: rgb(156, 163, 175);margin: 0px;">${esc(props.hint)}</p>
+</section>
+<section style="overflow-x: scroll;white-space: nowrap;padding-bottom: 8px;">${cards}</section>
+</section>`
+}
+
 const SPECIAL_RENDERERS: Record<string, (props: Record<string, string>) => string> = {
   TableBlock: renderTableBlock,
   InfoGrid: renderInfoGrid,
   ChatBlock: renderChatBlock,
+  CoverBlock: renderCoverBlock,
+  PartCards: renderPartCards,
 }
 
 // TipBlock type colors

@@ -4,7 +4,8 @@
  * 移植自公众号「工具评测」排版，所有尺寸/字重/字距/圆角/描边都取自原文
  * 逐节点的行内 style，而非凭感觉调参：
  *
- *   外层卡片  1.5px 主色 15% 描边 + 20px 圆角 + 0 4px 20px 6% 投影，内留白 32/28
+ *   外层容器  透明：原文只有「封面」是卡片，正文排在白底左右 20px。整篇套卡会造成
+ *             卡中卡，所以卡片改由 <CoverBlock> 组件自带（core/extensions/component.ts）
  *   封面标题  24px / 900 / 字距 -2px / 行高 1.15，左下角一条 48×3 主色渐变短条
  *   章节标题  28px 主色大编号 + 8px "PART" 标签 + 1×36 竖线 + 17px 900 标题
  *   小标题    13px 主色胶囊（999 圆角 + 8% 淡底）+ 6px 实心圆点
@@ -22,16 +23,19 @@
  * 尺寸用 calc(var(--md-font-size) * N)，间距乘 var(--md-block-spacing)。
  */
 
-/* ==================== 外层卡片 ==================== */
+/* ==================== 外层容器 ====================
+ * 原文没有「整篇卡片」：只有封面是卡片，正文白底左右 20px。
+ * 因此这里不画卡片（卡片由 <CoverBlock> 自带），只负责居中与正文留白。
+ */
 .container {
   box-sizing: border-box;
   max-width: 677px;
   margin: 0 auto calc(2em * var(--md-block-spacing));
-  padding: 32px 28px 28px;
-  border: 1.5px solid var(--md-primary-edge);
-  border-radius: 20px;
-  background: #ffffff;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  padding: 0 20px;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
   color: #374151;
   font-family: var(--md-font-family);
   font-size: calc(var(--md-font-size) * 0.875);
