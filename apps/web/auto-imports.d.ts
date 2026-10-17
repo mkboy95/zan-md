@@ -340,6 +340,7 @@ declare global {
   const useTextDirection: typeof import('@vueuse/core').useTextDirection
   const useTextSelection: typeof import('@vueuse/core').useTextSelection
   const useTextareaAutosize: typeof import('@vueuse/core').useTextareaAutosize
+  const useThemeFavoritesStore: typeof import('./src/stores/themeFavorites').useThemeFavoritesStore
   const useThemeStore: typeof import('./src/stores/theme').useThemeStore
   const useThrottle: typeof import('@vueuse/shared').useThrottle
   const useThrottleFn: typeof import('@vueuse/shared').useThrottleFn
