@@ -276,7 +276,7 @@ function onUpdate(val: boolean) {
                   {{ template.description }}
                 </p>
 
-                <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
+                <div v-if="!template.builtin" class="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
                   <span class="flex items-center gap-1">
                     <Calendar class="size-3" />
                     {{ t('template.createdAt') }}{{ formatDate(template.createdAt) }}
